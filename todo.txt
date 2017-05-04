@@ -1,0 +1,7 @@
+* TODO Add music to the puzzle game
+* TODO Create progress meter
+* TODO Order level by difficulty
+* TODO Polish levels
+* TODO Polish graphics
+* TODO Compile for iOS
+* FUTURE Maybe change to 3d graphics
