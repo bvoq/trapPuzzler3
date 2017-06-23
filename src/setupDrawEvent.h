@@ -35,8 +35,6 @@ void drawEvent() {
             }
             if(renderMode == PARTIAL) displayLevelWORefresh();
             else displayLevel();
-            
-            
             displayToolBar();
             break;
             
@@ -60,6 +58,7 @@ void drawEvent() {
             backgroundColor = scheme.colorBACKGROUND;
 
             displayLevelEditor();
+            displayToolBar();
             break;
             
         case MENUOLD:

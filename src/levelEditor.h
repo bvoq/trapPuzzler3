@@ -12,7 +12,7 @@
 deque<deque<int> > editorGrid;
 //int editorGridY, editorGridX;
 
-int playerCount = 1, enemyCount = 10, unmovableEnemyCount = 1000;
+int playerCount = 1, enemyCount = 100, unmovableEnemyCount = 1000;
 cellType placeType;
 
 void changeBrush (cellType newPlaceType) {

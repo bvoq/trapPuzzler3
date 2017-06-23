@@ -11,6 +11,20 @@
 #ifndef keyEvent_h
 #define keyEvent_h
 
+
+void restart() {
+    if(mode == PLAYING) {
+        /*
+         for(int i = 0; i < grid.size(); ++i) for(int j = 0; j < grid[i].size(); ++j) {
+         cout << grid[i][j] << ((j==grid[i].size() - 1) ? "\n" : ((grid[i][j]< 1000) ? "\t\t" : "\t"));
+         }
+         */
+        if(grid == levels[currentLevel]) mode = MENU; ///!!! maybe remove
+        else loadLevel(currentLevel);
+    }
+    else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;
+}
+
 void keyEvent (keyType kt) {
     if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
         switch(kt) {
@@ -24,16 +38,7 @@ void keyEvent (keyType kt) {
                 changePlayerIdRandom();
                 break;
             case RESTART:
-                if(mode == PLAYING) {
-                    /*
-                     for(int i = 0; i < grid.size(); ++i) for(int j = 0; j < grid[i].size(); ++j) {
-                     cout << grid[i][j] << ((j==grid[i].size() - 1) ? "\n" : ((grid[i][j]< 1000) ? "\t\t" : "\t"));
-                     }
-                     */
-                    if(grid == levels[currentLevel]) mode = MENU; ///!!! maybe remove
-                    else loadLevel(currentLevel);
-                }
-                else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;
+                restart();
                 break;
             case UNDO:
                 undoMovement(timeForMovement);

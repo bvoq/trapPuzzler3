@@ -11,9 +11,9 @@
 #define trapPuzzler3_colorScheme_h
 
 struct colorScheme {
-    ofColor colorPLAYERSELECTED, colorPLAYERUNSELECTED, colorENEMY, colorENEMYSTROKE, colorUNMOVABLE_ENEMY, colorUNMOVABLE_ENEMYSTROKE, colorBACKGROUND, colorBACKGROUND_LIGHT, colorBACKGROUND_SHADED, colorBACKGROUND_VOID, colorLEVELSELECT, colorLEVELSELECT_LIGHT, colorMESSAGE, colorMESSAGE_SHADED, colorTOOLBAR, colorTOOLBARBUTTON, colorTOOLBARBUTTON_LIGHT;
+    ofColor colorPLAYERSELECTED, colorPLAYERUNSELECTED, colorENEMY, colorENEMYSTROKE, colorUNMOVABLE_ENEMY, colorUNMOVABLE_ENEMYSTROKE, colorBACKGROUND, colorBACKGROUND_LIGHT, colorBACKGROUND_SHADED, colorBACKGROUND_VOID, colorLEVELSELECT, colorLEVELSELECT_LIGHT, colorMESSAGE, colorMESSAGE_SHADED, colorTOOLBAR, colorTOOLBARBUTTON, colorTOOLBARBUTTON_LIGHT, colorTOOLBARBUTTON_SELECTED, colorTOOLBARBUTTON_SELECTED_LIGHT;
     
-    colorScheme(int _colorPLAYERSELECTED, int _colorPLAYERUNSELECTED, int _colorENEMY, int _colorENEMYSTROKE, int _colorUNMOVABLE_ENEMY, int _colorUNMOVABLE_ENEMYSTROKE, int _colorBACKGROUND, int _colorBACKGROUND_LIGHT, int _colorBACKGROUND_SHADED, int _colorBACKGROUND_VOID, int _colorLEVELSELECT, int _colorLEVELSELECT_LIGHT, int _colorMESSAGE, int _colorMESSAGE_SHADED, int _colorTOOLBAR, int _colorTOOLBARBUTTON, int _colorTOOLBARBUTTON_LIGHT) {
+    colorScheme(int _colorPLAYERSELECTED, int _colorPLAYERUNSELECTED, int _colorENEMY, int _colorENEMYSTROKE, int _colorUNMOVABLE_ENEMY, int _colorUNMOVABLE_ENEMYSTROKE, int _colorBACKGROUND, int _colorBACKGROUND_LIGHT, int _colorBACKGROUND_SHADED, int _colorBACKGROUND_VOID, int _colorLEVELSELECT, int _colorLEVELSELECT_LIGHT, int _colorMESSAGE, int _colorMESSAGE_SHADED, int _colorTOOLBAR, int _colorTOOLBARBUTTON, int _colorTOOLBARBUTTON_LIGHT, int _colorTOOLBARBUTTON_SELECTED, int _colorTOOLBARBUTTON_SELECTED_LIGHT) {
         
         colorPLAYERSELECTED.setHex(_colorPLAYERSELECTED);
         colorPLAYERUNSELECTED.setHex(_colorPLAYERUNSELECTED);
@@ -32,6 +32,8 @@ struct colorScheme {
         colorTOOLBAR.setHex(_colorTOOLBAR);
         colorTOOLBARBUTTON.setHex(_colorTOOLBARBUTTON);
         colorTOOLBARBUTTON_LIGHT.setHex(_colorTOOLBARBUTTON_LIGHT);
+        colorTOOLBARBUTTON_SELECTED.setHex(_colorTOOLBARBUTTON_SELECTED);
+        colorTOOLBARBUTTON_SELECTED_LIGHT.setHex(_colorTOOLBARBUTTON_SELECTED_LIGHT);
     }
     
 };
@@ -54,10 +56,9 @@ colorScheme scheme0 (
                     0x000000, //MESSAGE_SHADED
                     0x646464, //TOOLBAR
                     0x000000, //TOOLBAR_BUTTON
-                    0x2f2f2f //TOOLBAR_BUTTON_LIGHT
-                    //ALTERNATIVE
-                    //0xf3ffac, //TOOLBAR BUTTON
-                    //0xfcffe8 //TOOLBAR BUTTON LIGHT
+                    0x2f2f2f, //TOOLBARBUTTON_LIGHT
+                    0xf3ffac, //TOOLBARBUTTON_SELECTED
+                    0xfcffe8 //TOOLBARBUTTON_SELECTED_LIGHT
 
 );
 //colorScheme scheme1 (0xFFFF00/*0xF9FA00*/, 0xFF2265, 0x5B2031, 0x556C62, 0xC2D7CD);

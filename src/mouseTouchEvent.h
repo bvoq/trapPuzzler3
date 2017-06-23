@@ -34,16 +34,11 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
                         playerTouches.insert({touchid,newMovement});
                         changePlayerId(grid[tilePos.first][tilePos.second]);
                     }
-                    
                 }
-                
-                
-                
             }
         }
             break;
         case MENU:
-            
             if(mouseTouchX < getWidth()/3) keyEvent(LEFT);
             if(mouseTouchX > 2*getWidth()/3) keyEvent(RIGHT);
             if(mouseTouchY < getHeight()/3) keyEvent(UP);
@@ -101,6 +96,34 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
 void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     //Call as if it moved one last time.
     mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
+    
+    
+    if(toolbarOrientation == BOTTOMTOOLBAR) {
+        if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
+            //UNDO
+            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                undoMovement(timeForMovement);
+            }
+            //RESTART
+            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                restart();
+            }
+        }
+        if(mode == LEVEL_EDITOR) {
+            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                undoLevelEditorMove();
+            }
+            if(mouseTouchX > toolbarSize * 0.05 + 1*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 1*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                changeBrush(PLAYER);
+            }
+            if(mouseTouchX > toolbarSize * 0.05 + 2*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 2*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                changeBrush(ENEMY);
+            }
+            if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                changeBrush(UNMOVABLE_ENEMY);
+            }
+        }
+    }
     
     //Control scheme: Execute move on touch maybe.
     playerTouches.erase(touchid);
