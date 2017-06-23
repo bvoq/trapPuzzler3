@@ -235,9 +235,9 @@ void displayToolBar() {
                     //START PLAYING LEVEL
                     ofPushMatrix();
                     
-                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     backgroundKey.draw();
-                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05)
+                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05 - toolbarSize)
                        && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -258,6 +258,32 @@ void displayToolBar() {
                     ofEndShape();
                     ofSetLineWidth(1);
                     ofPopMatrix();
+                    
+                    
+                    
+                    //MAIN MENU
+                    ofPushMatrix();
+                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    backgroundKey.draw();
+                    deque<deque<int> > blackOnly = {{1000}};
+                    ofSetColor(255);
+                    ofFill();
+                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05)
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                            ofScale(1.05,1.05);
+                            ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    float actualtilesize = toolbarSize*.9*.175;
+                    float tilesize = toolbarSize*.9*.25;
+                    for(int i = 0; i < 3; ++i) {
+                        for(int j = 0; j < 3; ++j) {
+                            ofPushMatrix();
+                            ofTranslate((toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+i*tilesize,
+                                        (toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+j*tilesize);
+                            drawCellFill(0,0, actualtilesize, actualtilesize*.75/6., blackOnly);
+                            ofPopMatrix();
+                        }
+                    }
                 }
                 
                 

@@ -122,7 +122,7 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
             if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 changeBrush(UNMOVABLE_ENEMY);
             }
-            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 tilesToBePlaced.clear();
                 loadLevel(-1);
             }
