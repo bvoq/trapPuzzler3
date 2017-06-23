@@ -99,7 +99,7 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
-        if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
+        if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             //UNDO
             if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 undoMovement(timeForMovement);
@@ -109,7 +109,7 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
                 restart();
             }
         }
-        if(mode == LEVEL_EDITOR) {
+        else if(mode == LEVEL_EDITOR) {
             if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 undoLevelEditorMove();
             }
@@ -121,6 +121,10 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
             }
             if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 changeBrush(UNMOVABLE_ENEMY);
+            }
+            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                tilesToBePlaced.clear();
+                loadLevel(-1);
             }
         }
     }

@@ -159,7 +159,7 @@ void displayOldMenu() {
                 //ofTranslate()
                 ofSetColor(0,255,0);
                 ofFill();
-                displayPencil();
+                displayPencil(false);
             }
             glLineWidth(1);
             ofPopMatrix();

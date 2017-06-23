@@ -700,7 +700,7 @@ void displayLevelWORefresh() {
 
 
 
-void displayPencil() {
+void displayPencil(bool selected) {
 
     ofPushMatrix();
     ofScale(min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.);
@@ -708,6 +708,7 @@ void displayPencil() {
     ofSetColor((int)0x0f,(int)0x8d,(int)0x00);
     ofDrawEllipse(-20, 10, 45, 45);
     ofSetColor(0,255,0);
+    if(selected) ofTranslate(0,3);
     ofDrawEllipse(-20, 5, 45, 45);
     
     ofPushMatrix();

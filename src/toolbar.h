@@ -17,7 +17,7 @@
 int toolbarX = 0, toolbarY = 0;
 enum ToolbarOrientation {
     NOTOOLBAR=0, BOTTOMTOOLBAR=1, RIGHTTOOLBAR=2 //, BOTTOMTOOLBAR=3, LEFTTOOLBAR=4
-} toolbarOrientation = NOTOOLBAR;
+} toolbarOrientation = BOTTOMTOOLBAR;
 
 bool messageBlockingToolbar = false; //maybe make this messa
 
@@ -44,7 +44,7 @@ void displayToolBar() {
                 //Redraw all the keys
                 backgroundKey = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON_LIGHT, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON);
                 backgroundKeySelected = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED_LIGHT, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED);
-      
+                
             }
             
             if(toolbarOrientation == BOTTOMTOOLBAR) {
@@ -98,45 +98,53 @@ void displayToolBar() {
                     ofFill();
                     // ...
                     // :::
+                    bool pencilselected = false;
                     if(ofGetAppPtr()->mouseX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05)
                        && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
-                        ofScale(1.05,1.05);
-                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                        if(mode == PLAYING) {
+                            ofScale(1.05,1.05);
+                            ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                        } else pencilselected = true;
                     }
-                    
-                    if(grid != levels[currentLevel]) { //RESTART
-                        ofPath path;
-                        path.moveTo(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.);
-                        path.arc(toolbarSize*.9/2.,toolbarSize*.9/2.,toolbarSize*.5/2.,toolbarSize*.5/2.,270,270+270);
-                        path.setFilled(false);
-                        path.setStrokeWidth(5);
-                        path.draw();
-                        
-                        ofTranslate(toolbarSize*.9/2.,toolbarSize*.9/2.);
-                        ofRotate(1);
-                        ofTranslate(-toolbarSize*.9/2.,-toolbarSize*.9/2.);
-                        path.draw();
-                        
-                        ofFill();
-                        ofBeginShape();
-                        ofVertex(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.-toolbarSize*.125);
-                        ofVertex(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.+toolbarSize*.125);
-                        ofVertex(toolbarSize*.9/2.-toolbarSize*.125,toolbarSize*.9/2.-toolbarSize*.5/2.);
-                        ofEndShape();
-                    } else { //BACK TO MENU
-                        float actualtilesize = toolbarSize*.9*.175;
-                        float tilesize = toolbarSize*.9*.25;
-                        for(int i = 0; i < 3; ++i) {
-                            for(int j = 0; j < 3; ++j) {
-                                ofPushMatrix();
-                                ofTranslate((toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+i*tilesize,
-                                            (toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+j*tilesize);
-                                drawCellFill(0,0, actualtilesize, actualtilesize*.75/6., blackOnly);
-                                ofPopMatrix();
+                    if(mode == PLAYING) {
+                        if(grid != levels[currentLevel]) { //RESTART
+                            ofPath path;
+                            path.moveTo(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.);
+                            path.arc(toolbarSize*.9/2.,toolbarSize*.9/2.,toolbarSize*.5/2.,toolbarSize*.5/2.,270,270+270);
+                            path.setFilled(false);
+                            path.setStrokeWidth(5);
+                            path.draw();
+                            
+                            ofTranslate(toolbarSize*.9/2.,toolbarSize*.9/2.);
+                            ofRotate(1);
+                            ofTranslate(-toolbarSize*.9/2.,-toolbarSize*.9/2.);
+                            path.draw();
+                            
+                            ofFill();
+                            ofBeginShape();
+                            ofVertex(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.-toolbarSize*.125);
+                            ofVertex(toolbarSize*.9/2.,toolbarSize*.9/2.-toolbarSize*.5/2.+toolbarSize*.125);
+                            ofVertex(toolbarSize*.9/2.-toolbarSize*.125,toolbarSize*.9/2.-toolbarSize*.5/2.);
+                            ofEndShape();
+                        } else { //BACK TO MENU
+                            float actualtilesize = toolbarSize*.9*.175;
+                            float tilesize = toolbarSize*.9*.25;
+                            for(int i = 0; i < 3; ++i) {
+                                for(int j = 0; j < 3; ++j) {
+                                    ofPushMatrix();
+                                    ofTranslate((toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+i*tilesize,
+                                                (toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+j*tilesize);
+                                    drawCellFill(0,0, actualtilesize, actualtilesize*.75/6., blackOnly);
+                                    ofPopMatrix();
+                                }
                             }
                         }
-                        ofPopMatrix();
+                    } else if(mode == LEVEL_EDITOR_PLAYING) {
+                        ofTranslate(toolbarSize*.9*.77,toolbarSize*.9*.4);
+                        displayPencil(pencilselected);
                     }
+                    ofPopMatrix();
+
                     
                     ofSetColor(255);
                     ofNoFill();
@@ -172,7 +180,7 @@ void displayToolBar() {
                     ofTranslate(toolbarSize * 0.05 + toolbarSize, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == PLAYER) backgroundKeySelected.draw();
                     else backgroundKey.draw();                    if(ofGetAppPtr()->mouseX > toolbarSize * 0.05 + toolbarSize && ofGetAppPtr()->mouseX < toolbarSize * 0.9 + toolbarSize
-                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                                                                     && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -208,7 +216,8 @@ void displayToolBar() {
                     deque<deque<int> > grayOne = {{1000}};
                     ofTranslate(toolbarSize * 0.05 + 3*toolbarSize, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == UNMOVABLE_ENEMY) backgroundKeySelected.draw();
-                    else backgroundKey.draw();                    if(ofGetAppPtr()->mouseX > toolbarSize * 0.05 + toolbarSize*3 && ofGetAppPtr()->mouseX < toolbarSize * 0.9 + toolbarSize*3
+                    else backgroundKey.draw();
+                    if(ofGetAppPtr()->mouseX > toolbarSize * 0.05 + toolbarSize*3 && ofGetAppPtr()->mouseX < toolbarSize * 0.9 + toolbarSize*3
                        && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
@@ -222,6 +231,33 @@ void displayToolBar() {
                     drawCellStroke(0,0, toolbarSize*.5*1.1, toolbarSize*.1, grayOne);
                     ofPopMatrix();
                     
+                    
+                    //START PLAYING LEVEL
+                    ofPushMatrix();
+                    
+                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    backgroundKey.draw();
+                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05)
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    ofFill();
+                    ofSetColor(255);
+                    ofSetLineWidth(5);
+                    if(ofGetAppPtr()->mouseX > toolbarSize * 0.05 && ofGetAppPtr()->mouseX < toolbarSize * 0.9
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                        //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    ofBeginShape();
+                    ofVertex((toolbarSize*.9/5.)*1.,(toolbarSize*.9/5.)*1.);
+                    ofVertex((toolbarSize*.9/5.)*4.,toolbarSize*.9/2.);
+                    ofVertex((toolbarSize*.9/5.)*1.,(toolbarSize*.9/5.)*4.);
+                    ofEndShape();
+                    ofSetLineWidth(1);
+                    ofPopMatrix();
                 }
                 
                 

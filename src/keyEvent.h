@@ -13,6 +13,7 @@
 
 
 void restart() {
+    cout << "RESTARTING????" << endl;
     if(mode == PLAYING) {
         /*
          for(int i = 0; i < grid.size(); ++i) for(int j = 0; j < grid[i].size(); ++j) {
@@ -22,7 +23,7 @@ void restart() {
         if(grid == levels[currentLevel]) mode = MENU; ///!!! maybe remove
         else loadLevel(currentLevel);
     }
-    else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;
+    else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;    
 }
 
 void keyEvent (keyType kt) {
