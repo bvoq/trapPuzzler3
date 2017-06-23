@@ -698,6 +698,83 @@ void displayLevelWORefresh() {
 }
 
 
+
+
+void displayPencil() {
+
+    ofPushMatrix();
+    ofScale(min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.);
+    ofFill();
+    ofSetColor((int)0x0f,(int)0x8d,(int)0x00);
+    ofDrawEllipse(-20, 10, 45, 45);
+    ofSetColor(0,255,0);
+    ofDrawEllipse(-20, 5, 45, 45);
+    
+    ofPushMatrix();
+    ofTranslate(-20,5); //do center rotation
+    ofRotate(-45);
+    ofTranslate(20,-5); //undo center rotation
+    
+    ofSetColor((int)0xc8,(int)0xff,(int)0x00);
+    ofDrawEllipse(-20,5,45,20);
+    
+    //Pencil body
+    ofSetColor((int)0xec,(int)0xf7,(int)0xc3);
+    ofFill();
+    ofBeginShape();
+    ofVertex(0,0);
+    ofVertex(-30,0);
+    ofVertex(-30,10);
+    ofVertex(0,10);
+    ofEndShape();
+    
+    //Pencil head
+    ofSetColor(255,255,255);
+    ofFill();
+    ofBeginShape();
+    ofVertex(-30,0);
+    ofVertex(-40,5);
+    ofVertex(-30,10);
+    ofEndShape();
+    
+    //Pencil point
+    ofSetColor(0);
+    ofFill();
+    ofBeginShape();
+    ofVertex(-35,2.5);
+    ofVertex(-40,5);
+    ofVertex(-35,7.5);
+    ofEndShape();
+    
+    
+    //Pencil head frame
+    ofSetColor(0);
+    ofNoFill();
+    ofVertex(-35,2.5);
+    ofVertex(-40,5);
+    ofVertex(-35,7.5);
+    ofBeginShape();
+    ofEndShape();
+    
+    
+    ofSetColor(0,0,0);
+    ofNoFill();
+    for(int i = 0; i < 3; ++i) {
+        ofPushMatrix();
+        ofTranslate(0,(10./3)*i);
+        ofBeginShape();
+        ofVertex(0,0);
+        ofVertex(-30,0);
+        ofVertex(-30,10./3);
+        ofVertex(0,10./3);
+        ofVertex(0,0);
+        ofEndShape();
+        ofPopMatrix();
+    }
+    ofPopMatrix();
+    ofPopMatrix();
+}
+
 /*
  SHAPES
  ofBeginShape();

@@ -154,7 +154,13 @@ void displayOldMenu() {
             ofSetColor(0, 255, 0);
             float miniScale = min((h * 1.) / 12.,  (w * 1.) / 12.);
             if(i == currentLevel) miniScale = min((h * 1.) / 15.,  (w * 1.) / 15.);
-            if(beaten[i]) ofDrawRectangle(-getWidth() / 24., -getHeight() / 32., miniScale, miniScale);
+            if(beaten[i]) {
+                //ofPushMatrix();
+                //ofTranslate()
+                ofSetColor(0,255,0);
+                ofFill();
+                displayPencil();
+            }
             glLineWidth(1);
             ofPopMatrix();
         }

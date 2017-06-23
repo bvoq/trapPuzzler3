@@ -72,6 +72,7 @@ void drawEvent() {
             renderMode = FULL;
             backgroundColor = scheme.colorBACKGROUND_VOID;
             displayOldMenu();
+
             
             break;
         default:

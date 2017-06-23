@@ -11,9 +11,9 @@
 #define trapPuzzler3_colorScheme_h
 
 struct colorScheme {
-    ofColor colorPLAYERSELECTED, colorPLAYERUNSELECTED, colorENEMY, colorENEMYSTROKE, colorUNMOVABLE_ENEMY, colorUNMOVABLE_ENEMYSTROKE, colorBACKGROUND, colorBACKGROUND_LIGHT, colorBACKGROUND_SHADED, colorBACKGROUND_VOID, colorLEVELSELECT, colorLEVELSELECT_LIGHT, colorMESSAGE, colorMESSAGE_SHADED, colorTOOLBAR;
+    ofColor colorPLAYERSELECTED, colorPLAYERUNSELECTED, colorENEMY, colorENEMYSTROKE, colorUNMOVABLE_ENEMY, colorUNMOVABLE_ENEMYSTROKE, colorBACKGROUND, colorBACKGROUND_LIGHT, colorBACKGROUND_SHADED, colorBACKGROUND_VOID, colorLEVELSELECT, colorLEVELSELECT_LIGHT, colorMESSAGE, colorMESSAGE_SHADED, colorTOOLBAR, colorTOOLBARBUTTON, colorTOOLBARBUTTON_LIGHT;
     
-    colorScheme(int _colorPLAYERSELECTED, int _colorPLAYERUNSELECTED, int _colorENEMY, int _colorENEMYSTROKE, int _colorUNMOVABLE_ENEMY, int _colorUNMOVABLE_ENEMYSTROKE, int _colorBACKGROUND, int _colorBACKGROUND_LIGHT, int _colorBACKGROUND_SHADED, int _colorBACKGROUND_VOID, int _colorLEVELSELECT, int _colorLEVELSELECT_LIGHT, int _colorMESSAGE, int _colorMESSAGE_SHADED, int _colorTOOLBAR) {
+    colorScheme(int _colorPLAYERSELECTED, int _colorPLAYERUNSELECTED, int _colorENEMY, int _colorENEMYSTROKE, int _colorUNMOVABLE_ENEMY, int _colorUNMOVABLE_ENEMYSTROKE, int _colorBACKGROUND, int _colorBACKGROUND_LIGHT, int _colorBACKGROUND_SHADED, int _colorBACKGROUND_VOID, int _colorLEVELSELECT, int _colorLEVELSELECT_LIGHT, int _colorMESSAGE, int _colorMESSAGE_SHADED, int _colorTOOLBAR, int _colorTOOLBARBUTTON, int _colorTOOLBARBUTTON_LIGHT) {
         
         colorPLAYERSELECTED.setHex(_colorPLAYERSELECTED);
         colorPLAYERUNSELECTED.setHex(_colorPLAYERUNSELECTED);
@@ -30,6 +30,8 @@ struct colorScheme {
         colorMESSAGE.setHex(_colorMESSAGE, 0); //add transperancy
         colorMESSAGE_SHADED.setHex(_colorMESSAGE_SHADED, 0); //add transperancy
         colorTOOLBAR.setHex(_colorTOOLBAR);
+        colorTOOLBARBUTTON.setHex(_colorTOOLBARBUTTON);
+        colorTOOLBARBUTTON_LIGHT.setHex(_colorTOOLBARBUTTON_LIGHT);
     }
     
 };
@@ -45,12 +47,18 @@ colorScheme scheme0 (
                     0xC8C8C8, //BACKGROUND
                     0xDBDBDB, //BACKGROUND_LIGHT
                     0x666666, //BACKGROUND_SHADED
-                    0x000000,  //BACKGROUND_VOID
+                    0x000000, //BACKGROUND_VOID
                     0x0000FF, //LEVELSELECT
                     0x5555FF, //LEVELSELECT_LIGHT
                     0x646464, //MESSAGE
                     0x000000, //MESSAGE_SHADED
-                    0x646464 //TOOLBAR COLOR
+                    0x646464, //TOOLBAR
+                    0x000000, //TOOLBAR_BUTTON
+                    0x2f2f2f //TOOLBAR_BUTTON_LIGHT
+                    //ALTERNATIVE
+                    //0xf3ffac, //TOOLBAR BUTTON
+                    //0xfcffe8 //TOOLBAR BUTTON LIGHT
+
 );
 //colorScheme scheme1 (0xFFFF00/*0xF9FA00*/, 0xFF2265, 0x5B2031, 0x556C62, 0xC2D7CD);
 //colorScheme scheme2 (0xF9FA00, 0xFF6400, 0x5B2031, 0x556C62, 0xC2D7CD);

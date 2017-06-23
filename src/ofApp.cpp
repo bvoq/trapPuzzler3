@@ -13,6 +13,7 @@ void ofApp::setup(){
     initAudio();
     
     initDefaultKeyMapping();
+    ofSetEscapeQuitsApp(false); //Disable quit on escape key press.
     
     createLevels();
     loadSaveData();

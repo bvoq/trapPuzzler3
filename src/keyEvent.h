@@ -46,6 +46,10 @@ void keyEvent (keyType kt) {
                 //!!!levelExport(cout, levels[currentLevel]);
                 cout << endl;
                 break;
+            case TOGGLE_TOOLBAR:
+                if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                else assert(false);
             default:
                 DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
         }
@@ -87,6 +91,10 @@ void keyEvent (keyType kt) {
             case LEFT:
                 addLayer(kt);
                 break;
+            case TOGGLE_TOOLBAR:
+                if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                else assert(false);
             default:
                 DEB("Unused keyMap: " << kt << " on key " << "(inv of keymap)" << " in mode " << mode);
         }
@@ -126,6 +134,10 @@ void keyEvent (keyType kt) {
                 levelEditorInMenu = !levelEditorInMenu;
             }
                 break;
+            case TOGGLE_TOOLBAR:
+                if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                else assert(false);    
             default:;
         }
     }
