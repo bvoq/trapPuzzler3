@@ -130,6 +130,7 @@ void loadLevelData() {
     }
     else {
         vector<string> lines = ofSplitString(ofBufferFromFile(locationOfResources+"levels/levels"), "\n");
+        
         for(int i = 0; i < lines.size(); ++i) {
             if(lines[i].size() > 2) {
                 if(lines[i][0] == '/' && lines[i][1] == '/') { /* ignore */ }
@@ -141,6 +142,7 @@ void loadLevelData() {
                     for(auto c : lines[i]) {
                         if(c == '{') {
                             depth++;
+                            info.clear();
                         }
                         else if(c == '}') {
                             depth--;
