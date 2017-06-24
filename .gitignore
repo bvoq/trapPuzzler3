@@ -1,0 +1,8 @@
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+*.suo
+.vs/trapPuzzler3/v15/Browse.VC.db
+.vs/VSWorkspaceState.json
+*.dll
+bin/trapPuzzler3Debug.app/Contents/Info.plist
+bin/data copy 2
