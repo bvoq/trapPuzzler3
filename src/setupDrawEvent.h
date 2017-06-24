@@ -77,12 +77,8 @@ void drawEvent() {
         default:
             cerr << "Unkown mode" << endl;
     }
-    if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
-        checkForMerge();
-    }
-    
     displayMessage();
-    
+
     isMouseReleased = false; //RESET MOUSE LISTENER
 }
 #endif /* setupDrawEvent_h */

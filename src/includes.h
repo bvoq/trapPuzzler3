@@ -53,6 +53,9 @@ ofColor backgroundColor;
 void updateGrid(deque<deque<int> >);
 int getWidth(); int getHeight();
 
+void switchRenderMode(RenderMode ini);
+
+
 #include "audio.h"
 #include "keyMap.h"
 #include "colorScheme.h"

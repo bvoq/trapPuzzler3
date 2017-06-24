@@ -28,6 +28,7 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
     if(displayEyes) {
         grid = theLevel;
         generateEyeGrid();
+        checkForMerge();
     }
     
     ofNoFill();
@@ -196,7 +197,7 @@ void displayOldMenu() {
                            && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
                             tryPlayLevel(currentLevel,true);
                         }
-                        if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
+                        else if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
                             currentLevel = i; //In case it hasn't been updated before.
                             tryPlayLevel(i,false);
                         }

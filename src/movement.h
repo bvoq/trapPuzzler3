@@ -14,7 +14,7 @@ int modifyKeys = 3;
 #include <iostream>
 using namespace std;
 
-
+void checkForMerge();
 struct movement {
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
@@ -38,6 +38,7 @@ struct movement {
     void changeGrid() {
         grid = newGrid;
         eyeGrid = newEyeGrid;
+        checkForMerge();
     }
     
     float getDelay() {
@@ -99,6 +100,7 @@ void checkMovement() {
             if(movements.front().isUndoMove == false) previousMovements.push_back(movements.front());
             movements.pop();
             movements.front().timeWhenStarted = ofGetElapsedTimeMicros();
+            checkForMerge();
         }
     }
 }
@@ -211,46 +213,77 @@ bool move(keyType input, int timeAllowed) {
 
 void changePlayerId(int i) {
     playerID = i;
+    if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
+    checkForMerge();
 }
 void changePlayerIdRandom() {
-    vector<int> playerIDs;
+    set<int> playerIDs;
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
-            if (getCellType(moveGrid[i][j]) == playerID) {
-                playerIDs.push_back(moveGrid[i][j]);
+            if (getCellType(moveGrid[i][j]) == PLAYER) {
+                playerIDs.insert(moveGrid[i][j]);
             }
         }
     }
-    if (playerIDs.size() == 1) return;
-    int i;
-    for(i = 0; i < playerIDs.size() && playerIDs[i] == playerID;++i) {}
-    playerID = playerIDs[(i+1)%playerIDs.size()];
+    
+    if (playerIDs.size() <= 1) return;
+    bool next = false;
+    for(auto c : playerIDs) {
+        if(next) {
+            changePlayerId(c);
+            return;
+        }
+        if(c == playerID) next = true;
+    }
+    changePlayerId(*playerIDs.begin());
 }
 
 void recheckGrid();
 void checkForMerge() {
-
-    bool playerExist = false;
-    for(int i = 0; i < moveGrid.size(); ++i) {
-        for(int j = 0; j < moveGrid[i].size(); ++j) {
-            if(moveGrid[i][j] == playerID) playerExist = true;
-        }
-    }
-    if(!playerExist) changePlayerIdRandom();
-    
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
             if(getCellType(moveGrid[i][j]) == PLAYER) {
-                if(i != 0 && getCellType(moveGrid[i-1][j]) == PLAYER) {
-                    moveGrid[i-1][j] = moveGrid[i][j];
-                    recheckGrid();
+                //CHANGE PLAYERID
+                if(i != 0 && getCellType(moveGrid[i-1][j]) == PLAYER && moveGrid[i-1][j] != moveGrid[i][j]) {
+                    int toReplaceID = moveGrid[i][j];
+                    for(int k = 0; k < moveGrid.size(); ++k) {
+                        for(int l = 0; l < moveGrid[k].size(); ++l) {
+                            if(moveGrid[k][l] == toReplaceID) moveGrid[k][l] = moveGrid[i-1][j];
+                        }
+                    }
+                    if(toReplaceID == playerID) playerID = moveGrid[i-1][j];
                 }
-                if(j != 0 && getCellType(moveGrid[i][j-1]) == PLAYER) {
-                    moveGrid[i][j-1] = moveGrid[i][j];
-                    recheckGrid();
+                if(i+1 < moveGrid.size() && getCellType(moveGrid[i+1][j]) == PLAYER && moveGrid[i+1][j] != moveGrid[i][j]) {
+                    int toReplaceID = moveGrid[i][j];
+                    for(int k = 0; k < moveGrid.size(); ++k) {
+                        for(int l = 0; l < moveGrid[k].size(); ++l) {
+                            if(moveGrid[k][l] == toReplaceID) moveGrid[k][l] = moveGrid[i+1][j];
+                        }
+                    }
+                    if(toReplaceID == playerID) playerID = moveGrid[i+1][j];
+                }
+                if(j != 0 && getCellType(moveGrid[i][j-1]) == PLAYER && moveGrid[i][j-1] != moveGrid[i][j]) {
+                    int toReplaceID = moveGrid[i][j];
+                    for(int k = 0; k < moveGrid.size(); ++k) {
+                        for(int l = 0; l < moveGrid[k].size(); ++l) {
+                            if(moveGrid[k][l] == toReplaceID) moveGrid[k][l] = moveGrid[i][j-1];
+                        }
+                    }
+                    if(toReplaceID == playerID) playerID =  moveGrid[i][j-1];
+                }
+                if(j+1 < moveGrid[i].size() && getCellType(moveGrid[i][j+1]) == PLAYER && moveGrid[i][j+1] != moveGrid[i][j]) {
+                    int toReplaceID = moveGrid[i][j];
+                    for(int k = 0; k < moveGrid.size(); ++k) {
+                        for(int l = 0; l < moveGrid[k].size(); ++l) {
+                            if(moveGrid[k][l] == toReplaceID) moveGrid[k][l] = moveGrid[i][j+1];
+                        }
+                    }
+                    if(toReplaceID == playerID) playerID =  moveGrid[i][j+1];
                 }
             }
         }
     }
+    recheckGrid();
+    if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
 }
 #endif
