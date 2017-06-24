@@ -142,8 +142,9 @@ void loadLevelData() {
                     for(auto c : lines[i]) {
                         if(c == '{') {
                             depth++;
-                            info.clear();
+                            info = "";
                         }
+                        
                         else if(c == '}') {
                             depth--;
                             if(depth == 1) {
