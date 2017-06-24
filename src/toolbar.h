@@ -23,6 +23,7 @@ bool messageBlockingToolbar = false; //maybe make this messa
 
 int toolbarSize = 100; //TODO! Make this dynamic and initialize its height
 int messageSize = 0;
+
 int getWidth() {
     if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR) && toolbarOrientation == RIGHTTOOLBAR) return ofGetWidth() - toolbarSize;
     else return ofGetWidth();

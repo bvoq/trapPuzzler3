@@ -67,12 +67,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     mouseTouchDown(y, x, button);
-    isMousePressed = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    isMousePressed = false;
     if(mode == LEVEL_EDITOR) placeSelectedTiles();
     mouseTouchUp(y,x,button);
 }

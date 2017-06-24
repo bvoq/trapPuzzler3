@@ -91,11 +91,15 @@ deque<deque<int> > questionMarkLevel = {{11,11,11,11,11,11,11,11,11},{11,11,11,1
 
 pair<pair<int,int>, ofMesh> backgroundTile  = {{-2,-2},ofMesh()};
 pair<pair<int,int>, ofMesh> levelselectTile = {{-2,-2},ofMesh()};
+int menuScrollX = 0;
 void displayOldMenu() {
     ofFill();
     //ofSetColor(scheme.colorBACKGROUND_VOID);
     //ofDrawRectangle(0,0,getWidth(), getHeight());
     
+    if(!isMousePressed) menuScrollX -= menuScrollX / 5.;
+    ofPushMatrix();
+    ofTranslate(menuScrollX,0);
     int sizeOfAllLevels = levels.size();
     //Every world has N levels:
     int minSize = min(getWidth(), getHeight());
@@ -159,12 +163,21 @@ void displayOldMenu() {
                 //ofTranslate()
                 ofSetColor(0,255,0);
                 ofFill();
-                displayPencil(false);
+                bool selectedPencil = false;
+                //min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.
+                if(ofGetAppPtr()->mouseX >  positionX + .1*w - 50 && ofGetAppPtr()->mouseX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
+                && ofGetAppPtr()->mouseY >  positionY + .1*h - 20 && ofGetAppPtr()->mouseY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                    selectedPencil = true;
+                }
+
+                displayPencil(selectedPencil);
             }
             glLineWidth(1);
             ofPopMatrix();
         }
     }
+    
+    ofPopMatrix();
 }
 
 

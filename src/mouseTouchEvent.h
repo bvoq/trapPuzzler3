@@ -18,7 +18,10 @@ struct playerTouchMovement {
 };
 
 map<int, playerTouchMovement> playerTouches; //player id of touch.
+map<int,pair<int,int> > origMouseTouch;
 void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
+    isMousePressed = true;
+    origMouseTouch.insert({touchid,{mouseTouchY, mouseTouchX}});
     switch(mode) {
         case PLAYING:
         case LEVEL_EDITOR_PLAYING:
@@ -38,64 +41,11 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
             }
         }
             break;
-        case MENU:
-            if(mouseTouchX < getWidth()/3) keyEvent(LEFT);
-            if(mouseTouchX > 2*getWidth()/3) keyEvent(RIGHT);
-            if(mouseTouchY < getHeight()/3) keyEvent(UP);
-            if(mouseTouchY > 2*getHeight()/3) keyEvent(DOWN);
-            if(mouseTouchX > getWidth()/3 && mouseTouchX < 2*getWidth()/3 && mouseTouchY > getHeight()/3 && mouseTouchY < 2*getHeight()/3) keyEvent(PLAYER_CHANGE);
-            break;
         default:
             cout << "Unknown mode " << mode << endl;
     }
-}
-
-
-void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
-    switch(mode) {
-        case PLAYING:
-        case LEVEL_EDITOR_PLAYING:
-            if(playerTouches.count(touchid) != 0) {
-                assert(grid.size() > 0);
-                pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
-                //Can click outside the box.
-                if(tilePos.first == playerTouches[touchid].y-1 && tilePos.second == playerTouches[touchid].x) {
-                    if(move(UP, timeForMovement)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
-                    }
-                }
-                if(tilePos.first == playerTouches[touchid].y+1 && tilePos.second == playerTouches[touchid].x) {
-                    if(move(DOWN, timeForMovement)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
-                    }
-                }
-                if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x-1) {
-                    if(move(LEFT, timeForMovement)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
-                    }
-                }
-                if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x+1) {
-                    if(move(RIGHT, timeForMovement)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
-                    }
-                }
-                
-                //playerTouches[touch.id].x;
-            }
-            break;
-        default:
-            cout << "Unknown mode " << mode << endl;
-    }
-}
-
-
-void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
-    //Call as if it moved one last time.
-    mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
+    
+    
     
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
@@ -135,8 +85,86 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
         }
     }
     
+    
+}
+
+
+void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
+    switch(mode) {
+        case PLAYING:
+        case LEVEL_EDITOR_PLAYING:
+            if(playerTouches.count(touchid) != 0) {
+                assert(grid.size() > 0);
+                pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
+                //Can click outside the box.
+                if(tilePos.first == playerTouches[touchid].y-1 && tilePos.second == playerTouches[touchid].x) {
+                    if(move(UP, timeForMovement)) { //Move succeeded
+                        playerTouches[touchid].y = tilePos.first;
+                        playerTouches[touchid].x = tilePos.second;
+                    }
+                }
+                if(tilePos.first == playerTouches[touchid].y+1 && tilePos.second == playerTouches[touchid].x) {
+                    if(move(DOWN, timeForMovement)) { //Move succeeded
+                        playerTouches[touchid].y = tilePos.first;
+                        playerTouches[touchid].x = tilePos.second;
+                    }
+                }
+                if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x-1) {
+                    if(move(LEFT, timeForMovement)) { //Move succeeded
+                        playerTouches[touchid].y = tilePos.first;
+                        playerTouches[touchid].x = tilePos.second;
+                    }
+                }
+                if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x+1) {
+                    if(move(RIGHT, timeForMovement)) { //Move succeeded
+                        playerTouches[touchid].y = tilePos.first;
+                        playerTouches[touchid].x = tilePos.second;
+                    }
+                }
+               
+                
+                //playerTouches[touch.id].x;
+            }
+            break;
+        case MENU:
+            menuScrollX =  mouseTouchX - origMouseTouch[touchid].second;
+            
+            break;
+        default:
+            cout << "Unknown mode " << mode << endl;
+    }
+}
+
+
+void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
+    //Call as if it moved one last time.
+    mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
+    
+    if(mode == MENU) {
+        if(abs(menuScrollX) > getWidth()/10.) {
+            //do movement in direction
+            if(menuScrollX > 0 && currentLevel >= 10) currentLevel -= 10;
+            if(menuScrollX < 0 && currentLevel + 10 < levels.size()) currentLevel += 10;
+        }
+        /*
+         {
+         if(mouseTouchX < getWidth()/3) keyEvent(LEFT);
+         if(mouseTouchX > 2*getWidth()/3) keyEvent(RIGHT);
+         if(mouseTouchY < getHeight()/3) keyEvent(UP);
+         if(mouseTouchY > 2*getHeight()/3) keyEvent(DOWN);
+         if(mouseTouchX > getWidth()/3 && mouseTouchX < 2*getWidth()/3 && mouseTouchY > getHeight()/3 && mouseTouchY < 2*getHeight()/3) keyEvent(PLAYER_CHANGE);
+         }
+         else {
+         */
+    }
+
+    
+    //menuScrollX = 0;
+    isMousePressed = false;
+
     //Control scheme: Execute move on touch maybe.
     playerTouches.erase(touchid);
+    origMouseTouch.erase(touchid);
 }
 
 #endif /* mouseTouchEvent_h */
