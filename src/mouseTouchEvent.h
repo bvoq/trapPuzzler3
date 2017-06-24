@@ -84,6 +84,13 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
                 tilesToBePlaced.clear();
                 loadLevel(-1);
             }
+            
+            if(mouseTouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 0*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                cropBordersOf(editorGrid);
+                levels[currentLevel] = editorGrid;
+                saveLevelData();
+                mode = MENU;
+            }
         }
     }
     
@@ -128,13 +135,11 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
                 //playerTouches[touch.id].x;
             }
             break;
-        case MENU:
-            menuScrollX =  mouseTouchX - origMouseTouch[touchid].second;
-            
-            break;
         default:
             cout << "Unknown mode " << mode << endl;
     }
+    scrollX =  mouseTouchX - origMouseTouch[touchid].second;
+    scrollY =  mouseTouchX - origMouseTouch[touchid].second;
 }
 
 
@@ -143,14 +148,14 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
     
     if(mode == MENU) {
-        if(abs(menuScrollX) > getWidth()/10.) {
+        if(abs(scrollX) > getWidth()/10.) {
             //do movement in direction
-            if(menuScrollX > 0 && (currentLevel/9) * 9 >= 0) currentLevel = (currentLevel/9) * 9 - 9;
-            if(menuScrollX < 0 &&  (currentLevel/9) * 9 < levels.size()) currentLevel = (currentLevel/9) * 9 + 9;
-            if(menuScrollX > 0) menuScrollX -= 2* getWidth();
-            if(menuScrollX < 0) menuScrollX += getWidth();
+            if(scrollX > 0 && (currentLevel/9) * 9 >= 0) currentLevel = (currentLevel/9) * 9 - 9;
+            if(scrollX < 0 &&  (currentLevel/9) * 9 < levels.size()) currentLevel = (currentLevel/9) * 9 + 9;
+            if(scrollX > 0) scrollX -= 2* getWidth();
+            if(scrollX < 0) scrollX += getWidth();
         }
-        if(abs(menuScrollX) < getWidth()/100.) {
+        if(abs(scrollX) < getWidth()/100.) {
             isMouseReleased = true;
             mouseReleasedX = mouseTouchX;
             mouseReleasedY = mouseTouchY;
@@ -165,9 +170,21 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
         }
         */
     }
+    
+    /* SILLY IDEA
+    if(mode == LEVEL_EDITOR) {
+        if(abs(scrollX) > getWidth()/10.) {
+            if(scrollX < 0) addLayer(LEFT);
+            if(scrollX > 0) addLayer(RIGHT);
+        }
+        if(abs(scrollY) > getWidth()/10.) {
+            if(scrollY < 0) addLayer(UP);
+            if(scrollY > 0) addLayer(DOWN);
+        }
+    }*/
 
     
-    //menuScrollX = 0
+    //scrollX = 0
     
     isMousePressed = false;
 

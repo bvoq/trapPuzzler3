@@ -92,15 +92,14 @@ deque<deque<int> > questionMarkLevel = {{1000011,1000011,1000011,1000011,1000011
 
 pair<pair<int,int>, ofMesh> backgroundTile  = {{-2,-2},ofMesh()};
 pair<pair<int,int>, ofMesh> levelselectTile = {{-2,-2},ofMesh()};
-int menuScrollX = 0;
 void displayOldMenu() {
     ofFill();
     //ofSetColor(scheme.colorBACKGROUND_VOID);
     //ofDrawRectangle(0,0,getWidth(), getHeight());
     
-    if(!isMousePressed) menuScrollX -= menuScrollX / 5.;
+    if(!isMousePressed) scrollX -= scrollX / 5.;
     ofPushMatrix();
-    ofTranslate(menuScrollX,0);
+    ofTranslate(scrollX,0);
     int sizeOfAllLevels = levels.size();
     //Every world has N levels:
     int minSize = min(getWidth(), getHeight());
@@ -121,13 +120,13 @@ void displayOldMenu() {
     ofTranslate(startX, startY);
     backgroundTile.second.draw();
     ofTranslate(getWidth(), 0);
-    if(menuScrollX < 0 && currentLevel+levelCountPerWorld < levels.size()) backgroundTile.second.draw();
+    if(scrollX < 0 && currentLevel+levelCountPerWorld < levels.size()) backgroundTile.second.draw();
     ofTranslate(-2*getWidth(),0);
-    if(menuScrollX > 0 && currentLevel-levelCountPerWorld >= 0) backgroundTile.second.draw();
+    if(scrollX > 0 && currentLevel-levelCountPerWorld >= 0) backgroundTile.second.draw();
     ofPopMatrix();
     
     for(int i = 0; i < levels.size(); ++i) {
-        if((i / levelCountPerWorld == currentWorld-1&&menuScrollX > 0) || i / levelCountPerWorld == currentWorld || (i/levelCountPerWorld == currentWorld+1 && menuScrollX < 0)) {
+        if((i / levelCountPerWorld == currentWorld-1&&scrollX > 0) || i / levelCountPerWorld == currentWorld || (i/levelCountPerWorld == currentWorld+1 && scrollX < 0)) {
             if(i/levelCountPerWorld == currentWorld-1) {
                 ofPushMatrix();
                 ofTranslate(-getWidth(),0);
@@ -195,7 +194,8 @@ void displayOldMenu() {
                     if(isMouseReleased) {
                         if(mouseReleasedX >  positionX + .1*w - 50 && mouseReleasedX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
                            && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
-                            tryPlayLevel(currentLevel,true);
+                            currentLevel = i;
+                            tryPlayLevel(i,true);
                         }
                         else if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
                             currentLevel = i; //In case it hasn't been updated before.
@@ -211,7 +211,6 @@ void displayOldMenu() {
             if(i/levelCountPerWorld == currentWorld-1 || i/levelCountPerWorld == currentWorld+1) ofPopMatrix();
         }
     }
-    
     ofPopMatrix();
 }
 

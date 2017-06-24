@@ -121,16 +121,22 @@ ddd l1036={{0,1001,1001,0,0,0,1007,0,0,1006,1006},{0,1001,1001,0,1004,1004,1007,
 {{0,1011,1011,1008,1008,0,0},{1007,0,0,106,0,105,1010},{1007,101,0,0,1,1,1010},{0,101,0,0,107,1009,1009},{1003,1003,102,0,0,1002,104},{0,1001,0,1004,1004,1002,0},{0,1006,0,103,103,0,1005}};
  */
 vector<ddd > levels;
+vector<ddd > defaultlevels;
 vector<bool> beaten;
 
+void saveLevelData();
 void loadLevelData() {
     levels.clear();
     if(!ofFile::doesFileExist(locationOfResources+"levels/levels")) {
         DEB("File containing the levels not found at location: " << (locationOfResources+"levels/levels"));
+        assert(false);
+    }
+    else if(!ofFile::doesFileExist(locationOfResources+"levels/defaultlevels")) {
+        DEB("File containing the levels not found at location: " << (locationOfResources+"levels/defaultlevels"));
+        assert(false);
     }
     else {
         vector<string> lines = ofSplitString(ofBufferFromFile(locationOfResources+"levels/levels"), "\n");
-        
         for(int i = 0; i < lines.size(); ++i) {
             if(lines[i].size() > 2) {
                 if(lines[i][0] == '/' && lines[i][1] == '/') { /* ignore */ }
@@ -144,7 +150,6 @@ void loadLevelData() {
                             depth++;
                             info = "";
                         }
-                        
                         else if(c == '}') {
                             depth--;
                             if(depth == 1) {
@@ -166,12 +171,72 @@ void loadLevelData() {
                 }
             }
         }
+        
+        vector<string> lines2 = ofSplitString(ofBufferFromFile(locationOfResources+"levels/defaultlevels"), "\n");
+        for(int i = 0; i < lines2.size(); ++i) {
+            if(lines2[i].size() > 2) {
+                if(lines2[i][0] == '/' && lines2[i][1] == '/') { /* ignore */ }
+                else {
+                    ddd level;
+                    deque<int> currentLayer;
+                    int depth = 0;
+                    string info = "";
+                    for(auto c : lines2[i]) {
+                        if(c == '{') {
+                            depth++;
+                            info = "";
+                        }
+                        else if(c == '}') {
+                            depth--;
+                            if(depth == 1) {
+                                currentLayer.push_back(stoi(info));
+                                info = "";
+                                level.push_back(currentLayer);
+                                currentLayer.clear();
+                            }
+                        }
+                        else if(c == ',') {
+                            if(depth == 2) {
+                                currentLayer.push_back(stoi(info));
+                                info = "";
+                            }
+                        }
+                        else if(c >= '0' && c <= '9') info.push_back(c);
+                    }
+                    defaultlevels.push_back(level);
+                }
+            }
+        }
     }
     for(int i = 0; i < levels.size(); ++i) {
         cropBordersOf(levels[i]);
     }
-    
+    for(int i = 0; i < defaultlevels.size(); ++i) {
+        cropBordersOf(defaultlevels[i]);
+    }
+    assert(levels.size() == defaultlevels.size());
+    saveLevelData();
     //locationOfLevels;
+}
+
+
+#include <stdio.h> //for removing files
+void saveLevelData() {
+    ofFile writefile(locationOfResources+"levels/levels",ofFile::WriteOnly);
+    for(int l = 0; l < levels.size(); ++l) {
+        writefile << "Level "<<(l+1) << " ";
+        writefile << "{";
+        for(int i = 0; i < levels[l].size(); ++i) {
+            writefile << "{";
+            for(int j = 0; j < levels[l][i].size(); ++j) {
+                writefile << levels[l][i][j];
+            }
+            writefile << "}";
+            if(i + 1 != levels[l].size()) writefile << ",";
+        }
+        writefile << "}";
+        writefile << endl;
+    }
 }
 
 void createLevels() {

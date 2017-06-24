@@ -59,7 +59,6 @@ colorScheme scheme0 (
                     0x2f2f2f, //TOOLBARBUTTON_LIGHT
                     0xf3ffac, //TOOLBARBUTTON_SELECTED
                     0xfcffe8 //TOOLBARBUTTON_SELECTED_LIGHT
-
 );
 
 colorScheme scheme1(

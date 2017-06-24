@@ -31,6 +31,8 @@ int mousePressedX = -1;
 int mousePressedY = -1;
 int mouseReleasedX = -1;
 int mouseReleasedY = -1;
+int scrollX = 0;
+int scrollY = 0;
 
 int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
