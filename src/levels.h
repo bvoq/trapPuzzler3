@@ -132,6 +132,7 @@ void loadLevelData() {
         vector<string> lines = ofSplitString(ofBufferFromFile(locationOfResources+"levels/levels"), "\n");
         
         for(int i = 0; i < lines.size(); ++i) {
+            cout << lines[i] << endl;
             if(lines[i].size() > 2) {
                 if(lines[i][0] == '/' && lines[i][1] == '/') { /* ignore */ }
                 else {
@@ -170,6 +171,7 @@ void loadLevelData() {
     for(int i = 0; i < levels.size(); ++i) {
         cropBordersOf(levels[i]);
     }
+    
     //locationOfLevels;
 }
 
