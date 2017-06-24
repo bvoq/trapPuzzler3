@@ -63,7 +63,7 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50)
                 drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
                 if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
-
+                
                 ofPopMatrix();
             }
         }
@@ -115,7 +115,7 @@ void displayOldMenu() {
     
     int levelCountPerWorld = 9;
     int currentWorld = currentLevel / levelCountPerWorld;
-
+    
     ofPushMatrix();
     ofTranslate(startX, startY);
     backgroundTile.second.draw();
@@ -136,13 +136,16 @@ void displayOldMenu() {
                 ofTranslate(getWidth(),0);
             }
             int positionX = (i % levelCountPerWorld) / 3, positionY = i % 3; //LAST IS BOSS
-            positionX = startX + positionX * 0.9/3. * minSize;
-            positionY = startY + positionY * 0.9/3. * minSize;
             
             int w = 0.9/3. * minSize;
             int h = w;
+            
+            positionX = startX + positionX * w;
+            positionY = startY + positionY * h;
+            
+            
             int sizeOfMap = .8 * w;
-
+            
             ofPushMatrix();
             ofTranslate(positionX + .1*w, positionY + .1*w);
             if(i == currentLevel) {
@@ -178,11 +181,28 @@ void displayOldMenu() {
                 ofFill();
                 bool selectedPencil = false;
                 //min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.
-                if(ofGetAppPtr()->mouseX >  positionX + .1*w - 50 && ofGetAppPtr()->mouseX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
-                && ofGetAppPtr()->mouseY >  positionY + .1*h - 20 && ofGetAppPtr()->mouseY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
-                    selectedPencil = true;
+                
+                if(i / levelCountPerWorld == currentWorld) {
+                    if(ofGetAppPtr()->mouseX >  positionX + .1*w - 50 && ofGetAppPtr()->mouseX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
+                       && ofGetAppPtr()->mouseY >  positionY + .1*h - 20 && ofGetAppPtr()->mouseY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                        selectedPencil = true;
+                    }
+                    
+                    if(isMousePressed) {
+                        if(mousePressedX > positionX && mousePressedX < positionX + w && mousePressedY > positionY && mousePressedY < positionY + h) currentLevel = i;
+                    }
+                    if(isMouseReleased) {
+                        if(mouseReleasedX >  positionX + .1*w - 50 && mouseReleasedX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
+                           && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                            tryPlayLevel(currentLevel,true);
+                        }
+                        if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
+                            currentLevel = i; //In case it hasn't been updated before.
+                            tryPlayLevel(i,false);
+                        }
+                    }
                 }
-
+                
                 displayPencil(selectedPencil);
             }
             glLineWidth(1);
@@ -208,7 +228,7 @@ void displayCharacterOnMap() {
             characterOnMapLocation[i+1] = characterOnMapLocation[i];
         }
         pair<float, float> currentLocation = characterOnMapLocation.front();
-                
+        
         float actualVelocity = velocity;
         if(keyPressedDown[UP] + keyPressedDown[DOWN] + keyPressedDown[LEFT] + keyPressedDown[RIGHT] > 1) actualVelocity *= sin(3.1415926/4.);
         if(keyPressedDown[UP]) characterOnMapLocation.front().first -= actualVelocity;
@@ -223,17 +243,17 @@ void displayCharacterOnMap() {
     float scaleX = (getWidth() * 1.);
     float scale = MIN(scaleY, scaleX);
     LINE_WIDTH = MAX(1, scale / 100.);
-
+    
     deque<deque<int> > levelMan = {{1}};
     for(int i = (int)characterOnMapLocation.size() - 1; i >= 0; --i) {
         ofPushMatrix();
         ofTranslate(characterOnMapLocation[i].second, characterOnMapLocation[i].first);
         displayLevelInMenu(levelMan, true,  10., true);
         /*ofSetColor(scheme.colorPLAYERSELECTED);
-        drawCellFill(0, 0, scale / 50., (scale / (50.*4.)), levelMan);
-        //drawCellStroke(0, 0, scale / 50., (scale / (50.*4.)), levelMan);
-        drawEyes(0,0,)
-        */
+         drawCellFill(0, 0, scale / 50., (scale / (50.*4.)), levelMan);
+         //drawCellStroke(0, 0, scale / 50., (scale / (50.*4.)), levelMan);
+         drawEyes(0,0,)
+         */
         ofPopMatrix();
     }
     

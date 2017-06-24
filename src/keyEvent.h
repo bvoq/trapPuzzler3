@@ -25,6 +25,20 @@ void restart() {
     else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;    
 }
 
+
+void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
+    bool playable = true;
+    if(currentLevel % 9 == 4) {
+        for(int i = 0; i < 9; ++i) {
+            if(i != 4 && beaten[currentLevel+i-4] == false) playable = false;
+        }
+    }
+    if(playable == true) {
+        if(levelEditorInMenu == false) loadLevel(currentLevel);
+        else if(beaten[currentLevel]) initLevelEditor(currentLevel);
+    }
+}
+
 void keyEvent (keyType kt) {
     if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
         switch(kt) {
@@ -122,16 +136,7 @@ void keyEvent (keyType kt) {
                 break;
             case PLAYER_CHANGE:
             {
-                bool playable = true;
-                if(currentLevel % 9 == 4) {
-                    for(int i = 0; i < 9; ++i) {
-                        if(i != 4 && beaten[currentLevel+i-4] == false) playable = false;
-                    }
-                }
-                if(playable == true) {
-                    if(levelEditorInMenu == false) loadLevel(currentLevel);
-                    else if(beaten[currentLevel]) initLevelEditor(currentLevel);
-                }
+                tryPlayLevel(currentLevel, levelEditorInMenu);
                 break;
             }
             case SOLVE:

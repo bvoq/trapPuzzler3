@@ -21,6 +21,8 @@ map<int, playerTouchMovement> playerTouches; //player id of touch.
 map<int,pair<int,int> > origMouseTouch;
 void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     isMousePressed = true;
+    mousePressedY = mouseTouchY;
+    mousePressedX = mouseTouchX;
     origMouseTouch.insert({touchid,{mouseTouchY, mouseTouchX}});
     switch(mode) {
         case PLAYING:
@@ -143,21 +145,25 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     if(mode == MENU) {
         if(abs(menuScrollX) > getWidth()/10.) {
             //do movement in direction
-            if(menuScrollX > 0 && currentLevel - 9 >= 0) currentLevel -= 9;
-            if(menuScrollX < 0 && currentLevel + 9 < levels.size()) currentLevel += 9;
+            if(menuScrollX > 0 && (currentLevel/9) * 9 >= 0) currentLevel = (currentLevel/9) * 9 - 9;
+            if(menuScrollX < 0 &&  (currentLevel/9) * 9 < levels.size()) currentLevel = (currentLevel/9) * 9 + 9;
             if(menuScrollX > 0) menuScrollX -= 2* getWidth();
             if(menuScrollX < 0) menuScrollX += getWidth();
         }
+        if(abs(menuScrollX) < getWidth()/100.) {
+            isMouseReleased = true;
+            mouseReleasedX = mouseTouchX;
+            mouseReleasedY = mouseTouchY;
+        }
         /*
-         {
-         if(mouseTouchX < getWidth()/3) keyEvent(LEFT);
-         if(mouseTouchX > 2*getWidth()/3) keyEvent(RIGHT);
-         if(mouseTouchY < getHeight()/3) keyEvent(UP);
-         if(mouseTouchY > 2*getHeight()/3) keyEvent(DOWN);
-         if(mouseTouchX > getWidth()/3 && mouseTouchX < 2*getWidth()/3 && mouseTouchY > getHeight()/3 && mouseTouchY < 2*getHeight()/3) keyEvent(PLAYER_CHANGE);
-         }
-         else {
-         */
+        {
+        if(mouseTouchX < getWidth()/3) keyEvent(LEFT);
+        if(mouseTouchX > 2*getWidth()/3) keyEvent(RIGHT);
+        if(mouseTouchY < getHeight()/3) keyEvent(UP);
+        if(mouseTouchY > 2*getHeight()/3) keyEvent(DOWN);
+        if(mouseTouchX > getWidth()/3 && mouseTouchX < 2*getWidth()/3 && mouseTouchY > getHeight()/3 && mouseTouchY < 2*getHeight()/3) keyEvent(PLAYER_CHANGE);
+        }
+        */
     }
 
     

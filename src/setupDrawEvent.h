@@ -82,5 +82,7 @@ void drawEvent() {
     }
     
     displayMessage();
+    
+    isMouseReleased = false; //RESET MOUSE LISTENER
 }
 #endif /* setupDrawEvent_h */
