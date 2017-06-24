@@ -12,7 +12,7 @@
 deque<deque<int> > editorGrid;
 //int editorGridY, editorGridX;
 
-int playerCount = 1, enemyCount = 100, unmovableEnemyCount = 1000;
+int playerCount = 1, enemyCount = 1000000, unmovableEnemyCount = 2000000;
 cellType placeType;
 
 void changeBrush (cellType newPlaceType) {
@@ -51,9 +51,9 @@ void placeSelectedTiles() {
             if(otherOnes == false) {
                 int pos = editorGrid[it.first][it.second];
                 pair<int, int> changeRange;
-                if(pos > 0 && pos < 10) {changeRange = {pos, 10}; playerCount--;}
-                else if(pos >= 10 && pos < 1000) {changeRange = {pos, 1000}; enemyCount--;}
-                else if(pos >= 1000 && pos < 2000) {changeRange = {pos, 2000}; unmovableEnemyCount--;}
+                if(pos > 0 && pos < 1000000) {changeRange = {pos, 1000000}; playerCount--;}
+                else if(pos >= 1000000 && pos < 2000000) {changeRange = {pos, 2000000}; enemyCount--;}
+                else if(pos >= 2000000 && pos < 3000000) {changeRange = {pos, 3000000}; unmovableEnemyCount--;}
                 for(int i = 0; i < editorGrid.size(); ++i) {
                     for(int j = 0; j < editorGrid[i].size(); ++j) {
                         if(editorGrid[i][j] > changeRange.first && editorGrid[i][j] < changeRange.second) editorGrid[i][j]--;

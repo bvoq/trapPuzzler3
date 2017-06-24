@@ -171,9 +171,9 @@ enum cellType {
 
 cellType getCellType(int ID) {
     if(ID == 0) return AIR;
-    else if(ID > 0 && ID < 10) return PLAYER;
-    else if(ID >= 10 && ID < 1000) return ENEMY;
-    else if(ID >= 1000) return UNMOVABLE_ENEMY;
+    else if(ID > 0 && ID < 1000000) return PLAYER;
+    else if(ID >= 1000000 && ID < 2000000) return ENEMY;
+    else if(ID >= 2000000) return UNMOVABLE_ENEMY;
 }
 
 ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX) {
