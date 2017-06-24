@@ -15,9 +15,9 @@ void initAudio() {
 
 void playAudio(int title) {
     if(currentTitle != title) {
-        if(currentTitle != -1) titles[title].stop();
-        titles[title].play();
-        currentTitle = title;
+        //if(currentTitle != -1) titles[title].stop();
+        //titles[title].play();
+        //currentTitle = title;
     }
 }
 

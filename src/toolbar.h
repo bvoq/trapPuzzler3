@@ -205,9 +205,8 @@ void displayToolBar() {
                     }
                     ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
                     drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1, redOne);
-                    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+                    //ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
                     drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, redOne);
-                    drawCellStroke(0,0, toolbarSize*.5, toolbarSize*.1, redOne);
                     ofPopMatrix();
                     
                     //GRAY BLOCK
@@ -284,6 +283,61 @@ void displayToolBar() {
                             ofPopMatrix();
                         }
                     }
+                    ofPopMatrix();
+                    
+                    
+                    //AIR
+                    ofPushMatrix();
+
+                    ofTranslate(ofGetWidth() - 3*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    if(placeType == AIR) backgroundKeySelected.draw();
+                    else backgroundKey.draw();
+                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 3*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05 - 2*toolbarSize)
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    ofFill();
+                    ofSetColor(scheme.colorBACKGROUND);
+                    ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
+                    ofDrawRectangle(0,0,toolbarSize*.5,toolbarSize*.5);
+                    ofNoFill();
+                    ofSetColor(0);
+                    ofDrawRectangle(0,0,toolbarSize*.5,toolbarSize*.5);
+                    
+                    //drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1,blackOnly);
+                    ofPopMatrix();
+                    
+                    
+                    //SUPERAIR
+                    ofPushMatrix();
+                    deque<deque<int> > redRow = {{100,100,100}};
+                    ofTranslate(ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    if(placeType == SUPERAIR) backgroundKeySelected.draw();
+                    else backgroundKey.draw();
+
+                    if(ofGetAppPtr()->mouseX > (ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05) && ofGetAppPtr()->mouseX < (ofGetWidth() - toolbarSize * 0.05 - 3*toolbarSize)
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    
+                    ofFill();
+                    ofSetColor(scheme.colorENEMY);
+                    ofTranslate(toolbarSize*.9*.2-toolbarSize*0.05,toolbarSize*.9*.4);
+                    drawCellFill(0,0,toolbarSize*.2, toolbarSize*.05, redRow);
+                    ofTranslate(toolbarSize*.9*.25,0);
+                    ofSetColor(scheme.colorBACKGROUND);
+                    drawCellFill(0,1,toolbarSize*.2, toolbarSize*.05, redRow);
+                    ofSetColor(scheme.colorENEMY);
+                    ofTranslate(toolbarSize*.9*.25,0);
+                    drawCellFill(0,2,toolbarSize*.2, toolbarSize*.05, redRow);
+                    
+                    //drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1,blackOnly);
+                    ofPopMatrix();
+
+                    
+                    
                 }
                 
                 
