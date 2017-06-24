@@ -213,18 +213,18 @@ void changePlayerId(int i) {
     playerID = i;
 }
 void changePlayerIdRandom() {
-    int oldPlayerID = playerID;
-    do {
-        ++playerID;
-        bool isAvaiable = false;
-        for(int i = 0; i < moveGrid.size(); ++i) {
-            for(int j = 0; j < moveGrid[i].size(); ++j) {
-                if(moveGrid[i][j] == playerID) isAvaiable = true;
+    vector<int> playerIDs;
+    for(int i = 0; i < moveGrid.size(); ++i) {
+        for(int j = 0; j < moveGrid[i].size(); ++j) {
+            if (getCellType(moveGrid[i][j]) == playerID) {
+                playerIDs.push_back(moveGrid[i][j]);
             }
         }
-        if(getCellType(playerID) != PLAYER) playerID = 0;
-        else if(isAvaiable) break;
-    } while(playerID != oldPlayerID);
+    }
+    if (playerIDs.size() == 1) return;
+    int i;
+    for(i = 0; i < playerIDs.size() && playerIDs[i] == playerID;++i) {}
+    playerID = playerIDs[(i+1)%playerIDs.size()];
 }
 
 void recheckGrid();
