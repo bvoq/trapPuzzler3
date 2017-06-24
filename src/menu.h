@@ -120,13 +120,13 @@ void displayOldMenu() {
     ofTranslate(startX, startY);
     backgroundTile.second.draw();
     ofTranslate(getWidth(), 0);
-    if(currentLevel+levelCountPerWorld < levels.size()) backgroundTile.second.draw();
+    if(menuScrollX < 0 && currentLevel+levelCountPerWorld < levels.size()) backgroundTile.second.draw();
     ofTranslate(-2*getWidth(),0);
-    if(currentLevel-levelCountPerWorld >= 0) backgroundTile.second.draw();
+    if(menuScrollX > 0 && currentLevel-levelCountPerWorld >= 0) backgroundTile.second.draw();
     ofPopMatrix();
     
     for(int i = 0; i < levels.size(); ++i) {
-        if(i / levelCountPerWorld == currentWorld-1 || i / levelCountPerWorld == currentWorld || i/levelCountPerWorld == currentWorld+1) {
+        if((i / levelCountPerWorld == currentWorld-1&&menuScrollX > 0) || i / levelCountPerWorld == currentWorld || (i/levelCountPerWorld == currentWorld+1 && menuScrollX < 0)) {
             if(i/levelCountPerWorld == currentWorld-1) {
                 ofPushMatrix();
                 ofTranslate(-getWidth(),0);

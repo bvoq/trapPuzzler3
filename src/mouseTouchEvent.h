@@ -143,8 +143,10 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     if(mode == MENU) {
         if(abs(menuScrollX) > getWidth()/10.) {
             //do movement in direction
-            if(menuScrollX > 0 && currentLevel >= 10) currentLevel -= 9;
-            if(menuScrollX < 0 && currentLevel + 10 < levels.size()) currentLevel += 9;
+            if(menuScrollX > 0 && currentLevel - 9 >= 0) currentLevel -= 9;
+            if(menuScrollX < 0 && currentLevel + 9 < levels.size()) currentLevel += 9;
+            if(menuScrollX > 0) menuScrollX -= 2* getWidth();
+            if(menuScrollX < 0) menuScrollX += getWidth();
         }
         /*
          {
@@ -159,7 +161,8 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     }
 
     
-    //menuScrollX = 0;
+    //menuScrollX = 0
+    
     isMousePressed = false;
 
     //Control scheme: Execute move on touch maybe.
