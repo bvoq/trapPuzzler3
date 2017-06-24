@@ -113,15 +113,28 @@ void displayOldMenu() {
     if(backgroundTile.first.first != getWidth() || backgroundTile.first.second != getHeight()) backgroundTile = {{getWidth(), getHeight()},
         generateMeshTile(0.9*minSize, 0.9*minSize, .05*minSize, scheme.colorBACKGROUND_LIGHT, scheme.colorBACKGROUND_LIGHT, scheme.colorBACKGROUND, scheme.colorBACKGROUND , false, false, false, false)};
     
+    int levelCountPerWorld = 9;
+    int currentWorld = currentLevel / levelCountPerWorld;
+
     ofPushMatrix();
     ofTranslate(startX, startY);
     backgroundTile.second.draw();
+    ofTranslate(getWidth(), 0);
+    if(currentLevel+levelCountPerWorld < levels.size()) backgroundTile.second.draw();
+    ofTranslate(-2*getWidth(),0);
+    if(currentLevel-levelCountPerWorld >= 0) backgroundTile.second.draw();
     ofPopMatrix();
     
-    int levelCountPerWorld = 9;
-    int currentWorld = currentLevel / levelCountPerWorld;
     for(int i = 0; i < levels.size(); ++i) {
-        if(i / levelCountPerWorld == currentWorld) {
+        if(i / levelCountPerWorld == currentWorld-1 || i / levelCountPerWorld == currentWorld || i/levelCountPerWorld == currentWorld+1) {
+            if(i/levelCountPerWorld == currentWorld-1) {
+                ofPushMatrix();
+                ofTranslate(-getWidth(),0);
+            }
+            if(i/levelCountPerWorld == currentWorld+1) {
+                ofPushMatrix();
+                ofTranslate(getWidth(),0);
+            }
             int positionX = (i % levelCountPerWorld) / 3, positionY = i % 3; //LAST IS BOSS
             positionX = startX + positionX * 0.9/3. * minSize;
             positionY = startY + positionY * 0.9/3. * minSize;
@@ -174,6 +187,7 @@ void displayOldMenu() {
             }
             glLineWidth(1);
             ofPopMatrix();
+            if(i/levelCountPerWorld == currentWorld-1 || i/levelCountPerWorld == currentWorld+1) ofPopMatrix();
         }
     }
     
