@@ -74,6 +74,9 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
             if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 changeBrush(UNMOVABLE_ENEMY);
             }
+            if(mouseTouchX > toolbarSize * 0.05 + 4*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 4*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                changeBrush(LOVE);
+            }
             if(mouseTouchX > (ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 3*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 changeBrush(SUPERAIR);
             }

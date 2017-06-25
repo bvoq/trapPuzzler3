@@ -101,6 +101,9 @@ void keyEvent (keyType kt) {
             case CHANGE_TO_SUPERAIR:
                 changeBrush(SUPERAIR);
                 break;
+            case CHANGE_TO_LOVE:
+                changeBrush(LOVE);
+                break;
             case CLEAR:
                 initLevelEditor(currentLevel,true);
                 break;

@@ -532,6 +532,7 @@ void displayLevel() {
                 }
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
                 drawCellFill(i, j, scale, tScale, grid);
                 drawEyes(i, j, scale, tScale, eyeGrid);
                 ofPopMatrix();
@@ -549,8 +550,8 @@ void displayLevel() {
                 cellType cT = getCellType(grid[i][j]);
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE);//ofSetColor(255, 0, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);//ofSetColor(0, 0, 0);
-                
-                if(cT == ENEMY || cT == UNMOVABLE_ENEMY) drawCellStroke(i, j, scale, tScale, grid);
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
+                if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, scale, tScale, grid);
                 ofPopMatrix();
             }
         }
@@ -647,6 +648,7 @@ void displayLevelWORefresh() {
                         }
                         else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                         else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
+                        else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
                         
                         drawCellFill(ti, tj, scale, tScale, grid);
                         
@@ -687,8 +689,9 @@ void displayLevelWORefresh() {
                 cellType cT = getCellType(grid[i][j]);
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE);//ofSetColor(255, 0, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);//ofSetColor(0, 0, 0);
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
                 
-                if(cT == ENEMY || cT == UNMOVABLE_ENEMY) drawCellStroke(i, j, scale, tScale, grid);
+                if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, scale, tScale, grid);
                 ofPopMatrix();
             }
             

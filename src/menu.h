@@ -62,6 +62,7 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
                 if(cT == PLAYER) ofSetColor(scheme.colorPLAYERSELECTED);//ofSetColor(255, 255, 0);
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50)
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
                 drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
                 if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
                 
@@ -80,8 +81,8 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
                 
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE); //ofSetColor(255, 0, 0); //NOT SURE
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE); //ofSetColor(0, 0, 0); //NOT SURE YET
-                
-                if(cT == ENEMY || cT == UNMOVABLE_ENEMY) drawCellStroke(i, j, miniScale, miniScale / 4., theLevel);
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
+                if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, miniScale, miniScale / 4., theLevel);
                 ofPopMatrix();
             }
         }

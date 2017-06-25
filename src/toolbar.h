@@ -38,7 +38,7 @@ pair<int,int> dpDrawCoordinates = {-1,-1};
 ofMesh backgroundKey, backgroundKeySelected;
 
 void displayToolBar() {
-    if(!messageBlockingToolbar) {
+    if(!messageBlockingToolbar && !blockMovementDueToWinningAnimation) {
         if(toolbarOrientation != NOTOOLBAR) {
             if(dpDrawCoordinates.first != ofGetHeight() && dpDrawCoordinates.second != ofGetHeight()) {
                 toolbarSize = 0.1 * ofGetHeight();
@@ -194,7 +194,7 @@ void displayToolBar() {
                     //RED BLOCK
                     ofSetColor(scheme.colorENEMY);
                     ofPushMatrix();
-                    deque<deque<int> > redOne = {{100}};
+                    deque<deque<int> > redOne = {{2}};
                     ofTranslate(toolbarSize * 0.05 + 2*toolbarSize, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == ENEMY) backgroundKeySelected.draw();
                     else backgroundKey.draw();
@@ -213,7 +213,7 @@ void displayToolBar() {
                     //GRAY BLOCK
                     ofSetColor(scheme.colorUNMOVABLE_ENEMY);
                     ofPushMatrix();
-                    deque<deque<int> > grayOne = {{1000}};
+                    deque<deque<int> > grayOne = {{0}};
                     ofTranslate(toolbarSize * 0.05 + 3*toolbarSize, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == UNMOVABLE_ENEMY) backgroundKeySelected.draw();
                     else backgroundKey.draw();
@@ -229,6 +229,25 @@ void displayToolBar() {
                     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
                     ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     drawCellStroke(0,0, toolbarSize*.5*1.1, toolbarSize*.1, grayOne);
+                    ofPopMatrix();
+                    
+                    //LOVE BLOCK
+                    ofSetColor(scheme.colorLOVE);
+                    deque<deque<int> > loveOne = {{3}};
+                    ofPushMatrix();
+                    ofTranslate(toolbarSize * 0.05 + 4*toolbarSize, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    if(placeType == LOVE) backgroundKeySelected.draw();
+                    else backgroundKey.draw();
+                    if(ofGetAppPtr()->mouseX > toolbarSize * 0.05 + toolbarSize*4 && ofGetAppPtr()->mouseX < toolbarSize * 0.9 + toolbarSize*4
+                       && ofGetAppPtr()->mouseY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && ofGetAppPtr()->mouseY < ofGetWidth() - toolbarSize * .05) {
+                        //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
+                    drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1, loveOne);
+                    //ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, loveOne);
                     ofPopMatrix();
                     
                     

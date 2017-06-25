@@ -149,8 +149,9 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
                 else if(input == RIGHT) {i = k; j = l + 1;}
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
-                if(cT == ENEMY || cT == PLAYER) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange);
+                if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange);
                 else if(cT == UNMOVABLE_ENEMY) return -1;
+                else if(cT != AIR) assert(false);
                 if(cB == -1) return -1;
                 moveGrid[i][j] = elementId;
                 tempGrid[k][l] = 0;
@@ -245,7 +246,7 @@ void recheckGrid();
 void checkForMerge() {
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
-            if(getCellType(moveGrid[i][j]) == PLAYER) {
+            if(getCellType(moveGrid[i][j]) == PLAYER || getCellType(moveGrid[i][j]) == LOVE) {
                 //CHANGE PLAYERID
                 if(i != 0 && getCellType(moveGrid[i-1][j]) == PLAYER && moveGrid[i-1][j] != moveGrid[i][j]) {
                     int toReplaceID = moveGrid[i][j];

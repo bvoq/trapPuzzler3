@@ -48,8 +48,8 @@ colorScheme scheme0 (
                     0xFF0000, //ENEMYSTROKE
                     0x646464, //UNMOVABLE_ENEMY
                     0x000000, //UNMOVABLE_ENEMYSTROKE
-                    0xFFE3E3, //LOVE
-                    0xFFC4C4, //LOVESTROKE
+                    0xFFC4C4, //LOVE
+                    0xFCA1A1, //LOVESTROKE
                     0xC8C8C8, //BACKGROUND
                     0xDBDBDB, //BACKGROUND_LIGHT
                     0x666666, //BACKGROUND_SHADED
@@ -73,7 +73,7 @@ colorScheme scheme1(
 	0x000000, //UNMOVABLE_ENEMY
 	0x646464, //UNMOVABLE_ENEMYSTROKE
     0xFFE3E3, //LOVE
-    0xFFC4C4, //LOVESTROKE
+    0xFCA1A1, //LOVESTROKE
 	0x94FAFF, //BACKGROUND
 	0xAFFBFF, //BACKGROUND_LIGHT
 	0x666666, //BACKGROUND_SHADED
@@ -92,7 +92,7 @@ colorScheme scheme1(
 //colorScheme scheme1 (0xFFFF00/*0xF9FA00*/, 0xFF2265, 0x5B2031, 0x556C62, 0xC2D7CD);
 //colorScheme scheme2 (0xF9FA00, 0xFF6400, 0x5B2031, 0x556C62, 0xC2D7CD);
 //Current scheme
-colorScheme scheme = scheme1;
+colorScheme scheme = scheme0;
 //ALTERNATIVE SCHEMES
 //COLOR_1 = 0xFF2A00, COLOR_2 = 0x3016B0, COLOR_3 = 0x00A287, COLOR_4 = 0xA66A00
 #endif

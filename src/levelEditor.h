@@ -39,6 +39,10 @@ void placeSelectedTiles() {
         placeID = unmovableEnemyCount;
         unmovableEnemyCount++;
     }
+    else if(placeType == LOVE) {
+        placeID = loveCount;
+        loveCount++;
+    }
     
     for(auto & it : tilesToBePlaced) {
         if(placeID == 0) {
@@ -54,6 +58,7 @@ void placeSelectedTiles() {
                 if(pos > 0 && pos < 1000000) {changeRange = {pos, 1000000}; playerCount--;}
                 else if(pos >= 1000000 && pos < 2000000) {changeRange = {pos, 2000000}; enemyCount--;}
                 else if(pos >= 2000000 && pos < 3000000) {changeRange = {pos, 3000000}; unmovableEnemyCount--;}
+                else if(pos >= 3000000 && pos < 4000000) {changeRange = {pos, 4000000}; loveCount--;}
                 for(int i = 0; i < editorGrid.size(); ++i) {
                     for(int j = 0; j < editorGrid[i].size(); ++j) {
                         if(editorGrid[i][j] > changeRange.first && editorGrid[i][j] < changeRange.second) editorGrid[i][j]--;

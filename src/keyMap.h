@@ -11,7 +11,7 @@
 #define trapPuzzler3_keyMap_h
 
 enum keyType {
-    UP, LEFT, DOWN, RIGHT, PLAYER_CHANGE, UNDO, RESTART, EXPORT, CHANGE_TO_AIR, CHANGE_TO_PLAYER, CHANGE_TO_ENEMY, CHANGE_TO_UNMOVABLE_ENEMY, CHANGE_TO_SUPERAIR, CLEAR, SOLVE, TOGGLE_TOOLBAR
+    UP, LEFT, DOWN, RIGHT, PLAYER_CHANGE, UNDO, RESTART, EXPORT, CHANGE_TO_AIR, CHANGE_TO_PLAYER, CHANGE_TO_ENEMY, CHANGE_TO_UNMOVABLE_ENEMY, CHANGE_TO_LOVE, CHANGE_TO_SUPERAIR, CLEAR, SOLVE, TOGGLE_TOOLBAR
 };
 
 map<int, keyType> keyMapper;
@@ -19,7 +19,6 @@ map<keyType, bool> keyPressedDown;
 /*
  Key Codes:
  ----------
- 
  */
 
 void initDefaultKeyMapping() {
@@ -53,6 +52,8 @@ void initDefaultKeyMapping() {
     keyMapper.insert({48, CHANGE_TO_AIR});
     keyMapper.insert({49, CHANGE_TO_PLAYER});
     keyMapper.insert({50, CHANGE_TO_ENEMY});
+    keyMapper.insert({51, CHANGE_TO_LOVE});
+
     keyMapper.insert({51, CHANGE_TO_UNMOVABLE_ENEMY});
     keyMapper.insert({57, CHANGE_TO_SUPERAIR});
     

@@ -40,9 +40,11 @@ void generateEyeGrid() {
     for( auto it = allNumbers.begin(), end = allNumbers.end(); it != end; it = allNumbers.upper_bound(it->first) ) {
         int randEye = rand() % allNumbers.count(it->first);
         advance(it, randEye);
-        int eyeID = 1;
-        if(getCellType(it->first) == ENEMY) eyeID = 100;
-        else if(getCellType(it->first) == UNMOVABLE_ENEMY) eyeID = 1000;
+        int eyeID = 0;
+        if(getCellType(it->first) == PLAYER) eyeID = 1;
+        else if(getCellType(it->first) == ENEMY) eyeID = 2;
+        else if(getCellType(it->first) == LOVE) eyeID = 3;
+        //else if(getCellType(it->first) == ) eyeID = 1000;
         eyeGrid[(it->second).first][(it->second).second] = eyeID;
         //cout << it->first << ' ' << (it->second).first << ' ' << (it->second).second << endl;
     }
@@ -65,6 +67,34 @@ void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gri
     ofSetLineWidth(1);
 }
 
+
+//CREATE scale DP
+pair<float,ofPath> loveEyeDP;
+void drawLoveEye(float scale) {
+    if(loveEyeDP.first != scale) {
+        ofPath eyeLid;
+        eyeLid.setColor(0);
+        
+        float wimperLength = scale * .15;
+        eyeLid.moveTo(scale*.5-scale*.2-wimperLength,scale*.5);
+        eyeLid.arcNegative(scale*.5,scale*.5,scale*.2, scale*.2, 180,135); //180°-90°
+        eyeLid.lineTo(scale*.5 - (scale*.2+wimperLength)*1./sqrt(2), scale*.5 + (scale*.2+wimperLength)*1./sqrt(2));
+        eyeLid.arcNegative(scale*.5,scale*.5,scale*.2, scale*.2, 135,90);
+        eyeLid.lineTo(scale*.5, scale*.5+scale*.2+wimperLength);
+        eyeLid.arcNegative(scale*.5,scale*.5,scale*.2, scale*.2, 90,45);
+        eyeLid.lineTo(scale*.5 + (scale*.2+wimperLength)*1./sqrt(2), scale*.5 + (scale*.2+wimperLength)*1./sqrt(2));
+        eyeLid.arcNegative(scale*.5,scale*.5,scale*.2, scale*.2, 45,0);
+        eyeLid.lineTo(scale*.5+scale*.2+wimperLength, scale*.5);
+        eyeLid.setFilled(false);
+        eyeLid.setStrokeWidth(2);
+        loveEyeDP = {scale, eyeLid};
+    }
+    ofPushMatrix();
+    ofTranslate(0,-scale*.1); //people like eyes a little bit higher.
+    loveEyeDP.second.draw();
+    ofPopMatrix();
+}
+
 void drawPlayerEye(float scale) {
     ofFill();
     ofSetColor(255, 255, 255);
@@ -74,7 +104,7 @@ void drawPlayerEye(float scale) {
 }
 
 void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid) {
-    if(eGrid[i][j] == 100) {
+    if(eGrid[i][j] == 2) {
         drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size());
         ofPushMatrix();
         ofTranslate(scale * 0.25, 0);
@@ -83,6 +113,9 @@ void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGri
     }
     else if(eGrid[i][j] == 1) {
         drawPlayerEye(scale);
+    }
+    else if(eGrid[i][j] == 3) {
+        drawLoveEye(scale);
     }
     //if(eGrid[i][j] == 1) ofDrawRectangle(scale * 0.25, scale * 0.25, scale * 0.25, scale * 0.25);
 }

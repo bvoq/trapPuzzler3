@@ -20,7 +20,7 @@ bool winState() {
         int thePlayer = -1;
         for(int i = 0; i < grid.size(); ++i) {
             for(int j = 0; j < grid[i].size(); ++j) {
-                if(getCellType(grid[i][j]) == PLAYER) {
+                if(getCellType(grid[i][j]) == PLAYER || getCellType(grid[i][j]) == LOVE) {
                     if(thePlayer == -1) thePlayer = grid[i][j];
                     else if(thePlayer != grid[i][j]) return false;
                 }
@@ -60,12 +60,6 @@ bool winState() {
             }
             return true;
         }
-        if(dP) {
-            for(int i = highestPoint; i < grid.size(); ++i) {
-                move(DOWN, timeForMovement);
-            }
-            return true;
-        }
         if(lP) {
             for(int j = mostLeftPoint; j >= 0; --j) {
                 move(LEFT, timeForMovement);
@@ -76,6 +70,12 @@ bool winState() {
         if(rP) {
             for(int j = mostRightPoint; j < grid[0].size(); ++j) {
                 move(RIGHT, timeForMovement);
+            }
+            return true;
+        }
+        if(dP) {
+            for(int i = highestPoint; i < grid.size(); ++i) {
+                move(DOWN, timeForMovement);
             }
             return true;
         }
