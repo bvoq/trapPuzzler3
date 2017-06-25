@@ -27,7 +27,7 @@ void loadLevel(int level) {
         DEB("Loading inexistant level: " << level << ". Current amount of levels = " << levels.size());
     }
     else {
-        if(levels[level].size() > 0 && levels[level][0].size().size() > 0) { //Cannot load an empty level.
+        if(levels[level].size() > 0 && levels[level][0].size() > 0) { //Cannot load an empty level.
             
             //Messages come here !!!
             if(level == 0) {
