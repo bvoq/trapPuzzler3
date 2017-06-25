@@ -12,7 +12,7 @@
 deque<deque<int> > editorGrid;
 //int editorGridY, editorGridX;
 
-int playerCount = 1, enemyCount = 1000000, unmovableEnemyCount = 2000000;
+int playerCount = 1, enemyCount = 1000000, unmovableEnemyCount = 2000000, loveCount = 3000000; //These values will be overwritten...
 cellType placeType;
 
 void changeBrush (cellType newPlaceType) {
@@ -150,6 +150,7 @@ void displayLevelEditor() {
                 if(cT == PLAYER) ofSetColor(scheme.colorPLAYERSELECTED);//ofSetColor(255, 255, 0);
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
                 drawCellFill(i, j, scale, tScale, editorGrid);
                 ofPopMatrix();
             }
@@ -193,6 +194,7 @@ void initLevelEditor(int loadFromLevel, bool empty) {
     playerCount = 1;
     enemyCount = 1000000;
     unmovableEnemyCount = 2000000;
+    loveCount = 3000000;
     //levelEdit orSaves.clear();
     assert(loadFromLevel >= 0);
     if(empty) {
