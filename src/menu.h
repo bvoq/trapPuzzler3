@@ -203,7 +203,6 @@ void displayOldMenu() {
                         }
                     }
                 }
-                
                 displayPencil(selectedPencil);
             }
             glLineWidth(1);

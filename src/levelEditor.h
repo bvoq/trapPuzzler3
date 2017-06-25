@@ -191,8 +191,8 @@ void initLevelEditor(int loadFromLevel) {
     mode = LEVEL_EDITOR;
     editorGrid.clear();
     playerCount = 1;
-    enemyCount = 10;
-    unmovableEnemyCount = 1000;
+    enemyCount = 1000000;
+    unmovableEnemyCount = 2000000;
     //levelEdit orSaves.clear();
     if(loadFromLevel == -1) {
         editorGrid.resize(20, deque<int>(20, 0));

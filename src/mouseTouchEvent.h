@@ -87,6 +87,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
             
             if(mouseTouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 0*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 cropBordersOf(editorGrid);
+                cout << "SAVING: " << currentLevel << " and " << levels.size() << endl;
                 levels[currentLevel] = editorGrid;
                 saveLevelData();
                 mode = MENU;
