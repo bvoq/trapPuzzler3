@@ -13,9 +13,13 @@
 void loadLevel(int level) {
     createLevels();
     if(level == -1 && editorGrid.size() > 0 && editorGrid[0].size() > 0) {
-        currentLevel = -1;
-        mode = LEVEL_EDITOR_PLAYING;
-        updateGrid(editorGrid);
+        //currentLevel = -1; In editor mode, but old level ID should be kept.
+        deque<deque<int> > copyLevel = editorGrid;
+        cropBordersOf(copyLevel);
+        if(copyLevel.size() > 0 && copyLevel[0].size() > 0) { //Cannot load an empty level.
+            mode = LEVEL_EDITOR_PLAYING;
+            updateGrid(copyLevel);
+        }
     }
     else if(level >= levels.size()) {
         //currentLevel = level;
@@ -23,21 +27,24 @@ void loadLevel(int level) {
         DEB("Loading inexistant level: " << level << ". Current amount of levels = " << levels.size());
     }
     else {
-        //Messages come here !!!
-        if(level == 0) {
-            addMessage({"This is the story of","a little yellow squarish blob."}, 4);
-            addMessage({"Although he was little,","he dreamt about a bigger world."}, 4);
-            addMessage({"He wanted to know what","the world was made of,"}, 4);
-            addMessage({"but his red neighbors just stared","at him with boredom in their eyes."}, 4);
-            addMessage({"They must've turned red from boredom","the little blob thought."}, 4);
-            addMessage({"He took all his courage and finally decided","to leave these miserable people."}, 4);
-            addMessage({"But little did he know,","what he got himself into."}, 4);
-            addMessage({"Move him using","the arrow keys or WASD"}, 4);
-        }
+        if(editorGrid.size() > 0 && editorGrid[0].size() > 0) { //Cannot load an empty level.
+            
+            //Messages come here !!!
+            if(level == 0) {
+                addMessage({"This is the story of","a little yellow squarish blob."}, 4);
+                addMessage({"Although he was little,","he dreamt about a bigger world."}, 4);
+                addMessage({"He wanted to know what","the world was made of,"}, 4);
+                addMessage({"but his red neighbors just stared","at him with boredom in their eyes."}, 4);
+                addMessage({"They must've turned red from boredom","the little blob thought."}, 4);
+                addMessage({"He took all his courage and finally decided","to leave these miserable people."}, 4);
+                addMessage({"But little did he know,","what he got himself into."}, 4);
+                addMessage({"Move him using","the arrow keys or WASD"}, 4);
+            }
         
-        mode = PLAYING;
-        DEB("Init level: " << level);
-        updateGrid(levels[level]);
+            mode = PLAYING;
+            DEB("Init level: " << level);
+            updateGrid(levels[level]);
+        }
     }
 }
 

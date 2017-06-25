@@ -35,7 +35,7 @@ void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
     }
     if(playable == true) {
         if(levelEditorInMenu == false) loadLevel(currentLevel);
-        else if(beaten[currentLevel]) initLevelEditor(currentLevel);
+        else if(beaten[currentLevel]) initLevelEditor(currentLevel,false);
     }
 }
 
@@ -102,7 +102,7 @@ void keyEvent (keyType kt) {
                 changeBrush(SUPERAIR);
                 break;
             case CLEAR:
-                initLevelEditor(-1);
+                initLevelEditor(currentLevel,true);
                 break;
             case UP:
             case DOWN:

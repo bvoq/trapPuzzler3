@@ -594,7 +594,7 @@ void displayLevelWORefresh() {
     }
     ofFill();
     
-    assert(rects.size() > 0);
+    assert(rects.size() > 0); //Cannot load an empty level.
     if(rectsDP.first.size() != rects.size() || rectsDP.first[0].size() != rects[0].size() || scale != scaleChange) {
         //Make sure everything is overwritten
         ofBackground(backgroundColor);

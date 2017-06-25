@@ -187,14 +187,15 @@ void addLayer(keyType direction) {
     }
 }
 
-void initLevelEditor(int loadFromLevel) {
+void initLevelEditor(int loadFromLevel, bool empty) {
     mode = LEVEL_EDITOR;
     editorGrid.clear();
     playerCount = 1;
     enemyCount = 1000000;
     unmovableEnemyCount = 2000000;
     //levelEdit orSaves.clear();
-    if(loadFromLevel == -1) {
+    assert(loadFromLevel >= 0);
+    if(empty) {
         editorGrid.resize(20, deque<int>(20, 0));
     }
     else {
@@ -205,7 +206,6 @@ void initLevelEditor(int loadFromLevel) {
                 if(getCellType(editorGrid[i][j]) == PLAYER && playerCount < editorGrid[i][j] + 1) playerCount = editorGrid[i][j] + 1;
                 if(getCellType(editorGrid[i][j]) == ENEMY && enemyCount < editorGrid[i][j] + 1) enemyCount = editorGrid[i][j] + 1;
                 if(getCellType(editorGrid[i][j]) == UNMOVABLE_ENEMY && unmovableEnemyCount < editorGrid[i][j] + 1) unmovableEnemyCount = editorGrid[i][j] + 1;
-                
             }
         }
         

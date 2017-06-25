@@ -22,6 +22,7 @@ struct movement {
     set<int> hasMoved;
     bool isUndoMove;
     int movementTime;
+    int oldPlayerID;
     movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
              keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime) {
         newGrid = _nG;
@@ -33,6 +34,7 @@ struct movement {
         timeWhenStarted = ofGetElapsedTimeMicros();
         isUndoMove = _isUndoMove;
         movementTime = _movementTime;
+        oldPlayerID = playerID;
     }
     
     void changeGrid() {
@@ -121,6 +123,7 @@ void undoMovement(int timeAllowed) {
         
         moveGrid = previousMovements.back().oldGrid;
         moveEyeGrid = previousMovements.back().oldEyeGrid;
+        playerID = previousMovements.back().oldPlayerID;
         movements.push(undoMove);
         previousMovements.pop_back();
     }

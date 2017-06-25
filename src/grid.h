@@ -70,7 +70,8 @@ void cropBordersOf(deque<deque<int> > &tempGrid) {
         }
         if(isEmpty) {
             emptyOverall = false;
-            tempGrid.pop_back();
+            if(tempGrid.size() > 0) tempGrid.pop_back();
+            else return;
         }
         isEmpty = true;
         for(int i = 0; i < tempGrid.front().size(); ++i) {
@@ -78,7 +79,8 @@ void cropBordersOf(deque<deque<int> > &tempGrid) {
         }
         if(isEmpty) {
             emptyOverall = false;
-            tempGrid.pop_front();
+            if(tempGrid.size() > 0) tempGrid.pop_front();
+            else return;
         }
         //}
         //if(tempGrid[0].size() > MIN_CELL_SIZE) {
