@@ -6,9 +6,21 @@
 #include <vector>
 #include <ctime>
 #include <cassert>
+#include <mutex>
+#include <thread>
+#include <climits>
+
+#define synchronized(m) \
+for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
+
 using namespace std;
 
-int GLOBAL_DEPTH = 100, enough = 22;
+int GLOBAL_DEPTH = 40, enough = 28;
+int threadCount = 2040;
+
+std::recursive_mutex m_mutex;
+int globalCounter = 4;
+
 
 deque<deque<int> > initField(int h, int w) {
     deque<deque<int> > field(h, deque<int> (w,0));
@@ -19,8 +31,8 @@ deque<deque<int> > initField(int h, int w) {
     vector< vector<pair<int,int> > > stonesRed = stonesBlack;
     vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
     int yellowBlocksToBePlaced = 1;
-    int darkBlocksToBePlaced = 11 + (rand() % 7) - 3;
-    int redBlocksToBePlaced = 7 + (rand()%7) - 3;
+    int darkBlocksToBePlaced = 11 + (rand() % 50) - 3;
+    int redBlocksToBePlaced = 7 + (rand()%50) - 3;
     
     
     
@@ -54,7 +66,7 @@ deque<deque<int> > initField(int h, int w) {
         }
         if(noAdd == false) {
             for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
-                field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 1000+darkBlocksToBePlaced;
+                field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
             }
             darkBlocksToBePlaced--;
         }
@@ -73,7 +85,7 @@ deque<deque<int> > initField(int h, int w) {
         }
         if(noAdd == false) {
             for(int i = 0; i < stonesRed[randTile].size(); ++i) {
-                field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 100+redBlocksToBePlaced;
+                field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 1000000+redBlocksToBePlaced;
             }
             redBlocksToBePlaced--;
         }
@@ -137,7 +149,7 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
         }
         if(noAdd == false) {
             for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
-                field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 1000+darkBlocksToBePlaced;
+                field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
             }
             darkBlocksToBePlaced--;
         }
@@ -156,7 +168,7 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
         }
         if(noAdd == false) {
             for(int i = 0; i < stonesRed[randTile].size(); ++i) {
-                field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 100+redBlocksToBePlaced;
+                field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 1000000+redBlocksToBePlaced;
             }
             redBlocksToBePlaced--;
         }
@@ -224,8 +236,7 @@ cellType getCellType(int ID) {
     return UNMOVABLE_ENEMY;
 }
 
-deque<deque<int> > moveGrid;
-int moveTile(int elementId, keyType input, set<int>& checked, deque<deque<int> >& tempGrid) {
+int moveTile(int elementId, keyType input, set<int>& checked, deque<deque<int> >& tempGrid, deque<deque<int> > & moveGrid) {
     checked.insert(elementId);
     for(int k = 0; k < tempGrid.size(); ++k) {
         for(int l = 0; l < tempGrid[k].size(); ++l) {
@@ -244,7 +255,7 @@ int moveTile(int elementId, keyType input, set<int>& checked, deque<deque<int> >
                 else if(input == RIGHT) {i = k; j = l + 1;}
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
-                if(cT == ENEMY || cT == PLAYER) cB = moveTile(moveGrid[i][j], input, checked, tempGrid);
+                if(cT == ENEMY || cT == PLAYER) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, moveGrid);
                 else if(cT == UNMOVABLE_ENEMY) return -1;
                 if(cB == -1) return -1;
                 moveGrid[i][j] = elementId;
@@ -312,7 +323,7 @@ void cropBordersOf(deque<deque<int> > &tempGrid) {
 }
 
 
-bool move(keyType input, int playerID) {
+bool move(keyType input, int playerID, deque<deque<int> > & moveGrid) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
@@ -325,7 +336,7 @@ bool move(keyType input, int playerID) {
     
     set<int> checked;
     set<pair<int, int> > eyesToChange;
-    int theReturn = moveTile(playerID, input, checked, tempGrid);
+    int theReturn = moveTile(playerID, input, checked, tempGrid, moveGrid);
     
     cropBordersOf(moveGrid);
     if(theReturn != -1) {
@@ -350,29 +361,29 @@ int bfsSolve (deque<deque<int> > input) {
         q.pop();
         if(alreadyPassed.count(current.second) == 0) {
             alreadyPassed.insert(current.second);
-            moveGrid = current.second;
-            if(move(UP, playerID)) {
+            deque<deque<int> > moveGrid = current.second;
+            if(move(UP, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return current.first;
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(DOWN, playerID)) {
+            if(move(DOWN, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return current.first;
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(LEFT, playerID)) {
+            if(move(LEFT, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return current.first;
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(RIGHT, playerID)) {
+            if(move(RIGHT, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return current.first;
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
@@ -405,29 +416,29 @@ long long steps = 0;
         q.pop();
         if(alreadyPassed.count(current.second) == 0) {
             alreadyPassed.insert(current.second);
-            moveGrid = current.second;
-            if(move(UP, playerID)) {
+            deque<deque<int> > moveGrid = current.second;
+            if(move(UP, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return {steps * current.first,current.first};
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(DOWN, playerID)) {
+            if(move(DOWN, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return {steps * current.first,current.first};
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(LEFT, playerID)) {
+            if(move(LEFT, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return {steps * current.first,current.first};
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
                 }
             }
             moveGrid = current.second;
-            if(move(RIGHT, playerID)) {
+            if(move(RIGHT, playerID, moveGrid)) {
                 if(current.second.size() > input.size()+2 || current.second[0].size() > input[0].size()+2) return {steps * current.first,current.first};
                 if(current.first < GLOBAL_DEPTH) {
                     q.push({current.first + 1, moveGrid});
@@ -456,38 +467,69 @@ void levelExport(ostream & o, deque<deque<int> > copied) {
     }
     o << "}";
 }
-#include <climits>
-int main() {
-srand(time(0));
+
+long long globalBiggestSolved = 0;
+long long globalBiggestSolvedDepth = 0;
+
+void runThread(int threadID, int size, bool symmetric) {
+    srand(threadID);
     long long biggestSolved = 0;
     long long biggestSolvedDepth = 0;
     //deque<deque<int> > debugLevel = {{0,0,105,105,0,0,0,0,0,0},{0,0,0,0,0,0,0,102,0,0},{0,0,1002,1002,0,0,0,102,0,0},{0,0,0,0,0,0,101,1001,0,0},{0,0,0,0,0,0,101,0,1003,0},{0,0,0,0,0,0,0,0,1003,0},{0,0,0,0,0,0,0,0,0,0},{103,103,0,0,0,0,0,0,0,1},{1004,0,0,0,0,0,104,0,0,1},{1004,0,0,0,0,0,0,0,0,0}};
     //int hi = bfsSolve(debugLevel);
     //cout << "SOLVED: " << hi << endl;
     
-int incrSuccess = 1000;
-
-int trapCount = 0;
-int tooLongCount = 0;
+    int incrSuccess = 10000000 * threadID;
+    
+    int trapCount = 0;
+    int tooLongCount = 0;
+    
     for(long long i = 0; i < 10000000000000000; ++i) {
-	if(i % 1000 == 0) srand(time(0));
-		int symFieldSize = 5 * 2 + 1;
-        deque<deque<int> > field = initSymmetricField(symFieldSize, symFieldSize);
+        int symFieldSize = size;
+        int fieldSize = size;
+		deque<deque<int> > field;
+		if(symmetric) field = initField(fieldSize, fieldSize);
+		else field = initSymmetricField(symFieldSize, symFieldSize);
+        
         pair<long long, int> solutionInfo = bfsSolveNeat(field, 50000);
-	long long hasSolved = solutionInfo.first;
-	int depthSolved = solutionInfo.second ;
-	if(trapCount == -1) trapCount++;
-	else if(hasSolved == -2) tooLongCount++;
+        long long hasSolved = solutionInfo.first;
+        int depthSolved = solutionInfo.second ;
+        if(trapCount == -1) trapCount++;
+        else if(hasSolved == -2) tooLongCount++;
         //cout << hasSolved << endl;
-	//cout << i << " " << hasSolved << endl;
-	    if(/*hasSolved >= enough ||*/ hasSolved >= biggestSolved || depthSolved >= biggestSolvedDepth) {
-		if(hasSolved > biggestSolved) biggestSolved = hasSolved;
-		if(depthSolved > biggestSolvedDepth) biggestSolvedDepth = depthSolved;
-            cout << "//" << hasSolved << " depth: " << depthSolved  << " traps: " << trapCount << " toolong: " << tooLongCount << endl;
-	    cout << "ddd l"<<incrSuccess++ << "=";
-            levelExport(cout, field);
-            cout << ";" << endl << endl;
+        //cout << i << " " << hasSolved << endl;
+        if(/*hasSolved >= enough ||*/ hasSolved >= biggestSolved || depthSolved >= biggestSolvedDepth) {
+            if(hasSolved > biggestSolved) biggestSolved = hasSolved;
+            if(depthSolved > biggestSolvedDepth) biggestSolvedDepth = depthSolved;
+            
+            synchronized(m_mutex) {
+                if(hasSolved >= globalBiggestSolved || depthSolved >= globalBiggestSolvedDepth) {
+                    globalCounter++;
+                
+                    if(hasSolved > globalBiggestSolved) globalBiggestSolved = hasSolved;
+                    if(depthSolved > globalBiggestSolvedDepth) globalBiggestSolvedDepth = depthSolved;
+                
+                    levelExport(cout, field);
+                    cout  << ";" << endl;
+                    cout << "//" << hasSolved << " depth: " << depthSolved  << " traps: " << trapCount << " toolong: " << tooLongCount << " no.: " << globalCounter << " thread: " << threadID << endl;
+                    cout << endl;
+                }
+            }
         }
     }
+}
+
+
+int main() {
+    //runThread(73);
+    
+    thread threads[threadCount];
+    cout << "Executing with: " << threadCount << " threads." << endl;
+    int size = 9;
+    for(int i = 0; i < threadCount; ++i) {
+        threads[i] = thread(runThread,i,size);
+    }
+    threads[0].join();
+    //arr[0].join(); //wait forever
     return 0;
 }

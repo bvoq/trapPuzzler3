@@ -62,6 +62,10 @@ void cropBordersOf(deque<deque<int> > &tempGrid) {
     bool isEmpty = true;
     bool emptyOverall = false;
     while(emptyOverall == false) {
+        
+        if(tempGrid.size() < 1) return;
+        if(tempGrid[0].size() < 1) return;
+        
         isEmpty = true;
         emptyOverall = true;
         //if( tempGrid.size() > MIN_CELL_SIZE) {
@@ -110,6 +114,10 @@ void cropBordersOfBoth(deque<deque<int> > &tempGrid, deque<deque<int> > &cropSam
     bool isEmpty = true;
     bool emptyOverall = false;
     while(emptyOverall == false) {
+        
+        if(tempGrid.size() < 1) return;
+        if(tempGrid[0].size() < 1) return;
+        
         isEmpty = true;
         emptyOverall = true;
         for(int i = 0; i < tempGrid.back().size(); ++i) {

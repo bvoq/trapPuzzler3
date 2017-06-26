@@ -209,6 +209,8 @@ void loadLevelData() {
         }
     }
     for(int i = 0; i < levels.size(); ++i) {
+        for(auto a : levels[i]) { for(int b : a) cout << b << ","; cout << "|";}
+        cout << endl;
         cropBordersOf(levels[i]);
     }
     for(int i = 0; i < defaultlevels.size(); ++i) {

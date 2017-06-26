@@ -154,10 +154,14 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     if(mode == MENU) {
         if(abs(scrollX) > getWidth()/10.) {
             //do movement in direction
-            if(scrollX > 0 && (currentLevel/9) * 9 >= 0) currentLevel = (currentLevel/9) * 9 - 9;
-            if(scrollX < 0 &&  (currentLevel/9) * 9 < levels.size()) currentLevel = (currentLevel/9) * 9 + 9;
-            if(scrollX > 0) scrollX -= 2* getWidth();
-            if(scrollX < 0) scrollX += getWidth();
+            if(scrollX > 0 && (currentLevel/9) * 9 - 9 >= 0) {
+                currentLevel = (currentLevel/9) * 9 - 9;
+                scrollX -= 2 * getWidth();
+            }
+            if(scrollX < 0 &&  (currentLevel/9) * 9 + 9 < levels.size()) {
+                currentLevel = (currentLevel/9) * 9 + 9;
+                scrollX += getWidth();
+            }
         }
         if(abs(scrollX) < getWidth()/100.) {
             isMouseReleased = true;
