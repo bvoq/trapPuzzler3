@@ -158,7 +158,7 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
                 currentLevel = (currentLevel/9) * 9 - 9;
                 scrollX -= 2 * getWidth();
             }
-            if(scrollX < 0 &&  (currentLevel/9) * 9 + 9 < levels.size()) {
+            else if(scrollX < 0 &&  (currentLevel/9) * 9 + 9 < levels.size()) {
                 currentLevel = (currentLevel/9) * 9 + 9;
                 scrollX += getWidth();
             }
