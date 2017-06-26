@@ -36,53 +36,53 @@ struct movement {
         movementTime = _movementTime;
         oldPlayerID = playerID;
     }
-    
+
     void changeGrid() {
         grid = newGrid;
         eyeGrid = newEyeGrid;
         checkForMerge();
     }
-    
+
     float getDelay() {
         return ofGetElapsedTimeMicros() - timeWhenStarted;
     }
-    
+
     ofRectangle calculatePosition(int i, int j) {
         float gD = getDelay();
-        
+
         float idY = i; float idX = j;
         float sign = 1;
         int gridY = grid.size(), gridX = grid[0].size(), newGridY = newGrid.size(), newGridX = newGrid[0].size();
-        
+
         if(movementDirection == UP && newGridY > gridY) sign = -1;
         if(movementDirection == LEFT && newGridX > gridX) sign = -1;
         if(movementDirection == DOWN && newGridY < gridY) sign = -1;
         if(movementDirection == RIGHT && newGridX < gridX) sign = -1;
-        
+
         float incr = gD / movementTime;
         if(incr > 1.0) incr = 1.0;
         int w = getWidth(), h = getHeight();
         float compGridY = gridY + sign * (1.*(newGridY - gridY)) * incr;
         float compGridX = gridX + sign * (1.*(newGridX - gridX)) * incr;
-        
+
         float compGrid2Y = gridY +   (1.*(newGridY - gridY)) * incr;
         float compGrid2X = gridX +   (1.*(newGridX - gridX)) * incr;
-        
+
         float theAdd = 2;
         if(sign == -1) theAdd = 2;
         float scaleY = (h * 1.) / (MAX(compGrid2Y + theAdd, MIN_CELL_SIZE) * 1.);
         float scaleX = (w * 1.) / (MAX(compGrid2X + theAdd, MIN_CELL_SIZE) * 1.);
         float scale = min(scaleY, scaleX);
-        
+
         idY -= (compGridY) / 2.;
         idX -= (compGridX) / 2.;
-        
+
         ofRectangle output(idX * scale, idY * scale, scale, scale);
         output.translate(w / 2, h / 2);
-        
+
         //Add movement delay
         if(hasMoved.count(grid[i][j]) != 0) {
-            
+
             if(movementDirection == UP) output.y -= scale * incr;
             else if(movementDirection == DOWN) output.y += scale * incr;
             else if(movementDirection == LEFT) output.x -= scale * incr;
@@ -114,13 +114,13 @@ void undoMovement(int timeAllowed) {
         else if(previousMovements.back().movementDirection == DOWN) oppositeKeyType = UP;
         else if(previousMovements.back().movementDirection == LEFT) oppositeKeyType = RIGHT;
         else if(previousMovements.back().movementDirection == RIGHT) oppositeKeyType = LEFT;
-        
+
         cropBordersOfBoth(previousMovements.back().oldGrid, previousMovements.back().oldEyeGrid);
         //cropBordersOf(previousMovements.back().oldEyeGrid);
         movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
                           previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
                           oppositeKeyType, previousMovements.back().hasMoved, true, timeAllowed);
-        
+
         moveGrid = previousMovements.back().oldGrid;
         moveEyeGrid = previousMovements.back().oldEyeGrid;
         playerID = previousMovements.back().oldPlayerID;
@@ -168,23 +168,23 @@ bool move(keyType input, int timeAllowed) {
     //moveGrid = grid;
     deque<deque<int> > oldGrid = moveGrid;
     deque<deque<int> > oldEyeGrid = moveEyeGrid;
-    
+
     if(input == UP) pushFrontRowOf(moveGrid);
     else if(input == DOWN) pushBackRowOf(moveGrid);
     else if(input == LEFT) pushFrontColumnOf(moveGrid);
     else if(input == RIGHT) pushBackColumnOf(moveGrid);
-    
+
     if(input == UP) pushFrontRowOf(moveEyeGrid);
     else if(input == DOWN) pushBackRowOf(moveEyeGrid);
     else if(input == LEFT) pushFrontColumnOf(moveEyeGrid);
     else if(input == RIGHT) pushBackColumnOf(moveEyeGrid);
-    
+
     deque<deque<int> > tempGrid = moveGrid;
-    
+
     set<int> checked;
     set<pair<int, int> > eyesToChange;
     int theReturn = moveTile(playerID, input, checked, tempGrid, eyesToChange);
-    
+
     if(theReturn != -1) {
         //Move eyes
         int yTrans = 0, xTrans = 0;
@@ -192,7 +192,7 @@ bool move(keyType input, int timeAllowed) {
         else if(input == DOWN) yTrans = 1;
         else if(input == LEFT) xTrans = -1;
         else if(input == RIGHT) xTrans = 1;
-        
+
         vector<int> eyeColor;
         for(auto it : eyesToChange) {
             eyeColor.push_back(moveEyeGrid[it.first][it.second]);
@@ -205,7 +205,7 @@ bool move(keyType input, int timeAllowed) {
         cropBordersOfBoth(moveGrid, moveEyeGrid);
         movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed);
         movements.push(newMovement);
-        
+
         return true;
     }
     else {
@@ -229,7 +229,7 @@ void changePlayerIdRandom() {
             }
         }
     }
-    
+
     if (playerIDs.size() <= 1) return;
     bool next = false;
     for(auto c : playerIDs) {
