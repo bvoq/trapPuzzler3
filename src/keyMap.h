@@ -52,9 +52,9 @@ void initDefaultKeyMapping() {
     keyMapper.insert({48, CHANGE_TO_AIR});
     keyMapper.insert({49, CHANGE_TO_PLAYER});
     keyMapper.insert({50, CHANGE_TO_ENEMY});
-    keyMapper.insert({51, CHANGE_TO_LOVE});
-
     keyMapper.insert({51, CHANGE_TO_UNMOVABLE_ENEMY});
+    keyMapper.insert({52, CHANGE_TO_LOVE});
+
     keyMapper.insert({57, CHANGE_TO_SUPERAIR});
     
     

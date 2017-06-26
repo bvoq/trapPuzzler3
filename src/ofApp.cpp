@@ -42,8 +42,10 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 
 void ofApp::keyPressed(int key){
-    if(keyMapper.count(key) != 0) keyPressedDown[keyMapper[key] ] = true;
-	keyEvent(keyMapper[key]);
+    if(keyMapper.count(key) != 0) {
+        keyPressedDown[keyMapper[key] ] = true;
+        keyEvent(keyMapper[key]);
+    }
 }
 
 //--------------------------------------------------------------
