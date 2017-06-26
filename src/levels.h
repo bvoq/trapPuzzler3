@@ -226,12 +226,13 @@ void loadLevelData() {
 void saveLevelData() {
     ofFile writefile(locationOfResources+"levels/levels",ofFile::WriteOnly);
     for(int l = 0; l < levels.size(); ++l) {
-        writefile << "Level "<<(l+1) << " ";
+        writefile << "Level "<<(l+1) << " =";
         writefile << "{";
         for(int i = 0; i < levels[l].size(); ++i) {
             writefile << "{";
             for(int j = 0; j < levels[l][i].size(); ++j) {
                 writefile << levels[l][i][j];
+                if(j + 1 != levels[l][i].size()) writefile <<",";
             }
             writefile << "}";
             if(i + 1 != levels[l].size()) writefile << ",";
