@@ -1,6 +1,9 @@
 *.dll
+*.project
+src/.vs/
 obj/
+
 *vcxproj*
 addons.make
-
-trapPuzzlerSimulation/*
+.compile and run.bat
+*.cproject
