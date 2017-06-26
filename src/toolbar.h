@@ -29,7 +29,7 @@ int getWidth() {
     else return ofGetWidth();
 }
 int getHeight() {
-    if(messageBlockingToolbar) return ofGetHeight() - messageSize;
+    if(messageBlockingToolbar) return ofGetHeight() - max(messageSize,toolbarSize); //might look nicer during transition of messages.
     if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR) && toolbarOrientation == BOTTOMTOOLBAR) return ofGetHeight() - toolbarSize;
     return ofGetHeight();
 }
