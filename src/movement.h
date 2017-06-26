@@ -9,7 +9,6 @@
 #ifndef trapPuzzler3_movement_h
 #define trapPuzzler3_movement_h
 
-int modifyKeys = 3;
 
 #include <iostream>
 using namespace std;
@@ -104,7 +103,7 @@ void checkMovement() {
             movements.front().timeWhenStarted = ofGetElapsedTimeMicros();
             checkForMerge();
         }
-    }
+	}
 }
 
 void undoMovement(int timeAllowed) {
