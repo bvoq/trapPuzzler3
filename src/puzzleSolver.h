@@ -15,6 +15,9 @@ int origSolveY, origSolveX;
 int solveY, solveX;
 bool moreOptimized = false;
 
+int diffForSolved = 3;
+
+int origGridSizeY, origGridSizeX;
 bool dfsSolvableWithDepth(int depth, int _y, int _x) {
     int currentGridSizeY = moveGrid.size(), currentGridSizeX = moveGrid[0].size();
     if(depth > 0 && solveGrids.count(moveGrid) == 0) {
@@ -32,7 +35,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
         solveGrids.insert(moveGrid);
         if(move(UP, -1)) {
             checkMovement();
-            if(moveGrid.size() > currentGridSizeY) return true;
+            if(moveGrid.size() > origGridSizeY + diffForSolved) return true;
             d = dfsSolvableWithDepth(depth - 1, _y-1, _x);
             if(d) return d;
             undoMovement(-1);
@@ -41,29 +44,29 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
         
         if(move(DOWN, -1)) {
             checkMovement();
-            if(moveGrid.size() > currentGridSizeY) return true;
+            //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y+1, _x);
             if(d) return d;
-            if(moveGrid.size() > currentGridSizeY) return true;
+            if(moveGrid.size() > origGridSizeY + diffForSolved) return true;
             undoMovement(-1);
             checkMovement();
         }
         
         if(move(LEFT, -1)) {
             checkMovement();
-            if(moveGrid.size() > currentGridSizeY) return true;
+            //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y, _x-1);
             if(d) return d;
-            if(moveGrid[0].size() > currentGridSizeX) return true;
+            if(moveGrid[0].size() > origGridSizeX + diffForSolved) return true;
             undoMovement(-1);
             checkMovement();
         }
         
         if(move(RIGHT, -1)) {
             checkMovement();
-            if(moveGrid.size() > currentGridSizeY) return true;
+            //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y, _x+1);
-            if(moveGrid[0].size() > currentGridSizeX) return true;
+            if(moveGrid[0].size() > origGridSizeX + diffForSolved) return true;
             if(d) return d;
             undoMovement(-1);
             checkMovement();
@@ -85,6 +88,9 @@ bool dfk(int depth) {
         }
     }
     solveY = 0; solveX = 0;
+    origGridSizeY = grid.size();
+    assert(grid.size() > 0);
+    origGridSizeX = grid[0].size();
     solveGrids.clear();
     bool canGetSolved = dfsSolvableWithDepth(depth, origSolveY, origSolveX);
     solveGrids.clear();
@@ -95,12 +101,13 @@ int tryForSolution() {
     int timeTaken = 0;
     bool tryToSolve = false;
     int i;
-    for(i = 5; i < 40 && timeTaken < /*2000000*/10000000 && tryToSolve == false; ++i) {
+    for(i = 5; timeTaken < /*2000000*/50000000 && tryToSolve == false; ++i) {
         timeTaken = clock();
         tryToSolve = dfk(i);
         timeTaken = clock() - timeTaken;
     }
-    if(tryToSolve == false) return -1;
+    if(timeTaken >= 50000000) return -2;
+    else if(tryToSolve == false) return -1;
     else return i;
 }
 
