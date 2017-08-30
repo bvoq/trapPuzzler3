@@ -93,6 +93,26 @@ deque<deque<int> > questionMarkLevel = {{1000011,1000011,1000011,1000011,1000011
 
 pair<pair<int,int>, ofMesh> backgroundTile  = {{-2,-2},ofMesh()};
 pair<pair<int,int>, ofMesh> levelselectTile = {{-2,-2},ofMesh()};
+
+/*
+map<int,ofImage> renderedImages;
+int previousLevel = 1;
+void displayOldMenu();
+void displayMenuIMGDPed() {
+    if(renderedImages.size() == 0 || renderedImages[0].getWidth() != getWidth() || renderedImages[0].getHeight() != getHeight()) renderedImages.clear();
+    if(renderedImages.count(currentLevel) != 0) {
+        displayOldMenu();
+        ofImage imgSaver;
+        imgSaver.grabScreen(0, 0, getWidth(), getHeight());
+        renderedImages[currentLevel] = imgSaver;
+    }
+    else {
+        renderedImages[currentLevel].draw();
+    }
+    previousLevel = currentLevel;
+    
+}*/
+
 void displayOldMenu() {
     ofFill();
     //ofSetColor(scheme.colorBACKGROUND_VOID);

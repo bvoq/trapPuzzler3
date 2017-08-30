@@ -44,6 +44,9 @@ void loadLevel(int level) {
             mode = PLAYING;
             DEB("Init level: " << level);
             updateGrid(levels[level]);
+            
+            gravityLevel = gravityLevels[level];
+            gravityDirection = gravityDirections[level];
         }
     }
 }
@@ -55,8 +58,9 @@ void updateGrid(deque<deque<int> > newGrid) {
     switchRenderMode(PARTIAL);
     backgroundColor = scheme.colorBACKGROUND;
     ofBackground(backgroundColor); //call this once to update buffer
-    queue<movement> empty;
-    swap(movements, empty );
+    //deque<movement> empty;
+    //swap(movements, empty );
+    movements.clear();
     previousMovements.clear();
     
     grid = newGrid;

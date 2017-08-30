@@ -20,7 +20,8 @@ float MIN_CELL_SIZE = 12;
 int playerID;
 //int currentLevel; declared in levels.h
 long long timeForSlowMovement = 160000; //is relative
-long long timeForFastMovement = 20000;
+long long timeForFastMovement = 20000; //winning
+long long timeForGravityMovement = 60000; //gravity
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
 
