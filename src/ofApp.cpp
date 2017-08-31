@@ -43,8 +43,8 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
     if(keyMapper.count(key) != 0) {
+        if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ] == false) keyEvent(keyMapper[key]);
         keyPressedDown[keyMapper[key] ] = true;
-        keyEvent(keyMapper[key]);
     }
 }
 
@@ -52,7 +52,6 @@ void ofApp::keyPressed(int key){
 void ofApp::keyReleased(int key) {
     if(keyMapper.count(key) != 0) {
         if(keyPressedDown.count(keyMapper[key]) != 0) keyPressedDown[keyMapper[key]] = false;
-        
     }
     DEB("Released key: " << key);
 }

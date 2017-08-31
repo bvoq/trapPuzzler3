@@ -20,6 +20,8 @@ void loadLevel(int level) {
             mode = LEVEL_EDITOR_PLAYING;
             updateGrid(copyLevel);
         }
+        gravityLevel = gravityLevels[currentLevel]; //can be changed, currently take it from currentLevel
+        gravityDirection = gravityDirections[currentLevel];
     }
     else if(level >= levels.size()) {
         //currentLevel = level;
