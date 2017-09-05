@@ -134,7 +134,6 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
-               
                 
                 //playerTouches[touch.id].x;
             }

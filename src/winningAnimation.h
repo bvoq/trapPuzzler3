@@ -15,40 +15,40 @@ void blockMovementForWinning() {
 }
 
 bool winState() {
-    if(movements.size() == 0) {
+    //if(movements.size() == 0) {
         //ALL PLAYERS MUST BE MERGED & 'FREE'
         int thePlayer = -1;
-        for(int i = 0; i < grid.size(); ++i) {
-            for(int j = 0; j < grid[i].size(); ++j) {
-                if(getCellType(grid[i][j]) == PLAYER || getCellType(grid[i][j]) == LOVE) {
-                    if(thePlayer == -1) thePlayer = grid[i][j];
-                    else if(thePlayer != grid[i][j]) return false;
+        for(int i = 0; i < moveGrid.size(); ++i) {
+            for(int j = 0; j < moveGrid[i].size(); ++j) {
+                if(getCellType(moveGrid[i][j]) == PLAYER || getCellType(moveGrid[i][j]) == LOVE) {
+                    if(thePlayer == -1) thePlayer = moveGrid[i][j];
+                    else if(thePlayer != moveGrid[i][j]) return false;
                 }
             }
         }
         if(thePlayer == -1) return false;
 
         bool lP = true, rP = true, dP = true, uP = true;
-        int lowestPoint = 0, highestPoint = grid.size(), mostRightPoint = 0, mostLeftPoint = grid[0].size();
-        for(int i = 0; i < grid.size(); ++i) {
-            for(int j = 0; j < grid[i].size(); ++j) {
-                if(grid[i][j] == thePlayer) {
+        int lowestPoint = 0, highestPoint = moveGrid.size(), mostRightPoint = 0, mostLeftPoint = moveGrid[0].size();
+        for(int i = 0; i < moveGrid.size(); ++i) {
+            for(int j = 0; j < moveGrid[i].size(); ++j) {
+                if(moveGrid[i][j] == thePlayer) {
                     if(i < highestPoint) highestPoint = i;
                     if(i > lowestPoint) lowestPoint = i;
                     if(j < mostLeftPoint) mostLeftPoint = j;
                     if(j > mostRightPoint) mostRightPoint = j;
 
                     for(int k = i; k >= 0; --k) {
-                        if(!(grid[k][j] == thePlayer || grid[k][j] == 0)) uP = false;
+                        if(!(moveGrid[k][j] == thePlayer || moveGrid[k][j] == 0)) uP = false;
                     }
                     for(int k = i; k < grid.size(); ++k) {
-                        if(!(grid[k][j] == thePlayer || grid[k][j] == 0)) dP = false;
+                        if(!(moveGrid[k][j] == thePlayer || moveGrid[k][j] == 0)) dP = false;
                     }
                     for(int k = j; k >= 0; --k) {
-                        if(!(grid[i][k] == thePlayer || grid[i][k] == 0)) lP = false;
+                        if(!(moveGrid[i][k] == thePlayer || moveGrid[i][k] == 0)) lP = false;
                     }
                     for(int k = j; k < grid[i].size(); ++k) {
-                        if(!(grid[i][k] == thePlayer || grid[i][k] == 0)) rP = false;
+                        if(!(moveGrid[i][k] == thePlayer || moveGrid[i][k] == 0)) rP = false;
                     }
                 }
             }
@@ -79,7 +79,7 @@ bool winState() {
             }
             return true;
         }
-    }
+    //}
     return false;
 }
 

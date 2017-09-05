@@ -937,7 +937,7 @@ void displayLevelWORefresh() {
                 ofSetColor(scheme.colorBACKGROUND);
                 ofDrawRectangle(calculatePosition(i, j, grid.size(), grid[i].size()));
                 if(j + 1 < grid[i].size() && getCellType(grid[i][j+1]) == GRAVITYMONSTERMOUTH || j + 2 < grid[i].size() && getCellType(grid[i][j+2]) == GRAVITYMONSTERMOUTH) {
-                    for(int k = 0; k <= 13; ++k) {
+                    for(int k = 0; k <= 0xF+1; ++k) {
                         //  2DE
                         //  39A
                         //01478
@@ -1067,30 +1067,34 @@ void displayLevelWORefresh() {
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);//ofSetColor(0, 0, 0);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
                 //else if(cT == GRAVITYMONSTER) ofSetColor(scheme.colorGRAVITYMONSTERSTROKE);
-                
-                //the stroke of a gravity monster is actually its eyes and mouth, so yeah
-                if(grid[i][j] == GRAVITYMONSTEREYEID) {
-                    /*ofPushMatrix();
-                     ofTranslate(-scale*2,0);
-                     drawMonsterEye(i,j,scale,tScale,grid);
-                     ofPopMatrix();*/
-                }
-                if(grid[i][j] == GRAVITYMONSTERMOUTHID) {
-                    ofPushMatrix();
-                    ofTranslate(-scale*2,0);
-                    ofPushMatrix();
-                    ofTranslate(0,scale*.1);
-                    ofScale(2,1);
-                    drawMonsterTeethRight(i,j,scale,tScale,grid,rects[i][j]);
-                    ofPopMatrix();
-                    ofPopMatrix();
-                }
+
                 
                 if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, scale, tScale, grid);
                 ofPopMatrix();
             }
         }
     }
+    
+    
+    for(int i = 0; i < grid.size(); ++i) {
+        for(int j = 0; j < grid[i].size(); ++j) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH && needToBeDrawn.count({i,j}) != 0){
+                ofPushMatrix();
+                ofTranslate(rects[i][j].getTopLeft());
+                ofPushMatrix();
+                ofTranslate(-scale*2,0);
+                ofPushMatrix();
+                ofTranslate(0,scale*.1);
+                ofScale(2,1);
+                drawMonsterTeethRight(i,j,scale,tScale,grid,rects[i][j]);
+                ofPopMatrix();
+                ofPopMatrix();
+                ofPopMatrix();
+            }
+        }
+    }
+    
+    
     needToBeDrawn.clear();
 }
 
