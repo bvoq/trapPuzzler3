@@ -204,8 +204,8 @@ void displayOldMenu() {
                 //min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.
                 
                 if(i / levelCountPerWorld == currentWorld) {
-                    if(ofGetAppPtr()->mouseX >  positionX + .1*w - 50 && ofGetAppPtr()->mouseX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
-                       && ofGetAppPtr()->mouseY >  positionY + .1*h - 20 && ofGetAppPtr()->mouseY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                    if(mousetouchX >  positionX + .1*w - 50 && mousetouchX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
+                       && mousetouchY >  positionY + .1*h - 20 && mousetouchY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
                         selectedPencil = true;
                     }
                     

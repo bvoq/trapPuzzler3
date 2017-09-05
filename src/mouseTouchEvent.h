@@ -48,7 +48,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     }
     
     
-    
+    cout << "NO I'M PRESSING DOWN " << rand() << endl;
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
         if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
@@ -149,6 +149,8 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
 
 void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     //Call as if it moved one last time.
+    if(mode == LEVEL_EDITOR) placeSelectedTiles();
+
     mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
     
     if(mode == MENU) {

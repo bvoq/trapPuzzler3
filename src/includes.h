@@ -34,11 +34,12 @@ int mouseReleasedX = -1;
 int mouseReleasedY = -1;
 int scrollX = 0;
 int scrollY = 0;
+int mousetouchX = -100, mousetouchY = -100;
 
 int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 
-bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
+bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
 enum RenderMode {
     PARTIAL, FULL
 } renderMode;

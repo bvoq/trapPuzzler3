@@ -132,10 +132,10 @@ void displayLevelEditor() {
     for(int i = 0; i < editorGrid.size(); ++i) {
         for(int j = 0; j < editorGrid[i].size(); ++j) {
             rects[i][j] = calculatePosition(i, j, editorGrid.size(), editorGrid[i].size());
-            if(isMousePressed && ofGetAppPtr()->mouseX >= rects[i][j].getTopLeft().x &&
-               ofGetAppPtr()->mouseY >= rects[i][j].getTopLeft().y &&
-               ofGetAppPtr()->mouseX < rects[i][j].getBottomRight().x &&
-               ofGetAppPtr()->mouseY < rects[i][j].getBottomRight().y) {
+            if(isMousePressed && mousetouchX >= rects[i][j].getTopLeft().x &&
+               mousetouchY >= rects[i][j].getTopLeft().y &&
+               mousetouchX < rects[i][j].getBottomRight().x &&
+               mousetouchY < rects[i][j].getBottomRight().y) {
                 if(placeType == AIR) {
                     int currentID = editorGrid[i][j];
                     for(int k = 0; k < editorGrid.size(); ++k) {

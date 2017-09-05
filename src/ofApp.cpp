@@ -25,7 +25,7 @@ void ofApp::setup(){
     //generateFancyMeshes();
     //initLevelEditor(currentLevel);
     //generateSomeCoolLevels();
-    
+        
     playAudio(0);
 }
 
@@ -36,6 +36,8 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    mousetouchY = ofGetAppPtr()->mouseY;
+    mousetouchX = ofGetAppPtr()->mouseX;
     drawEvent();
 }
 
@@ -73,7 +75,6 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if(mode == LEVEL_EDITOR) placeSelectedTiles();
     mouseTouchUp(y,x,button);
 }
 

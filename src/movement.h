@@ -157,7 +157,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
                 if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange);
-                else if(cT == UNMOVABLE_ENEMY) return -1;
+                else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE) return -1;
                 else if(cT != AIR) assert(false);
                 if(cB == -1) return -1;
                 moveGrid[i][j] = elementId;
