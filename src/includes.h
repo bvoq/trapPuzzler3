@@ -21,7 +21,7 @@ int playerID;
 //int currentLevel; declared in levels.h
 long long timeForSlowMovement = 160000; //is relative
 long long timeForFastMovement = 20000; //winning
-long long timeForGravityMovement = 60000; //gravity
+long long timeForGravityMovement = 160000; //gravity
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
 
@@ -38,7 +38,7 @@ int scrollY = 0;
 int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 
-bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
+bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
 enum RenderMode {
     PARTIAL, FULL
 } renderMode;

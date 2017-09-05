@@ -43,7 +43,14 @@ void placeSelectedTiles() {
         placeID = loveCount;
         loveCount++;
     }
-    
+    else if(placeType == GRAVITYMONSTEREYE) {
+        placeID = GRAVITYMONSTEREYEID;
+        // there can only be one gravity monster.
+    }
+    else if(placeType == GRAVITYMONSTERMOUTH) {
+        placeID = GRAVITYMONSTERMOUTHID;
+        // there can only be one gravity monster.
+    }
     for(auto & it : tilesToBePlaced) {
         if(placeID == 0) {
             bool otherOnes = false;
@@ -59,6 +66,7 @@ void placeSelectedTiles() {
                 else if(pos >= 1000000 && pos < 2000000) {changeRange = {pos, 2000000}; enemyCount--;}
                 else if(pos >= 2000000 && pos < 3000000) {changeRange = {pos, 3000000}; unmovableEnemyCount--;}
                 else if(pos >= 3000000 && pos < 4000000) {changeRange = {pos, 4000000}; loveCount--;}
+            
                 for(int i = 0; i < editorGrid.size(); ++i) {
                     for(int j = 0; j < editorGrid[i].size(); ++j) {
                         if(editorGrid[i][j] > changeRange.first && editorGrid[i][j] < changeRange.second) editorGrid[i][j]--;
@@ -170,7 +178,7 @@ void displayLevelEditor() {
                 cellType cT = getCellType(editorGrid[i][j]);
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE); //ofSetColor(255, 0, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE); // ofSetColor(0, 0, 0);
-                
+                else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
                 if(cT == ENEMY || cT == UNMOVABLE_ENEMY) drawCellStroke(i, j, scale, tScale, editorGrid);
                 ofPopMatrix();
             }
@@ -212,6 +220,7 @@ void initLevelEditor(int loadFromLevel, bool empty) {
             for(int j = 0; j < editorGrid[i].size(); ++j) {
                 if(getCellType(editorGrid[i][j]) == PLAYER && playerCount < editorGrid[i][j] + 1) playerCount = editorGrid[i][j] + 1;
                 if(getCellType(editorGrid[i][j]) == ENEMY && enemyCount < editorGrid[i][j] + 1) enemyCount = editorGrid[i][j] + 1;
+                if(getCellType(editorGrid[i][j]) == LOVE && loveCount < editorGrid[i][j]+1) loveCount = editorGrid[i][j] + 1;
                 if(getCellType(editorGrid[i][j]) == UNMOVABLE_ENEMY && unmovableEnemyCount < editorGrid[i][j] + 1) unmovableEnemyCount = editorGrid[i][j] + 1;
             }
         }

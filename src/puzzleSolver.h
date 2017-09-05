@@ -60,6 +60,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
             if(moveGrid[0].size() > origGridSizeX + diffForSolved) return true;
             undoMovement(-1);
             checkMovement();
+            
         }
         
         if(move(RIGHT, -1)) {

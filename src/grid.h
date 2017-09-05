@@ -175,8 +175,9 @@ void extendGridToFit(deque<deque<int> > & tempGrid, int sizeY, int sizeX) {
     }
 }
 
+int GRAVITYMONSTERMOUTHID = 10101010, GRAVITYMONSTEREYEID = 10101011;
 enum cellType {
-    AIR=0, PLAYER=1, ENEMY=2, UNMOVABLE_ENEMY=3, LOVE=4, SUPERAIR=9
+    AIR=0, PLAYER=1, ENEMY=2, UNMOVABLE_ENEMY=3, LOVE=4, SUPERAIR=9, GRAVITYMONSTERMOUTH=10101010, GRAVITYMONSTEREYE=10101011
 };
 
 cellType getCellType(int ID) {
@@ -185,6 +186,9 @@ cellType getCellType(int ID) {
     else if(ID >= 1000000 && ID < 2000000) return ENEMY;
     else if(ID >= 2000000 && ID < 3000000) return UNMOVABLE_ENEMY;
     else if(ID >= 3000000 && ID < 4000000) return LOVE;
+    else if(ID == GRAVITYMONSTERMOUTHID) return GRAVITYMONSTERMOUTH;
+    else if(ID == GRAVITYMONSTEREYEID) return GRAVITYMONSTEREYE;
+    else assert(false);
 }
 
 ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX) {

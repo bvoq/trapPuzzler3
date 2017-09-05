@@ -144,6 +144,26 @@ void loadLevelData() {
             }
         }
     }
+    if(levels.size() != defaultlevels.size()) cout << "The levels and defaultlevels files contain a different number of levels." << endl;
+    assert(levels.size() == defaultlevels.size());
+
+    for(int i = 0; i < levels.size(); ++i) {
+        for(int j = 0; j < levels[i].size(); ++j) {
+            if(levels[i][j].size() != levels[i][0].size()) {
+                cout << "Level " << i+1 << " in levels is not rectangular, see row " << j+1 << endl;
+                assert(false);
+            }
+        }
+    }
+    for(int i = 0; i < defaultlevels.size(); ++i) {
+        for(int j = 0; j < defaultlevels[i].size(); ++j) {
+            if(defaultlevels[i][j].size() != defaultlevels[i][0].size()) {
+                cout << "Level " << i+1 << " in defaultlevels is not rectangular, see row " << j+1 << endl;
+                assert(false);
+            }
+        }
+    }
+    
     for(int i = 0; i < levels.size(); ++i) {
         for(auto a : levels[i]) { for(int b : a) cout << b << ","; cout << "|";}
         cout << endl;
@@ -152,7 +172,6 @@ void loadLevelData() {
     for(int i = 0; i < defaultlevels.size(); ++i) {
         cropBordersOf(defaultlevels[i]);
     }
-    assert(levels.size() == defaultlevels.size());
     saveLevelData();
     //locationOfLevels;
 }

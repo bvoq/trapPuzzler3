@@ -32,7 +32,7 @@ void loadLevel(int level) {
         if(levels[level].size() > 0 && levels[level][0].size() > 0) { //Cannot load an empty level.
             
             //Messages come here !!!
-            if(level == 0) {
+            if(level == 0) {/*
                 addMessage({"This is the story of","a little yellow squarish blob."}, 4);
                 addMessage({"Although he was little,","he dreamt about a bigger world."}, 4);
                 addMessage({"He wanted to know what","the world was made of,"}, 4);
@@ -40,7 +40,7 @@ void loadLevel(int level) {
                 addMessage({"They must've turned red from boredom","the little blob thought."}, 4);
                 addMessage({"He took all his courage and finally decided","to leave these miserable people."}, 4);
                 addMessage({"But little did he know,","what he got himself into."}, 4);
-                addMessage({"Move him using","the arrow keys or WASD"}, 4);
+                addMessage({"Move him using","the arrow keys or WASD"}, 4);*/
             }
         
             mode = PLAYING;

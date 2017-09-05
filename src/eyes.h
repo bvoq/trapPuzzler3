@@ -32,8 +32,8 @@ void generateEyeGrid() {
     multimap<int, pair<int, int> > allNumbers;
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            // Eye easter egg if this line is missing: !!!!!
-            if(grid[i][j] != 0)
+            // Eye easter egg if air is added: !!!!!
+            if(getCellType(grid[i][j]) == PLAYER || getCellType(grid[i][j]) == ENEMY || getCellType(grid[i][j]) == LOVE)
             allNumbers.insert( {grid[i][j], {i, j}} );
         }
     }
@@ -48,10 +48,17 @@ void generateEyeGrid() {
         eyeGrid[(it->second).first][(it->second).second] = eyeID;
         //cout << it->first << ' ' << (it->second).first << ' ' << (it->second).second << endl;
     }
+    /*for(int i = 0; i < grid.size(); ++i) {
+        for(int j = 0; j < grid[i].size(); ++j) {
+            if(grid[i][j] == GRAVITYMONSTERMOUTHID) eyeGrid[i][j] = GRAVITYMONSTERMOUTHID;
+            else if(grid[i][j] == GRAVITYMONSTEREYEID) eyeGrid[i][j] = GRAVITYMONSTEREYEID;
+        }
+    }*/
     moveEyeGrid = eyeGrid;
 }
 
 void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX) {
+    ofEnableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
     ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5, scale * 0.5);
@@ -67,10 +74,11 @@ void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gri
     ofSetLineWidth(1);
 }
 
-
 //CREATE scale DP
 pair<float,ofPath> loveEyeDP;
 void drawLoveEye(float scale) {
+    ofEnableSmoothing();
+
     if(loveEyeDP.first != scale) {
         ofPath eyeLid;
         eyeLid.setColor(0);
@@ -96,6 +104,7 @@ void drawLoveEye(float scale) {
 }
 
 void drawPlayerEye(float scale) {
+    ofDisableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
     ofDrawEllipse(scale * 0.5, scale * 0.5, scale * 0.5, scale * 0.5);
@@ -104,7 +113,8 @@ void drawPlayerEye(float scale) {
 }
 
 void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid) {
-    if(eGrid[i][j] == 2) {
+    if(eGrid[i][j] == 0) {} //eyeless
+    else if(eGrid[i][j] == 2) {
         drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size());
         ofPushMatrix();
         ofTranslate(scale * 0.25, 0);
@@ -117,6 +127,7 @@ void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGri
     else if(eGrid[i][j] == 3) {
         drawLoveEye(scale);
     }
+    else assert(false); //unknown eyes
     //if(eGrid[i][j] == 1) ofDrawRectangle(scale * 0.25, scale * 0.25, scale * 0.25, scale * 0.25);
 }
 
