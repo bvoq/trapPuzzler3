@@ -212,19 +212,20 @@ void displayOldMenu() {
                     if(isMousePressed) {
                         if(mousePressedX > positionX && mousePressedX < positionX + w && mousePressedY > positionY && mousePressedY < positionY + h) currentLevel = i;
                     }
-                    if(isMouseReleased) {
-                        if(mouseReleasedX >  positionX + .1*w - 50 && mouseReleasedX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
-                           && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
-                            currentLevel = i;
-                            tryPlayLevel(i,true);
-                        }
-                        else if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
-                            currentLevel = i; //In case it hasn't been updated before.
-                            tryPlayLevel(i,false);
-                        }
-                    }
                 }
                 displayPencil(selectedPencil);
+            }
+            
+            if(isMouseReleased) {
+                if(beaten[i] && mouseReleasedX >  positionX + .1*w - 50 && mouseReleasedX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
+                   && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                    currentLevel = i;
+                    tryPlayLevel(i,true);
+                }
+                else if(mouseReleasedX > positionX && mouseReleasedX < positionX + w && mouseReleasedY > positionY && mouseReleasedY < positionY + h) {
+                    currentLevel = i; //In case it hasn't been updated before.
+                    tryPlayLevel(i,false);
+                }
             }
             glLineWidth(1);
             ofPopMatrix();

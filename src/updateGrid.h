@@ -20,8 +20,9 @@ void loadLevel(int level) {
             mode = LEVEL_EDITOR_PLAYING;
             updateGrid(copyLevel);
         }
-        gravityLevel = gravityLevels[currentLevel]; //can be changed, currently take it from currentLevel
-        gravityDirection = gravityDirections[currentLevel];
+        //TODO - REDO
+        // gravityLevel = gravityLevels[currentLevel]; //can be changed, currently take it from currentLevel
+        // gravityDirection = gravityDirections[currentLevel];
     }
     else if(level >= levels.size()) {
         //currentLevel = level;
@@ -47,16 +48,17 @@ void loadLevel(int level) {
             DEB("Init level: " << level);
             updateGrid(levels[level]);
             
-            gravityLevel = gravityLevels[level];
-            gravityDirection = gravityDirections[level];
+            levelInfo = levelsInfo[level];
         }
     }
 }
 
 void updateGrid(deque<deque<int> > newGrid) {
     blockMovementDueToWinningAnimation = false;
+    forceUndo = false;
+    
     timeForMovement = timeForSlowMovement;
-
+    
     switchRenderMode(PARTIAL);
     backgroundColor = scheme.colorBACKGROUND;
     ofBackground(backgroundColor); //call this once to update buffer

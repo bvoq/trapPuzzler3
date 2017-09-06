@@ -326,9 +326,38 @@ void drawCellFill(int i, int j,  float scale, float tScale, deque<deque<int> > &
 
 
 void drawCellMonsterFill(int i, int j,  float scale, float tScale, deque<deque<int> > & grid, keyType directionNotExtending) {
-    //drawCellFill(i,j,scale,tScale,grid);
-    
+    //Color should be set before calling this method.
+    ofFill();
     if(directionNotExtending == LEFT) {
+        int yP = 0, xP = 0;
+        if(i == 0) {
+            ofBeginShape();
+            ofVertex(xP,yP+scale);
+            ofVertex(xP+getWidth(),yP+scale);
+            ofVertex(xP+getWidth(),yP-getHeight());
+            ofVertex(xP,yP-getHeight());
+            ofVertex(xP,yP+scale);
+            ofEndShape();
+        }
+        else if(i+1 == grid.size()) {
+            ofBeginShape();
+            ofVertex(xP,yP);
+            ofVertex(xP+getWidth(),yP);
+            ofVertex(xP+getWidth(),yP+getHeight());
+            ofVertex(xP,yP+getHeight());
+            ofVertex(xP,yP);
+            ofEndShape();
+        }
+        else {
+            ofBeginShape();
+            ofVertex(xP,yP);
+            ofVertex(xP+getWidth(),yP);
+            ofVertex(xP+getWidth(),yP+scale);
+            ofVertex(xP,yP+scale);
+            ofVertex(xP,yP);
+            ofEndShape();
+        }
+        /*
         ofFill();
         ofBeginShape();
         ofVertex(0,0);
@@ -337,39 +366,8 @@ void drawCellMonsterFill(int i, int j,  float scale, float tScale, deque<deque<i
         ofVertex(getWidth()*2,getHeight()*2);
         ofVertex(0,getHeight()*2);
         ofVertex(0,0);
-        ofEndShape();
-    } else if(directionNotExtending == RIGHT) {
-        ofFill();
-        ofBeginShape();
-        ofVertex(scale,0);
-        ofVertex(scale,-getHeight()*2);
-        ofVertex(-getWidth()*2,-getHeight()*2);
-        ofVertex(-getWidth()*2,getHeight()*2);
-        ofVertex(scale,getHeight()*2);
-        ofVertex(scale,0);
-        ofEndShape();
-    } else if(directionNotExtending == UP) {
-        ofFill();
-        ofBeginShape();
-        ofVertex(0,scale);
-        ofVertex(getWidth()*2,scale);
-        ofVertex(getWidth()*2,-getHeight()*2);
-        ofVertex(-getWidth()*2,-getHeight()*2);
-        ofVertex(-getWidth()*2,scale);
-        ofVertex(0,scale);
-        ofEndShape();
-    } else if(directionNotExtending == DOWN) {
-        ofFill();
-        ofBeginShape();
-        ofVertex(0,0);
-        ofVertex(getWidth()*2,0);
-        ofVertex(getWidth()*2,getHeight()*2);
-        ofVertex(-getWidth()*2,getHeight()*2);
-        ofVertex(-getWidth()*2,0);
-        ofVertex(0,0);
-        ofEndShape();
-    }
-    
+        ofEndShape();*/
+    } else assert(false); //TODO Implement!
     /* FOR FUTURE 1-D BLOCKS
      if((i == 0 || grid[i-1][j] != grid[i][j]) && directionNotExtending != UP) {
      ofFill();
@@ -423,7 +421,6 @@ void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > 
      }
      ofSetColor(0);
      ofDrawEllipse(scale/2.,scale/2.,scale*.3, scale*.3);*/
-    //cout << "YOOO " << (currentWatchY-i) * 1./grid.size() * .25*scale << endl;
     
     for(float a = 0; a <= 1; a += 0.2) {
         float leftPos = (currentWatchY-i) * 1./grid.size() * .25 * scale + scale*.6 * a + scale/2. - scale*.3;
@@ -563,7 +560,7 @@ void drawMonsterTeethRight(int i, int j, float scale, float tScale, deque<deque<
     //ADDITIONALLY DRAW BROWN BACKGROUND
     ofSetColor(scheme.colorGRAVITYMONSTER);
     ofFill();
-    ofDrawRectangle(scale*.8,0,scale*.6,scale*1.2);
+    ofDrawRectangle(scale*.8,0,scale*.8,scale*1.2);
     
     //Think about how far the teeth go.
     if(i==0) for(int k = -1; position.getTop() + (k+1)*scale >= 0; --k) {
@@ -777,36 +774,43 @@ void displayLevel() {
     
     generateLookAt(eyeGrid);
     
-    //Draw everything of the gravity monster beside the monster teeth right
+    //Draw the background of the monster.
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
                 ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                drawMonsterEye(i,j,scale,tScale,grid);
                 ofPopMatrix();
                 ofPopMatrix();
             }
         }
     }
     
+    //Draw the monster (beside right teeth overlay)
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
                 ofTranslate(-scale*2,0);
-                ofPushMatrix();
-                ofTranslate(0,scale*.1);
-                ofScale(2,1);
-                drawMonsterMouth(i,j,scale,tScale,grid,rects[i][j]);
-                drawMonsterTeethLeft(i,j,scale,tScale,grid,rects[i][j]);
-                ofPopMatrix();
+                ofSetColor(scheme.colorGRAVITYMONSTER);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
+                    drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
+                    drawMonsterEye(i,j,scale,tScale,grid);
+                }
+                else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
+                    ofPushMatrix();
+                    ofTranslate(0,scale*.1);
+                    ofScale(2,1);
+                    drawMonsterMouth(i,j,scale,tScale,grid,rects[i][j]);
+                    drawMonsterTeethLeft(i,j,scale,tScale,grid,rects[i][j]);
+                    ofPopMatrix();
+                }
                 ofPopMatrix();
                 ofPopMatrix();
             }
@@ -916,7 +920,6 @@ void displayLevelWORefresh() {
         vector<vector<cellType> > rectsDPC = vector<vector<cellType> >(rects.size(), vector<cellType>(rects[0].size(),AIR));
         rectsDP = {rectsDPR, rectsDPC};
         scaleChange = scale;
-        cout << "Full redraw" << endl;
     }
     
     //Generate eye positions
@@ -970,43 +973,49 @@ void displayLevelWORefresh() {
             }
         }
     }
-
-    //Draw everything of the gravity monster beside the monster teeth right
+    
+    //Draw the background of the monster.
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE && needToBeDrawn.count({i,j}) != 0) {
+            if((getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) && needToBeDrawn.count({i,j}) != 0) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
                 ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                drawMonsterEye(i,j,scale,tScale,grid);
                 ofPopMatrix();
                 ofPopMatrix();
             }
         }
     }
     
+    //Draw the monster (beside right teeth overlay)
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH && needToBeDrawn.count({i,j}) != 0 ) {
+            if((getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) && needToBeDrawn.count({i,j}) != 0) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
                 ofTranslate(-scale*2,0);
-                ofPushMatrix();
-                ofTranslate(0,scale*.1);
-                ofScale(2,1);
-                drawMonsterMouth(i,j,scale,tScale,grid,rects[i][j]);
-                drawMonsterTeethLeft(i,j,scale,tScale,grid,rects[i][j]);
-                ofPopMatrix();
+                ofSetColor(scheme.colorGRAVITYMONSTER);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
+                    drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
+                    drawMonsterEye(i,j,scale,tScale,grid);
+                }
+                else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
+                    ofPushMatrix();
+                    ofTranslate(0,scale*.1);
+                    ofScale(2,1);
+                    drawMonsterMouth(i,j,scale,tScale,grid,rects[i][j]);
+                    drawMonsterTeethLeft(i,j,scale,tScale,grid,rects[i][j]);
+                    ofPopMatrix();
+                }
                 ofPopMatrix();
                 ofPopMatrix();
             }
         }
     }
-    
     
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {

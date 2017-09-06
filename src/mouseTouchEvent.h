@@ -29,7 +29,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
         case LEVEL_EDITOR_PLAYING:
         {
             assert(grid.size() > 0);
-            if(grid.size() > 0 && !blockMovementDueToWinningAnimation) {
+            if(grid.size() > 0 && !blockMovementDueToWinningAnimation && !forceUndo) {
                 pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
                 //If click is in bound.
                 if(0 <= tilePos.first && tilePos.first < grid.size() && 0 <= tilePos.second && tilePos.second < grid[0].size())

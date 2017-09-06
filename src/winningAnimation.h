@@ -15,7 +15,8 @@ void blockMovementForWinning() {
 }
 
 bool winState() {
-    //if(movements.size() == 0) {
+    //gravity must be disabled in order to win!
+    if(!levelInfo.gravityLevel) {
         //ALL PLAYERS MUST BE MERGED & 'FREE'
         int thePlayer = -1;
         for(int i = 0; i < moveGrid.size(); ++i) {
@@ -79,7 +80,7 @@ bool winState() {
             }
             return true;
         }
-    //}
+    }
     return false;
 }
 

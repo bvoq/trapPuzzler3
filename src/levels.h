@@ -10,17 +10,31 @@
 #ifndef trapPuzzler3_levels_h
 #define trapPuzzler3_levels_h
 #define ddd deque<deque<int> >
+
 int currentLevel = 0;
-bool gravityLevel = false;
-keyType gravityDirection = LEFT;
+
+struct LevelInfo {
+    bool gravityLevel;
+    keyType gravityDirection;
+    LevelInfo(bool _gravityLevel, keyType _gravityDirection) : gravityLevel(_gravityLevel), gravityDirection(_gravityDirection) {}
+} levelInfo(false,UP);
 
 vector<ddd > levels;
 vector<ddd > defaultlevels;
-vector<bool> gravityLevels;
-vector<bool> defaultGravityLevels;
-vector<keyType> gravityDirections;
-vector<keyType> defaultGravityDirections;
+vector<LevelInfo> levelsInfo;
+vector<LevelInfo> defaultlevelsInfo;
 vector<bool> beaten;
+
+
+bool validateLevel(deque<deque<int> > & level, LevelInfo levelInfo) {
+    for(int i = 0; i < level.size(); ++i) {
+        if(level[i].size() != level[0].size()) {
+            cout << "The level is not rectangular at row " << i << " compared to row 0." << endl;
+            return false;
+        }
+    }
+    return true;
+}
 
 void saveLevelData();
 void loadLevelData() {
@@ -73,17 +87,26 @@ void loadLevelData() {
                         }
                     }
                     for(; j < lines[i].size(); ++j) {
-                        if(lines[i][j] == 'g') {
+                        /*if(lines[i][j] == 'g') {
                             assert(j+1 < lines[i].size());
                             gravity = true;
                             assert(lines[i][j+1] == 'u' || lines[i][j+1] == 'd' || lines[i][j+1] == 'l' || lines[i][j+1] == 'r');
                             gravityDir = lines[i][j+1] == 'u' ? UP : lines[i][j+1] == 'd' ? DOWN : lines[i][j+1] == 'l' ? LEFT : lines[i][j+1] == 'r' ? RIGHT : UP;
                             ++j;
+                        }*/
+                    }
+                    
+                    for(int i = 0; i < level.size(); ++i) {
+                        for(int j = 0; j < level[i].size(); ++j) {
+                            if(getCellType(level[i][j]) == GRAVITYMONSTERMOUTH) {
+                                gravity = true;
+                                gravityDir = RIGHT;
+                            }
                         }
                     }
                     levels.push_back(level);
-                    gravityLevels.push_back(gravity);
-                    gravityDirections.push_back(gravityDir);
+                    LevelInfo tempLevelInfo = LevelInfo(gravity,gravityDir);
+                    levelsInfo.push_back(tempLevelInfo);
                 }
             }
         }
@@ -129,49 +152,44 @@ void loadLevelData() {
                         }
                     }
                     for(; j < lines2[i].size(); ++j) {
+                        /*
                         if(lines2[i][j] == 'g') {
                             assert(j+1 < lines2[i].size());
                             gravity = true;
                             assert(lines2[i][j+1] == 'u' || lines2[i][j+1] == 'd' || lines2[i][j+1] == 'l' || lines2[i][j+1] == 'r');
-                            gravityDir = lines2[i][j+1] == 'u' ? UP : lines2[i][j+1] == 'd' ? DOWN : lines2[i][j+1] == 'l' ? LEFT : lines2[i][j+1] == 'r' ? RIGHT : UP;
+                            //gravityDir = lines2[i][j+1] == 'u' ? UP : lines2[i][j+1] == 'd' ? DOWN : lines2[i][j+1] == 'l' ? LEFT : lines2[i][j+1] == 'r' ? RIGHT : UP;
                             ++j;
+                        }*/
+                    }
+                    
+                    for(int i = 0; i < level.size(); ++i) {
+                        for(int j = 0; j < level[i].size(); ++j) {
+                            if(getCellType(level[i][j]) == GRAVITYMONSTERMOUTH) {
+                                gravity = true;
+                                gravityDir = RIGHT;
+                            }
                         }
                     }
+                    
                     defaultlevels.push_back(level);
-                    defaultGravityLevels.push_back(gravity);
-                    defaultGravityDirections.push_back(gravityDir);
+                    LevelInfo tempDefaultLevelInfo = LevelInfo(gravity,gravityDir);
+                    defaultlevelsInfo.push_back(tempDefaultLevelInfo);
                 }
             }
         }
     }
     if(levels.size() != defaultlevels.size()) cout << "The levels and defaultlevels files contain a different number of levels." << endl;
     assert(levels.size() == defaultlevels.size());
-
-    for(int i = 0; i < levels.size(); ++i) {
-        for(int j = 0; j < levels[i].size(); ++j) {
-            if(levels[i][j].size() != levels[i][0].size()) {
-                cout << "Level " << i+1 << " in levels is not rectangular, see row " << j+1 << endl;
-                assert(false);
-            }
-        }
-    }
-    for(int i = 0; i < defaultlevels.size(); ++i) {
-        for(int j = 0; j < defaultlevels[i].size(); ++j) {
-            if(defaultlevels[i][j].size() != defaultlevels[i][0].size()) {
-                cout << "Level " << i+1 << " in defaultlevels is not rectangular, see row " << j+1 << endl;
-                assert(false);
-            }
-        }
-    }
     
     for(int i = 0; i < levels.size(); ++i) {
-        for(auto a : levels[i]) { for(int b : a) cout << b << ","; cout << "|";}
-        cout << endl;
+        cout << "Validating level " << i+1 << endl;
+        assert( validateLevel(levels[i],levelsInfo[i]) );
+        assert( validateLevel(defaultlevels[i],defaultlevelsInfo[i]) );
         cropBordersOf(levels[i]);
-    }
-    for(int i = 0; i < defaultlevels.size(); ++i) {
         cropBordersOf(defaultlevels[i]);
+
     }
+    
     saveLevelData();
     //locationOfLevels;
 }
@@ -192,7 +210,8 @@ void saveLevelData() {
             writefile << "}";
             if(i + 1 != levels[l].size()) writefile << ",";
         }
-        writefile << "}"; writefile << (gravityLevels[l] ? (gravityDirections[l] == UP ? "gu" : gravityDirections[l] == DOWN ? "gd" : gravityDirections[l] == LEFT ? "gl" : "gr") : "" );
+        writefile << "}";
+        //writefile << (levelsInfo[l].gravityLevel ? (levelsInfo[l].gravityDirection == UP ? "gu" : levelsInfo[l].gravityDirection == DOWN ? "gd" : levelsInfo[l].gravityDirection == LEFT ? "gl" : "gr") : "" );
         writefile << endl;
     }
 }

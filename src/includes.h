@@ -38,6 +38,7 @@ int mousetouchX = -100, mousetouchY = -100;
 
 int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
+bool forceUndo = false;
 
 bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
 enum RenderMode {
@@ -50,6 +51,7 @@ enum playMode {
 
 ofColor backgroundColor;
 
+#include <cassert>
 #include <cmath>
 #include <stdio.h>
 

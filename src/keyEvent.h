@@ -46,16 +46,16 @@ void keyEvent (keyType kt) {
             case DOWN:
             case RIGHT:
             case LEFT:
-                if(!blockMovementDueToWinningAnimation) move(kt, timeForMovement);
+                if(!blockMovementDueToWinningAnimation && !forceUndo) move(kt, timeForMovement);
                 break;
             case PLAYER_CHANGE:
-                changePlayerIdRandom();
+                if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdRandom();
                 break;
             case RESTART:
                 restart();
                 break;
             case UNDO:
-                undoMovement(timeForMovement);
+                if(!blockMovementDueToWinningAnimation) undoMovement(timeForMovement);
                 break;
             case SOLVE:
                 cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
