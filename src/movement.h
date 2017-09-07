@@ -108,7 +108,7 @@ void checkMovement() {
     }
 }
 
-void undoMovement(int timeAllowed) {
+void undoMovement(long long maxtime) {
     if(movements.size() == 0 && previousMovements.size() != 0) {
         forceUndo = false;
         bool lastGravity = false;
@@ -123,7 +123,7 @@ void undoMovement(int timeAllowed) {
             //cropBordersOf(previousMovements.back().oldEyeGrid);
             movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
                               previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
-                              oppositeKeyType, previousMovements.back().hasMoved, true, timeAllowed, previousMovements.back().gravityMove);
+                              oppositeKeyType, previousMovements.back().hasMoved, true, MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
             
             moveGrid = previousMovements.back().oldGrid;
             moveEyeGrid = previousMovements.back().oldEyeGrid;
@@ -208,7 +208,7 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
     return isAffected;
 }
 
-bool move(keyType input, int timeAllowed) {
+bool move(keyType input, long long timeAllowed) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
@@ -266,21 +266,31 @@ bool move(keyType input, int timeAllowed) {
         movements.push_back(newMovement);
         checked.clear();
         
+
         bool hasEyeAndThereforeGravity = false;
         int positionOfGravityMonsterX = -1;
-        
         for(int i = 0; i < moveGrid.size(); ++i) {
             for(int j = 0; j < moveGrid[i].size(); ++j) {
                 if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
                 if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) hasEyeAndThereforeGravity = true;
             }
         }
+        
         if(hasEyeAndThereforeGravity) { //asserts gravity.
             set<int> checked, currentlyChecking, affectedByGravity; set<pair<int,int> > affectedEyes;
             int gravityMaxCount = 100;
             keyType gravityDirection = RIGHT; //always to the right as of now.
             
+            double velocity = 1./timeAllowed; //from here acceleration will take over.
             do {
+                
+                for(int i = 0; i < moveGrid.size(); ++i) {
+                    for(int j = 0; j < moveGrid[i].size(); ++j) {
+                        if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
+                        if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) hasEyeAndThereforeGravity = true;
+                    }
+                }
+                
                 if(positionOfGravityMonsterX-1 >= 0) {
                     for(int i = 0; i < moveGrid.size(); ++i) {
                         
@@ -310,7 +320,13 @@ bool move(keyType input, int timeAllowed) {
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
                         else {
-                            cout << "Unexpected celltype: " << getCellType(moveGrid[i][positionOfGravityMonsterX]) << endl;
+                            cout << "Unexpected celltype: " << getCellType(moveGrid[i][positionOfGravityMonsterX]) << " at location (" << i << "," << positionOfGravityMonsterX << ")" << endl;
+                            for(int i = 0; i < moveGrid.size(); ++i) {
+                                for(int j = 0; j < moveGrid[i].size(); ++j) {
+                                    cout << j << ":" << moveGrid[i][j] << ",";
+                                }
+                                cout << endl;
+                            }
                             assert(false);
                         } //should only be filled by GRAVITYMONSTERMOUTH and GRAVITYMONSTEREYE
                     }
@@ -369,8 +385,11 @@ bool move(keyType input, int timeAllowed) {
                 
                 cropBordersOfBoth(moveGrid, moveEyeGrid);
                 if(affectedByGravity.size() > 0) {
-                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, timeForGravityMovement, true);
+                    cout << "speed " << (velocity) << " time " << (1./velocity) << " longed " <<  (long long)(1./velocity) << endl;
+
+                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, (long long)(1./velocity), true);
                     movements.push_back(newGravityMovement);
+                    velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;
                 }
             } while(affectedByGravity.size() > 0 && gravityMaxCount-->0);
             while(affectedByGravity.size()!=0 && movements.size() > 10 && affectedByGravity == movements.back().hasMoved) {
