@@ -158,7 +158,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
                 if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange);
-                else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE) return -1;
+                else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) return -1;
                 else if(cT != AIR) assert(false);
                 if(cB == -1) return -1;
                 moveGrid[i][j] = elementId;
@@ -171,7 +171,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
 
 //returns a set with the blocks affected by gravity. currentlychecking makes sure no infinite loops happen.
 bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, set<int>& currentlyChecking, set<int> &
-    affectedByGravity, set<pair<int,int> > & affectedEyes ) {
+                   affectedByGravity, set<pair<int,int> > & affectedEyes ) {
     assert(elementId != 0);
     if(checked.count(elementId) != 0) return affectedByGravity.count(elementId) != 0;
     
@@ -188,11 +188,11 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
                 else if(gravityDirection == RIGHT) j++;
                 else assert(false);
                 if(moveEyeGrid[k][l] != 0) eyePositions.push_back({k,l});
-
+                
                 if(moveGrid[i][j] != elementId && currentlyChecking.count(moveGrid[i][j])==0) { //currentlyChecking prevents infinite loops
                     cellType cT = getCellType(moveGrid[i][j]);
                     if(cT == ENEMY || cT == PLAYER || cT == LOVE) isAffected = affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes);
-                    else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE) isAffected = false;
+                    else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) isAffected = false;
                     else if(cT != AIR) assert(false);
                 }
             }
@@ -255,7 +255,7 @@ bool move(keyType input, int timeAllowed) {
         //Extend monsters after cropping (maximum by one):
         for(int i = 0; i < moveGrid.size(); ++i) {
             for(int j = 0; j < moveGrid[i].size(); ++j) {
-                if((i+1 < moveGrid.size() && moveGrid[i+1][j] == GRAVITYMONSTERMOUTHID) || (i-1 >= 0 && moveGrid[i-1][j] == GRAVITYMONSTERMOUTHID)) {
+                if((i+1 == moveGrid.size()-1 && moveGrid[i+1][j] == GRAVITYMONSTERMOUTHID) || (i-1 == 0 && moveGrid[i-1][j] == GRAVITYMONSTERMOUTHID)) {
                     if(moveGrid[i][j] == AIR) {
                         moveGrid[i][j] = GRAVITYMONSTERMOUTHID;
                     }
@@ -268,44 +268,70 @@ bool move(keyType input, int timeAllowed) {
         
         bool hasEyeAndThereforeGravity = false;
         int positionOfGravityMonsterX = -1;
-
+        
         for(int i = 0; i < moveGrid.size(); ++i) {
             for(int j = 0; j < moveGrid[i].size(); ++j) {
-                if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE || getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
+                if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
                 if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) hasEyeAndThereforeGravity = true;
             }
         }
         if(hasEyeAndThereforeGravity) { //asserts gravity.
             set<int> checked, currentlyChecking, affectedByGravity; set<pair<int,int> > affectedEyes;
             int gravityMaxCount = 100;
+            keyType gravityDirection = RIGHT; //always to the right as of now.
             
             do {
                 if(positionOfGravityMonsterX-1 >= 0) {
                     for(int i = 0; i < moveGrid.size(); ++i) {
-                        if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER
-                           || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == ENEMY) {
-                            if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER) forceUndo = true;
-                            moveGrid[i][positionOfGravityMonsterX-1] = 0;
+                        
+                        if(getCellType(moveGrid[i][positionOfGravityMonsterX]) == GRAVITYMONSTERMOUTH) {
+                            if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER
+                               || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == ENEMY
+                               || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == LOVE) {
+                                if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER) {
+                                    forceUndo = true;
+                                    for(int k = 0; k < moveGrid.size(); ++k) {
+                                        for(int l = 0; l < moveGrid[k].size(); ++l) {
+                                            if(!(k == i && l == positionOfGravityMonsterX-1) && moveGrid[i][positionOfGravityMonsterX-1] == moveGrid[k][l]) {
+                                                forceUndo = false; //Only gets triggered if all movements are false.
+                                            }
+                                        }
+                                    }
+                                }
+                                moveGrid[i][positionOfGravityMonsterX-1] = 0;
+                            }
                         }
+                        else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTEREYE) {
+                            if(positionOfGravityMonsterX-3 >= 0 && (getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == PLAYER
+                               || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == ENEMY
+                               || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
+                                //moveGrid[i][positionOfGravityMonsterX] = GRAVITYMONSTERDEADEYEID;
+                            }
+                        }
+                        else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
+                        else {
+                            cout << "Unexpected celltype: " << getCellType(moveGrid[i][positionOfGravityMonsterX]) << endl;
+                            assert(false);
+                        } //should only be filled by GRAVITYMONSTERMOUTH and GRAVITYMONSTEREYE
                     }
                 }
                 
                 oldGrid = moveGrid;
                 oldEyeGrid = moveEyeGrid;
                 checked.clear(); affectedByGravity.clear(); affectedEyes.clear(); currentlyChecking.clear();
-                if(levelInfo.gravityDirection == UP) pushFrontRowOf(moveGrid);
-                else if(levelInfo.gravityDirection == DOWN) pushBackRowOf(moveGrid);
-                else if(levelInfo.gravityDirection == LEFT) pushFrontColumnOf(moveGrid);
-                else if(levelInfo.gravityDirection == RIGHT) pushBackColumnOf(moveGrid);
+                if(gravityDirection == UP) pushFrontRowOf(moveGrid);
+                else if(gravityDirection == DOWN) pushBackRowOf(moveGrid);
+                else if(gravityDirection == LEFT) pushFrontColumnOf(moveGrid);
+                else if(gravityDirection == RIGHT) pushBackColumnOf(moveGrid);
                 
-                if(levelInfo.gravityDirection == UP) pushFrontRowOf(moveEyeGrid);
-                else if(levelInfo.gravityDirection == DOWN) pushBackRowOf(moveEyeGrid);
-                else if(levelInfo.gravityDirection == LEFT) pushFrontColumnOf(moveEyeGrid);
-                else if(levelInfo.gravityDirection == RIGHT) pushBackColumnOf(moveEyeGrid);
+                if(gravityDirection == UP) pushFrontRowOf(moveEyeGrid);
+                else if(gravityDirection == DOWN) pushBackRowOf(moveEyeGrid);
+                else if(gravityDirection == LEFT) pushFrontColumnOf(moveEyeGrid);
+                else if(gravityDirection == RIGHT) pushBackColumnOf(moveEyeGrid);
                 
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
-                        if(moveGrid[i][j] != 0) affectGravity(moveGrid[i][j], levelInfo.gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes);
+                        if(moveGrid[i][j] != 0) affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes);
                     }
                 }
                 tempGrid = moveGrid;
@@ -317,10 +343,10 @@ bool move(keyType input, int timeAllowed) {
                 }
                 
                 yTrans = 0, xTrans = 0;
-                if(levelInfo.gravityDirection == UP) yTrans = -1;
-                else if(levelInfo.gravityDirection == DOWN) yTrans = 1;
-                else if(levelInfo.gravityDirection == LEFT) xTrans = -1;
-                else if(levelInfo.gravityDirection == RIGHT) xTrans = 1;
+                if(gravityDirection == UP) yTrans = -1;
+                else if(gravityDirection == DOWN) yTrans = 1;
+                else if(gravityDirection == LEFT) xTrans = -1;
+                else if(gravityDirection == RIGHT) xTrans = 1;
                 
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
@@ -343,7 +369,7 @@ bool move(keyType input, int timeAllowed) {
                 
                 cropBordersOfBoth(moveGrid, moveEyeGrid);
                 if(affectedByGravity.size() > 0) {
-                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, levelInfo.gravityDirection, affectedByGravity, false, timeForGravityMovement, true);
+                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, timeForGravityMovement, true);
                     movements.push_back(newGravityMovement);
                 }
             } while(affectedByGravity.size() > 0 && gravityMaxCount-->0);

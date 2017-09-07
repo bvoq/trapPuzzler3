@@ -484,7 +484,7 @@ void drawMonsterMouth(int i, int j, float scale, float tScale, deque<deque<int> 
 
 
 void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<int> > & grid, ofRectangle & position) {
-    for(int k = 0; k < grid.size(); ++k) if(grid[k][j] == GRAVITYMONSTEREYEID) {
+    for(int k = 0; j-2 >= 0 && k < grid.size(); ++k) if(getCellType(grid[k][j-2]) == GRAVITYMONSTEREYE || getCellType(grid[k][j-2]) == GRAVITYMONSTERDEADEYE) {
         fastrandtoothgenseed = (1000*(k-i)) % 32767;
         break;
     }
@@ -528,8 +528,8 @@ void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<i
 
 
 void drawMonsterTeethRight(int i, int j, float scale, float tScale, deque<deque<int> > & grid, ofRectangle & position) {
-    for(int k = 0; k < grid.size(); ++k) if(grid[k][j] == GRAVITYMONSTEREYEID) {
-        fastrandtoothgenseed = (1000*(k-i)) % 32767;
+    for(int k = 0; j-2 >= 0 && k < grid.size(); ++k) if(getCellType(grid[k][j-2]) == GRAVITYMONSTEREYE || getCellType(grid[k][j-2]) == GRAVITYMONSTERDEADEYE) {
+        fastrandtoothgenseed = (1002*(k-i)) % 32767;
         break;
     }
     ofSetColor(255);
@@ -777,11 +777,11 @@ void displayLevel() {
     //Draw the background of the monster.
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH || getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
-                ofTranslate(-scale*2,0);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                 ofPopMatrix();
@@ -793,13 +793,17 @@ void displayLevel() {
     //Draw the monster (beside right teeth overlay)
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH || getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
-                ofTranslate(-scale*2,0);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
+                    drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
+                    drawMonsterEye(i,j,scale,tScale,grid);
+                }
+                else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     drawMonsterEye(i,j,scale,tScale,grid);
                 }
@@ -830,7 +834,6 @@ void displayLevel() {
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
-                else if(cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERMOUTH) ofSetColor(scheme.colorGRAVITYMONSTER);
                 
                 if(cT == PLAYER || cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellFill(i, j, scale, tScale, grid);
                 
@@ -853,25 +856,32 @@ void displayLevel() {
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE);//ofSetColor(255, 0, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);//ofSetColor(0, 0, 0);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
-                //else if(cT == GRAVITYMONSTER) ofSetColor(scheme.colorGRAVITYMONSTERSTROKE);
-                
-                //the stroke of a gravity monster is actually its eyes and mouth, so yeah
-                if(grid[i][j] == GRAVITYMONSTERMOUTHID) {
-                    ofPushMatrix();
-                    ofTranslate(-scale*2,0);
-                    ofPushMatrix();
-                    ofTranslate(0,scale*.1);
-                    ofScale(2,1);
-                    drawMonsterTeethRight(i,j,scale,tScale,grid,rects[i][j]);
-                    ofPopMatrix();
-                    ofPopMatrix();
-                }
                 
                 if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, scale, tScale, grid);
                 ofPopMatrix();
             }
         }
     }
+    
+    
+    for(int i = 0; i < grid.size(); ++i) {
+        for(int j = 0; j < grid[i].size(); ++j) {
+            if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH){
+                ofPushMatrix();
+                ofTranslate(rects[i][j].getTopLeft());
+                ofPushMatrix();
+                ofTranslate(-scale*2,0);
+                ofPushMatrix();
+                ofTranslate(0,scale*.1);
+                ofScale(2,1);
+                drawMonsterTeethRight(i,j,scale,tScale,grid,rects[i][j]);
+                ofPopMatrix();
+                ofPopMatrix();
+                ofPopMatrix();
+            }
+        }
+    }
+    
     
 }
 
@@ -949,7 +959,7 @@ void displayLevelWORefresh() {
                         int ti = k == 2||k==0xD||k==0xE ? i - 2 : k == 3||k==9||k==0xA ? i - 1 : k == 5||k==0xB||k==0xC ? i + 1 : k == 6||k==0xF||k==0x10 ? i + 2 :  i;
                         int tj = k == 0 ? j - 2 : k == 1 ? j - 1 : k == 7||k==9||k==0xB||k==0xD||k==0xF ? j + 1 : k == 8||k==0xA||k==0xB||k==0xE||k==0x10 ? j + 2 : j;
                         
-                        if(ti >= 0 && ti < grid.size() && tj >= 0 && tj < grid[ti].size() && grid[ti][tj] != 0 && cellType(grid[ti][tj]) != GRAVITYMONSTEREYE) {
+                        if(ti >= 0 && ti < grid.size() && tj >= 0 && tj < grid[ti].size() && grid[ti][tj] != 0) {
                             needToBeDrawn.insert({ti,tj});
                         }
                     }
@@ -977,11 +987,11 @@ void displayLevelWORefresh() {
     //Draw the background of the monster.
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if((getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) && needToBeDrawn.count({i,j}) != 0) {
+            if((getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH || getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) && needToBeDrawn.count({i,j}) != 0) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
-                ofTranslate(-scale*2,0);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                 ofPopMatrix();
@@ -993,13 +1003,17 @@ void displayLevelWORefresh() {
     //Draw the monster (beside right teeth overlay)
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if((getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) && needToBeDrawn.count({i,j}) != 0) {
+            if((getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH || getCellType(grid[i][j]) == GRAVITYMONSTEREYE || getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) && needToBeDrawn.count({i,j}) != 0) {
                 ofPushMatrix();
                 ofTranslate(rects[i][j].getTopLeft());
                 ofPushMatrix();
-                ofTranslate(-scale*2,0);
+                if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
+                    drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
+                    drawMonsterEye(i,j,scale,tScale,grid);
+                }
+                else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     drawMonsterEye(i,j,scale,tScale,grid);
                 }
@@ -1034,7 +1048,6 @@ void displayLevelWORefresh() {
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
-                else if(cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERMOUTH) ofSetColor(scheme.colorGRAVITYMONSTER);
                 
                 /*if(cT == GRAVITYMONSTEREYE) {
                     ofPushMatrix();
@@ -1075,7 +1088,6 @@ void displayLevelWORefresh() {
                 if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE);//ofSetColor(255, 0, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);//ofSetColor(0, 0, 0);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
-                //else if(cT == GRAVITYMONSTER) ofSetColor(scheme.colorGRAVITYMONSTERSTROKE);
 
                 
                 if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, scale, tScale, grid);

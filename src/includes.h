@@ -40,7 +40,7 @@ int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 bool forceUndo = false;
 
-bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
+bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
 enum RenderMode {
     PARTIAL, FULL
 } renderMode;

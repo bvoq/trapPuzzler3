@@ -14,10 +14,8 @@
 int currentLevel = 0;
 
 struct LevelInfo {
-    bool gravityLevel;
-    keyType gravityDirection;
-    LevelInfo(bool _gravityLevel, keyType _gravityDirection) : gravityLevel(_gravityLevel), gravityDirection(_gravityDirection) {}
-} levelInfo(false,UP);
+    LevelInfo() {}
+} levelInfo;
 
 vector<ddd > levels;
 vector<ddd > defaultlevels;
@@ -105,7 +103,7 @@ void loadLevelData() {
                         }
                     }
                     levels.push_back(level);
-                    LevelInfo tempLevelInfo = LevelInfo(gravity,gravityDir);
+                    LevelInfo tempLevelInfo = LevelInfo();
                     levelsInfo.push_back(tempLevelInfo);
                 }
             }
@@ -172,7 +170,7 @@ void loadLevelData() {
                     }
                     
                     defaultlevels.push_back(level);
-                    LevelInfo tempDefaultLevelInfo = LevelInfo(gravity,gravityDir);
+                    LevelInfo tempDefaultLevelInfo = LevelInfo();
                     defaultlevelsInfo.push_back(tempDefaultLevelInfo);
                 }
             }

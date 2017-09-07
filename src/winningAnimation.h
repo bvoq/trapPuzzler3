@@ -16,7 +16,20 @@ void blockMovementForWinning() {
 
 bool winState() {
     //gravity must be disabled in order to win!
-    if(!levelInfo.gravityLevel) {
+    bool gravityLevel = false;
+    for(int i = 0; i < moveGrid.size(); ++i) {
+        for(int j = 0; j < moveGrid[i].size(); ++j) {
+            if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) gravityLevel = true;
+        }
+    }
+    cout << endl;
+    for(int i = 0; i < grid.size(); ++i) {
+        for(int j = 0; j < grid[i].size(); ++j) {
+            cout << grid[i][j] << ",";
+        }
+        cout << "|" << endl;
+    }
+    if(!gravityLevel) {
         //ALL PLAYERS MUST BE MERGED & 'FREE'
         int thePlayer = -1;
         for(int i = 0; i < moveGrid.size(); ++i) {
@@ -42,13 +55,13 @@ bool winState() {
                     for(int k = i; k >= 0; --k) {
                         if(!(moveGrid[k][j] == thePlayer || moveGrid[k][j] == 0)) uP = false;
                     }
-                    for(int k = i; k < grid.size(); ++k) {
+                    for(int k = i; k < moveGrid.size(); ++k) {
                         if(!(moveGrid[k][j] == thePlayer || moveGrid[k][j] == 0)) dP = false;
                     }
                     for(int k = j; k >= 0; --k) {
                         if(!(moveGrid[i][k] == thePlayer || moveGrid[i][k] == 0)) lP = false;
                     }
-                    for(int k = j; k < grid[i].size(); ++k) {
+                    for(int k = j; k < moveGrid[i].size(); ++k) {
                         if(!(moveGrid[i][k] == thePlayer || moveGrid[i][k] == 0)) rP = false;
                     }
                 }
@@ -69,13 +82,13 @@ bool winState() {
         }
 
         if(rP) {
-            for(int j = mostRightPoint; j < grid[0].size(); ++j) {
+            for(int j = mostRightPoint; j < moveGrid[0].size(); ++j) {
                 move(RIGHT, timeForMovement);
             }
             return true;
         }
         if(dP) {
-            for(int i = highestPoint; i < grid.size(); ++i) {
+            for(int i = highestPoint; i < moveGrid.size(); ++i) {
                 move(DOWN, timeForMovement);
             }
             return true;
