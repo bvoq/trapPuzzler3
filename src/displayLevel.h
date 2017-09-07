@@ -477,7 +477,8 @@ void drawMonsterMouth(int i, int j, float scale, float tScale, deque<deque<int> 
     ofSetColor(0);
     drawCellFill(i,j,scale*.8,tScale*.8,grid);
     ofSetColor(0);
-    if(i-1 >= 0 && grid[i-1][j] == grid[i][j]) ofDrawRectangle(0,0,scale*.8,-scale*.4);
+    if(i+1 < grid.size() && grid[i+1][j] == grid[i][j]) ofDrawRectangle(0,scale*.8,scale*.8,scale*.1);
+    if(i-1 >= 0 && grid[i-1][j] == grid[i][j]) ofDrawRectangle(0,0,scale*.8,-scale*.1);
     
     //if(i+1 < grid.size() && grid[i+1][j] == grid[i][j]) ofDrawRectangle(0,scale*.8,scale*.8,scale);
 }
@@ -486,16 +487,21 @@ void drawMonsterMouth(int i, int j, float scale, float tScale, deque<deque<int> 
 void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<int> > & grid, ofRectangle & position) {
     for(int k = 0; j-2 >= 0 && k < grid.size(); ++k) if(getCellType(grid[k][j-2]) == GRAVITYMONSTEREYE || getCellType(grid[k][j-2]) == GRAVITYMONSTERDEADEYE) {
         fastrandtoothgenseed = (1000*(k-i)) % 32767;
+        //fastrandtoothgenseed = rand(); for debugging purposes
         break;
     }
     ofSetColor(255);
     
     float teethOffset = scale*.1*fastrandtoothgenpos()+scale*.01;//minsize
-    float teethY = -scale*.4;
-    if(i-1 >= 0 && i < grid.size() && grid[i-1][j] != grid[i][j]) teethY = scale*.2;
+    float teethY = -scale*.1;
+    if(i-1 >= 0 && i < grid.size() && grid[i-1][j] != grid[i][j]) teethY = scale *.15;
+    
+    float until = scale*.8;
+    if(i >= 0 && i+1 < grid.size() && grid[i+1][j] != grid[i][j]) until = scale*.8-tScale*.6;
     
     float teethShiftWidth = scale*.05;
-    for(; teethY < scale*.3; teethY += scale*.2*fastrandtoothgenpos()+scale*.05) {
+    bool firstTime = false;
+    for(; teethY < until; teethY += scale*.2*fastrandtoothgenpos()+scale*.05) {
         if(teethOffset >= scale*.3) teethOffset = scale*.1;
         teethOffset += scale*.1;
         //ofDrawRectangle(0,teethY,scale*.2,scale*.1);
@@ -507,11 +513,13 @@ void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<i
         
         float teethWidth = scale*.1+scale*.3*fastrandtoothgenpos(), teethLength = fastrandtoothgenpos() * scale*.4 + scale*.1;
         float teethShift = teethShiftWidth*fastrandtoothgennegpos();
+        if(!firstTime) teethShift -= teethShiftWidth*fastrandtoothgenpos();
         path.bezierTo(teethLength, teethY-teethShiftWidth+teethShift, teethLength, teethY+teethWidth+teethWidth+teethShift, 0, teethY+teethWidth);
         path.lineTo(0,teethY);
-        path.draw();
         
         teethY += teethWidth;
+        if(teethY + teethShift< until) path.draw();
+        firstTime = true;
     }
     
     //Think about how far the teeth go.
@@ -534,11 +542,15 @@ void drawMonsterTeethRight(int i, int j, float scale, float tScale, deque<deque<
     }
     ofSetColor(255);
     float teethOffset = scale*.1*fastrandtoothgenpos()+scale*.01;//minsize
-    float teethShiftWidth = scale*.05;
-    float teethY = -scale*.4;
-    if(i-1 >= 0 && i < grid.size() && grid[i-1][j] != grid[i][j]) teethY = scale*.2;
+    float teethY = -scale*.1;
+    if(i-1 >= 0 && i < grid.size() && grid[i-1][j] != grid[i][j]) teethY = scale *.15;
     
-    for(; teethY < scale*.25; teethY += scale*.2*fastrandtoothgenpos()+scale*.05) {
+    float until = scale*.8;
+    if(i >= 0 && i+1 < grid.size() && grid[i+1][j] != grid[i][j]) until = scale*.8-tScale*.6;
+    
+    float teethShiftWidth = scale*.05;
+    bool firstTime = true;
+    for(; teethY < until; teethY += scale*.2*fastrandtoothgenpos()+scale*.05) {
         if(teethOffset >= scale*.3) teethOffset = scale*.1;
         teethOffset += scale*.1;
         //ofDrawRectangle(0,teethY,scale*.2,scale*.1);
@@ -550,11 +562,12 @@ void drawMonsterTeethRight(int i, int j, float scale, float tScale, deque<deque<
         
         float teethWidth = scale*.1+scale*.3*fastrandtoothgenpos(), teethLength = fastrandtoothgenpos() * scale*.4 + scale*.1;
         float teethShift = teethShiftWidth*fastrandtoothgennegpos();
+        if(!firstTime) teethShift -= teethShiftWidth*fastrandtoothgenpos();
         path.bezierTo(scale*.8-teethLength, teethY-teethShiftWidth+teethShift, scale*.8-teethLength, teethY+teethWidth+teethWidth+teethShift, scale*.8, teethY+teethWidth);
         path.lineTo(scale*.8,teethY);
-        path.draw();
-        
         teethY += teethWidth;
+        if(teethY + teethShift< until) path.draw();
+        firstTime = true;
     }
     
     //ADDITIONALLY DRAW BROWN BACKGROUND

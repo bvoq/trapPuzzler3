@@ -22,13 +22,7 @@ bool winState() {
             if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) gravityLevel = true;
         }
     }
-    cout << endl;
-    for(int i = 0; i < grid.size(); ++i) {
-        for(int j = 0; j < grid[i].size(); ++j) {
-            cout << grid[i][j] << ",";
-        }
-        cout << "|" << endl;
-    }
+
     if(!gravityLevel) {
         //ALL PLAYERS MUST BE MERGED & 'FREE'
         int thePlayer = -1;
