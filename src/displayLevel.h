@@ -484,6 +484,8 @@ void drawMonsterMouth(int i, int j, float scale, float tScale, deque<deque<int> 
 }
 
 
+//float prevscale = 0; int prevgridsize = 0;
+//unordered_map<int, vector<ofPath> > leftteethDP;
 void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<int> > & grid, ofRectangle & position) {
     for(int k = 0; j-2 >= 0 && k < grid.size(); ++k) if(getCellType(grid[k][j-2]) == GRAVITYMONSTEREYE || getCellType(grid[k][j-2]) == GRAVITYMONSTERDEADEYE) {
         fastrandtoothgenseed = (1000*(k-i)) % 32767;
@@ -506,16 +508,23 @@ void drawMonsterTeethLeft(int i, int j, float scale, float tScale, deque<deque<i
         teethOffset += scale*.1;
         //ofDrawRectangle(0,teethY,scale*.2,scale*.1);
         //fastrandtoothgen()*scale*.5;
-        ofPath path;
-        path.setHexColor(0xFFFFFF);
-        path.setFilled(true);
-        path.moveTo(0,teethY);
-        
+        //int insertID = fastrandtoothgenseed;
+
         float teethWidth = scale*.1+scale*.3*fastrandtoothgenpos(), teethLength = fastrandtoothgenpos() * scale*.4 + scale*.1;
         float teethShift = teethShiftWidth*fastrandtoothgennegpos();
-        if(!firstTime) teethShift -= teethShiftWidth*fastrandtoothgenpos();
-        path.bezierTo(teethLength, teethY-teethShiftWidth+teethShift, teethLength, teethY+teethWidth+teethWidth+teethShift, 0, teethY+teethWidth);
-        path.lineTo(0,teethY);
+        
+        //if(leftteethDP.count(insertID) == 0) {
+            ofPath path;
+            path.setHexColor(0xFFFFFF);
+            path.setFilled(true);
+            path.moveTo(0,teethY);
+        
+            if(!firstTime) teethShift -= teethShiftWidth*fastrandtoothgenpos();
+            path.bezierTo(teethLength, teethY-teethShiftWidth+teethShift, teethLength, teethY+teethWidth+teethWidth+teethShift, 0, teethY+teethWidth);
+            path.lineTo(0,teethY);
+        //    leftteethDP[insertID] = path;
+        //}
+        
         
         teethY += teethWidth;
         if(teethY + teethShift< until) path.draw();

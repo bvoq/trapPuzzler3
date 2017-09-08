@@ -33,7 +33,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
             if(d) return d;
         }
         solveGrids.insert(moveGrid);
-        if(move(UP, -1)) {
+        if(move(moveGrid, playerID, UP, -1,false,false)) {
             checkMovement();
             if(moveGrid.size() > origGridSizeY + diffForSolved) return true;
             d = dfsSolvableWithDepth(depth - 1, _y-1, _x);
@@ -42,7 +42,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
             checkMovement();
         }
         
-        if(move(DOWN, -1)) {
+        if(move(moveGrid, playerID, DOWN, -1,false,false)) {
             checkMovement();
             //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y+1, _x);
@@ -52,7 +52,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
             checkMovement();
         }
         
-        if(move(LEFT, -1)) {
+        if(move(moveGrid, playerID, LEFT, -1,false,false)) {
             checkMovement();
             //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y, _x-1);
@@ -63,7 +63,7 @@ bool dfsSolvableWithDepth(int depth, int _y, int _x) {
             
         }
         
-        if(move(RIGHT, -1)) {
+        if(move(moveGrid, playerID, RIGHT, -1,false,false)) {
             checkMovement();
             //if(moveGrid.size() > currentGridSizeY) return true;
             d = dfsSolvableWithDepth(depth - 1, _y, _x+1);
@@ -171,6 +171,53 @@ void generateSomeCoolLevels() {
     }
     cout << endl << endl << endl << "done :(" << endl;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+set<pair<ddd,int> > computed; //<*,THIS> :=  ID of player
+vector<pair<int,keyType> > previousMove; //can then be used to backtrace the solution.
+//ONLY CONSIDERS moveGrid, NOT grid!
+//Only pushes the solved
+//Set hasGravity = true, if uncertain.
+void newSolver(ddd gridtosolve, bool hasGravity) {
+    
+    int maxSize = 256; //number of moves which are tried.
+    previousMove = vector<pair<int,keyType> >(maxSize);
+    queue<pair<ddd,int> > moves;
+    
+    //ALL POSSIBLE MOVEMENTS
+    /*
+    if(move(LEFT,-1,true,hasGravity)) {
+        computed.insert({});
+    }
+    if(move(RIGHT,-1,true,hasGravity)) {
+    
+    }
+    if(move(UP,-1,true,hasGravity)) {
+    
+    }
+    if(move(DOWN,-1,true,hasGravity)) {
+    }*/
+    /*
+    if(changePlayerId()) {
+        playerID = current.second; //reset player id
+    }*/
+}
+
 
 
 #endif

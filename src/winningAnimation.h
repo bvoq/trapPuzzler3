@@ -64,26 +64,26 @@ bool winState() {
         if(uP || dP || lP || rP) timeForMovement = timeForFastMovement;
         if(uP) {
             for(int i = lowestPoint; i >= 0; --i) {
-                move(UP, timeForMovement);
+                move(moveGrid, playerID, UP, timeForMovement, false, true);
             }
             return true;
         }
         if(lP) {
             for(int j = mostLeftPoint; j >= 0; --j) {
-                move(LEFT, timeForMovement);
+                move(moveGrid, playerID, LEFT, timeForMovement, false, true);
             }
             return true;
         }
 
         if(rP) {
             for(int j = mostRightPoint; j < moveGrid[0].size(); ++j) {
-                move(RIGHT, timeForMovement);
+                move(moveGrid, playerID, RIGHT, timeForMovement, false, true);
             }
             return true;
         }
         if(dP) {
             for(int i = highestPoint; i < moveGrid.size(); ++i) {
-                move(DOWN, timeForMovement);
+                move(moveGrid, playerID, DOWN, timeForMovement, false, true);
             }
             return true;
         }

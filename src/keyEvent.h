@@ -46,7 +46,7 @@ void keyEvent (keyType kt) {
             case DOWN:
             case RIGHT:
             case LEFT:
-                if(!blockMovementDueToWinningAnimation && !forceUndo) move(kt, timeForMovement);
+                if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,playerID,kt, timeForMovement, false, true);
                 break;
             case PLAYER_CHANGE:
                 if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdRandom();
@@ -98,11 +98,17 @@ void keyEvent (keyType kt) {
             case CHANGE_TO_UNMOVABLE_ENEMY:
                 changeBrush(UNMOVABLE_ENEMY);
                 break;
-            case CHANGE_TO_SUPERAIR:
-                changeBrush(SUPERAIR);
-                break;
             case CHANGE_TO_LOVE:
                 changeBrush(LOVE);
+                break;
+            case CHANGE_TO_MONSTERMOUTH:
+                changeBrush(GRAVITYMONSTERMOUTH);
+                break;
+            case CHANGE_TO_MONSTEREYE:
+                changeBrush(GRAVITYMONSTEREYE);
+                break;
+            case CHANGE_TO_SUPERAIR:
+                changeBrush(SUPERAIR);
                 break;
             case CLEAR:
                 initLevelEditor(currentLevel,true);

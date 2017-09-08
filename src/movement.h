@@ -121,28 +121,29 @@ void undoMovement(long long maxtime) {
             
             cropBordersOfBoth(previousMovements.back().oldGrid, previousMovements.back().oldEyeGrid);
             //cropBordersOf(previousMovements.back().oldEyeGrid);
-            movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
-                              previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
-                              oppositeKeyType, previousMovements.back().hasMoved, true, MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
             
             moveGrid = previousMovements.back().oldGrid;
-            moveEyeGrid = previousMovements.back().oldEyeGrid;
             playerID = previousMovements.back().oldPlayerID;
-            movements.push_back(undoMove);
             lastGravity = previousMovements.back().gravityMove;
+            moveEyeGrid = previousMovements.back().oldEyeGrid;
+            movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
+                          previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
+                          oppositeKeyType, previousMovements.back().hasMoved, true,
+                          MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
+            movements.push_back(undoMove);
             previousMovements.pop_back();
         } while(lastGravity);
         
     }
 }
 
-int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> >& tempGrid, set<pair<int, int> >& eyesToChange) {
+int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> >& tempGrid, set<pair<int, int> >& eyesToChange, bool solver) {
     checked.insert(elementId);
     for(int k = 0; k < tempGrid.size(); ++k) {
         for(int l = 0; l < tempGrid[k].size(); ++l) {
             if(moveGrid[k][l] == elementId) {
                 moveGrid[k][l] = 0;
-                if(moveEyeGrid[k][l] != 0) eyesToChange.insert({k,l});
+                if(!solver) if(moveEyeGrid[k][l] != 0) eyesToChange.insert({k,l});
             }
         }
     }
@@ -157,7 +158,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
                 else assert(false);
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
-                if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange);
+                if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange, solver);
                 else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) return -1;
                 else if(cT != AIR) assert(false);
                 if(cB == -1) return -1;
@@ -171,7 +172,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
 
 //returns a set with the blocks affected by gravity. currentlychecking makes sure no infinite loops happen.
 bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, set<int>& currentlyChecking, set<int> &
-                   affectedByGravity, set<pair<int,int> > & affectedEyes ) {
+                   affectedByGravity, set<pair<int,int> > & affectedEyes, bool solver ) {
     assert(elementId != 0);
     if(checked.count(elementId) != 0) return affectedByGravity.count(elementId) != 0;
     
@@ -187,11 +188,11 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
                 else if(gravityDirection == LEFT) j--;
                 else if(gravityDirection == RIGHT) j++;
                 else assert(false);
-                if(moveEyeGrid[k][l] != 0) eyePositions.push_back({k,l});
+                if(!solver) if(moveEyeGrid[k][l] != 0) eyePositions.push_back({k,l});
                 
                 if(moveGrid[i][j] != elementId && currentlyChecking.count(moveGrid[i][j])==0) { //currentlyChecking prevents infinite loops
                     cellType cT = getCellType(moveGrid[i][j]);
-                    if(cT == ENEMY || cT == PLAYER || cT == LOVE) isAffected = affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes);
+                    if(cT == ENEMY || cT == PLAYER || cT == LOVE) isAffected = affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
                     else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) isAffected = false;
                     else if(cT != AIR) assert(false);
                 }
@@ -202,13 +203,16 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
     checked.insert(elementId);
     if(isAffected) {
         affectedByGravity.insert(elementId);
-        for(int i = 0; i < eyePositions.size(); ++i) affectedEyes.insert(eyePositions[i]);
-        eyePositions.clear();
+        if(!solver) {
+            for(int i = 0; i < eyePositions.size(); ++i) affectedEyes.insert(eyePositions[i]);
+            eyePositions.clear();
+        }
     }
     return isAffected;
 }
 
-bool move(keyType input, long long timeAllowed) {
+//WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
+bool move(deque<deque<int> > & moveGrid, int playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
@@ -230,7 +234,7 @@ bool move(keyType input, long long timeAllowed) {
     
     set<int> checked;
     set<pair<int, int> > eyesToChange;
-    int theReturn = moveTile(playerID, input, checked, tempGrid, eyesToChange);
+    int theReturn = moveTile(playerID, input, checked, tempGrid, eyesToChange, solver);
     
     if(theReturn != -1) {
         //Move eyes
@@ -240,39 +244,46 @@ bool move(keyType input, long long timeAllowed) {
         else if(input == LEFT) xTrans = -1;
         else if(input == RIGHT) xTrans = 1;
         
-        vector<int> eyeColor;
-        for(auto it : eyesToChange) {
-            eyeColor.push_back(moveEyeGrid[it.first][it.second]);
-            moveEyeGrid[it.first][it.second] = 0;
+        if(!solver) {
+            vector<int> eyeColor;
+            for(auto it : eyesToChange) {
+                eyeColor.push_back(moveEyeGrid[it.first][it.second]);
+                moveEyeGrid[it.first][it.second] = 0;
+            }
+            int i = 0;
+            for(auto it : eyesToChange) {
+                moveEyeGrid[it.first+yTrans][it.second+xTrans] = eyeColor[i++];
+            }
+            cropBordersOfBoth(moveGrid, moveEyeGrid);
         }
-        int i = 0;
-        for(auto it : eyesToChange) {
-            moveEyeGrid[it.first+yTrans][it.second+xTrans] = eyeColor[i++];
-        }
+        else cropBordersOf(moveGrid);
         
-        cropBordersOfBoth(moveGrid, moveEyeGrid);
-        
-        //Extend monsters after cropping (maximum by one):
-        for(int i = 0; i < moveGrid.size(); ++i) {
-            for(int j = 0; j < moveGrid[i].size(); ++j) {
-                if((i+1 == moveGrid.size()-1 && moveGrid[i+1][j] == GRAVITYMONSTERMOUTHID) || (i-1 == 0 && moveGrid[i-1][j] == GRAVITYMONSTERMOUTHID)) {
-                    if(moveGrid[i][j] == AIR) {
-                        moveGrid[i][j] = GRAVITYMONSTERMOUTHID;
+        if(possibleGravity) {
+            //Extend monsters after cropping (maximum by one):
+            for(int i = 0; i < moveGrid.size(); ++i) {
+                for(int j = 0; j < moveGrid[i].size(); ++j) {
+                    if((i+1 == moveGrid.size()-1 && moveGrid[i+1][j] == GRAVITYMONSTERMOUTHID) || (i-1 == 0 && moveGrid[i-1][j] == GRAVITYMONSTERMOUTHID)) {
+                        if(moveGrid[i][j] == AIR) {
+                            moveGrid[i][j] = GRAVITYMONSTERMOUTHID;
+                        }
                     }
                 }
             }
         }
-        movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false);
-        movements.push_back(newMovement);
+        if(!solver) {
+            movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false);
+            movements.push_back(newMovement);
+        }
         checked.clear();
-        
 
         bool hasEyeAndThereforeGravity = false;
         int positionOfGravityMonsterX = -1;
-        for(int i = 0; i < moveGrid.size(); ++i) {
-            for(int j = 0; j < moveGrid[i].size(); ++j) {
-                if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
-                if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) hasEyeAndThereforeGravity = true;
+        if(possibleGravity) {
+            for(int i = 0; i < moveGrid.size(); ++i) {
+                for(int j = 0; j < moveGrid[i].size(); ++j) {
+                    if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
+                    if(getCellType(moveGrid[i][j]) == GRAVITYMONSTEREYE) hasEyeAndThereforeGravity = true;
+                }
             }
         }
         
@@ -299,14 +310,16 @@ bool move(keyType input, long long timeAllowed) {
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == ENEMY
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == LOVE) {
                                 if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER) {
-                                    forceUndo = true;
+                                    bool mustUndo = true;
                                     for(int k = 0; k < moveGrid.size(); ++k) {
                                         for(int l = 0; l < moveGrid[k].size(); ++l) {
                                             if(!(k == i && l == positionOfGravityMonsterX-1) && moveGrid[i][positionOfGravityMonsterX-1] == moveGrid[k][l]) {
-                                                forceUndo = false; //Only gets triggered if all movements are false.
+                                                mustUndo = false; //Only gets triggered if all movements are false.
                                             }
                                         }
                                     }
+                                    if(solver && mustUndo) return false;
+                                    else forceUndo = mustUndo;
                                 }
                                 moveGrid[i][positionOfGravityMonsterX-1] = 0;
                             }
@@ -327,7 +340,7 @@ bool move(keyType input, long long timeAllowed) {
                                 }
                                 cout << endl;
                             }
-                            assert(false);
+                            //assert(false);
                         } //should only be filled by GRAVITYMONSTERMOUTH and GRAVITYMONSTEREYE
                     }
                 }
@@ -347,7 +360,7 @@ bool move(keyType input, long long timeAllowed) {
                 
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
-                        if(moveGrid[i][j] != 0) affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes);
+                        if(moveGrid[i][j] != 0) affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
                     }
                 }
                 tempGrid = moveGrid;
@@ -372,21 +385,23 @@ bool move(keyType input, long long timeAllowed) {
                     }
                 }
                 
-                vector<int> eyeColor;
-                for(auto it : affectedEyes) {
-                    eyeColor.push_back(moveEyeGrid[it.first][it.second]);
-                    moveEyeGrid[it.first][it.second] = 0;
-                }
-                int i = 0;
-                for(auto it : affectedEyes) {
-                    moveEyeGrid[it.first+yTrans][it.second+xTrans] = eyeColor[i++];
-                }
                 moveGrid = tempGrid;
                 
-                cropBordersOfBoth(moveGrid, moveEyeGrid);
-                if(affectedByGravity.size() > 0) {
-                    cout << "speed " << (velocity) << " time " << (1./velocity) << " longed " <<  (long long)(1./velocity) << endl;
-
+                if(!solver) {
+                    vector<int> eyeColor;
+                    for(auto it : affectedEyes) {
+                        eyeColor.push_back(moveEyeGrid[it.first][it.second]);
+                        moveEyeGrid[it.first][it.second] = 0;
+                    }
+                    int i = 0;
+                    for(auto it : affectedEyes) {
+                        moveEyeGrid[it.first+yTrans][it.second+xTrans] = eyeColor[i++];
+                    }
+                    cropBordersOfBoth(moveGrid, moveEyeGrid);
+                } else cropBordersOf(moveGrid);
+                
+                
+                if(!solver && affectedByGravity.size() > 0) {
                     movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, (long long)(1./velocity), true);
                     movements.push_back(newGravityMovement);
                     velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;

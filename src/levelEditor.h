@@ -59,6 +59,8 @@ void placeSelectedTiles() {
                     if(! (it.first == i && it.second == j) && editorGrid[i][j] == editorGrid[it.first][it.second]) otherOnes = true;
                 }
             }
+            
+            //CHANGE RANGE (currently for PLAYER, ENEMY, UNMOVABLE_ENEMY, LOVE)
             if(otherOnes == false) {
                 int pos = editorGrid[it.first][it.second];
                 pair<int, int> changeRange;
@@ -74,7 +76,11 @@ void placeSelectedTiles() {
                 }
             }
         }
-        editorGrid[it.first][it.second] = placeID;
+        
+        if(placeType == GRAVITYMONSTERMOUTH) {
+            if(it.second+2 < editorGrid[it.first].size()) editorGrid[it.first][it.second+2] = placeID;
+        }
+        else editorGrid[it.first][it.second] = placeID;
     }
     
     tilesToBePlaced.clear();
@@ -164,6 +170,8 @@ void displayLevelEditor() {
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);
                 else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
+                else if(cT == GRAVITYMONSTERMOUTH) ofSetColor(0);
+                else if(cT == GRAVITYMONSTEREYE) ofSetColor(255,255,255);
                 drawCellFill(i, j, scale, tScale, editorGrid);
                 ofPopMatrix();
             }

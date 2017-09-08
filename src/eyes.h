@@ -33,7 +33,7 @@ void generateEyeGrid() {
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
             // Eye easter egg if air is added: !!!!!
-            if(getCellType(grid[i][j]) == PLAYER || getCellType(grid[i][j]) == ENEMY || getCellType(grid[i][j]) == LOVE)
+            if(getCellType(grid[i][j]) == PLAYER || getCellType(grid[i][j]) == ENEMY || getCellType(grid[i][j]) == LOVE)
             allNumbers.insert( {grid[i][j], {i, j}} );
         }
     }

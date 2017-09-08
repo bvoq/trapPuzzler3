@@ -111,25 +111,25 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
                 pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
                 //Can click outside the box.
                 if(tilePos.first == playerTouches[touchid].y-1 && tilePos.second == playerTouches[touchid].x) {
-                    if(move(UP, timeForMovement)) { //Move succeeded
+                    if(move(moveGrid, playerID, UP, timeForMovement, false, true)) { //Move succeeded
                         playerTouches[touchid].y = tilePos.first;
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y+1 && tilePos.second == playerTouches[touchid].x) {
-                    if(move(DOWN, timeForMovement)) { //Move succeeded
+                    if(move(moveGrid, playerID, DOWN, timeForMovement, false, true)) { //Move succeeded
                         playerTouches[touchid].y = tilePos.first;
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x-1) {
-                    if(move(LEFT, timeForMovement)) { //Move succeeded
+                    if(move(moveGrid, playerID, LEFT, timeForMovement, false, true)) { //Move succeeded
                         playerTouches[touchid].y = tilePos.first;
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x+1) {
-                    if(move(RIGHT, timeForMovement)) { //Move succeeded
+                    if(move(moveGrid, playerID, RIGHT, timeForMovement, false, true)) { //Move succeeded
                         playerTouches[touchid].y = tilePos.first;
                         playerTouches[touchid].x = tilePos.second;
                     }
