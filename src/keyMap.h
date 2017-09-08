@@ -59,7 +59,6 @@ void initDefaultKeyMapping() {
     
     keyMapper.insert({57, CHANGE_TO_SUPERAIR});
     
-    
     keyMapper.insert({67, CLEAR});
     keyMapper.insert({99, CLEAR});
     

@@ -16,6 +16,7 @@ void blockMovementForWinning() {
 
 bool winState(deque<deque<int> > & moveGrid) {
     //gravity must be disabled in order to win!
+    assert(moveGrid.size() != 0);
     bool gravityLevel = false;
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
@@ -76,13 +77,15 @@ bool winState(deque<deque<int> > & moveGrid) {
         }
 
         if(rP) {
-            for(int j = mostRightPoint; j < moveGrid[0].size(); ++j) {
+            int origSize = moveGrid[0].size();
+            for(int j = mostRightPoint; j < origSize; ++j) {
                 move(moveGrid, playerID, RIGHT, timeForMovement, false, true);
             }
             return true;
         }
         if(dP) {
-            for(int i = highestPoint; i < moveGrid.size(); ++i) {
+            int origSize = moveGrid.size();
+            for(int i = highestPoint; i < origSize; ++i) {
                 move(moveGrid, playerID, DOWN, timeForMovement, false, true);
             }
             return true;

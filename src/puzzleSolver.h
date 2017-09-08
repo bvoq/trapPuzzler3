@@ -190,7 +190,7 @@ void generateSomeCoolLevels() {
 //Set hasGravity = true, if uncertain.
 //returns -1 = UNSOLVABLE, x = SOLVABLE in STEP, -2 = UNKNOWN (not fully computed), -3 = ERROR, such as no player
 bool winState(deque<deque<int> > &);
-int newSolver(ddd gridtosolve, bool hasGravity) {
+int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution) {
     set<pair<ddd,int> > computed; //<*,THIS> :=  ID of player
     vector<pair<int,keyType> > previousMove; //can then be used to backtrace the solution.
     
@@ -210,9 +210,8 @@ int newSolver(ddd gridtosolve, bool hasGravity) {
     }
     
     int currentPosition = -1, newMovePosition = -1;
-    while(q.size() != 0) {
+    while(q.size() != 0 && newMovePosition < maxSize) {
         assert(!forceUndo);
-        currentPosition++;
         pair<ddd,int> current = q.back();
         q.pop();
         pair<ddd,int> left = current;
@@ -224,32 +223,61 @@ int newSolver(ddd gridtosolve, bool hasGravity) {
             if(computed.count(left) == 0) {
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, LEFT};
-                if(winState(left.first)) return newMovePosition;
-                q.push(left);
+                if(winState(down.first)) {
+                    int cm = newMovePosition;
+                    while(cm != -1) {
+                        solution.push_back(previousMove[cm].second);
+                        cm = previousMove[cm].first;
+                    }
+                    reverse(solution.begin(), solution.end());
+                    return newMovePosition;
+                }                if(newMovePosition < maxSize) q.push(left);
             }
         }
         if(move(right.first, right.second, RIGHT, -1, true, hasGravity)) {
             if(computed.count(right) == 0) {
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, RIGHT};
-                if(winState(right.first)) return newMovePosition;
-                q.push(right);
+                if(winState(down.first)) {
+                    int cm = newMovePosition;
+                    while(cm != -1) {
+                        solution.push_back(previousMove[cm].second);
+                        cm = previousMove[cm].first;
+                    }
+                    reverse(solution.begin(), solution.end());
+                    return newMovePosition;
+                }                if(newMovePosition < maxSize) q.push(right);
             }
         }
         if(move(up.first, up.second, UP, -1, true, hasGravity)) {
             if(computed.count(up) == 0) {
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, UP};
-                if(winState(up.first)) return newMovePosition;
-                q.push(up);
+                if(winState(down.first)) {
+                    int cm = newMovePosition;
+                    while(cm != -1) {
+                        solution.push_back(previousMove[cm].second);
+                        cm = previousMove[cm].first;
+                    }
+                    reverse(solution.begin(), solution.end());
+                    return newMovePosition;
+                }                if(newMovePosition < maxSize) q.push(up);
             }
         }
         if(move(down.first, down.second, DOWN, -1, true, hasGravity)) {
             if(computed.count(down) == 0) {
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, DOWN};
-                if(winState(down.first)) return newMovePosition;
-                q.push(down);
+                if(winState(down.first)) {
+                    int cm = newMovePosition;
+                    while(cm != -1) {
+                        solution.push_back(previousMove[cm].second);
+                        cm = previousMove[cm].first;
+                    }
+                    reverse(solution.begin(), solution.end());
+                    return newMovePosition;
+                }
+                if(newMovePosition < maxSize) q.push(down);
             }
         }
         
@@ -258,32 +286,14 @@ int newSolver(ddd gridtosolve, bool hasGravity) {
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, CHANGE_TO_PLAYER};
                 //should not make a win state
-                q.push(down);
+                if(newMovePosition < maxSize) q.push(down);
             }
         }
-        
-        
+        currentPosition++;
     }
     
-    return -1;
     
-    //ALL POSSIBLE MOVEMENTS
-    /*
-     if(move(LEFT,-1,true,hasGravity)) {
-     computed.insert({});
-     }
-     if(move(RIGHT,-1,true,hasGravity)) {
-     
-     }
-     if(move(UP,-1,true,hasGravity)) {
-     
-     }
-     if(move(DOWN,-1,true,hasGravity)) {
-     }*/
-    /*
-     if(changePlayerId()) {
-     playerID = current.second; //reset player id
-     }*/
+    return -1;
 }
 
 
