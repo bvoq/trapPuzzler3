@@ -14,7 +14,7 @@ void blockMovementForWinning() {
     playerTouches.clear(); //TODO Make it unplayable also for keyboard!
 }
 
-bool winState() {
+bool winState(deque<deque<int> > & moveGrid) {
     //gravity must be disabled in order to win!
     bool gravityLevel = false;
     for(int i = 0; i < moveGrid.size(); ++i) {

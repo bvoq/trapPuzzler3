@@ -28,7 +28,8 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
     if(displayEyes) {
         grid = theLevel;
         generateEyeGrid();
-        checkForMerge();
+        recheckGrid();
+        //if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
     }
     
     ofNoFill();

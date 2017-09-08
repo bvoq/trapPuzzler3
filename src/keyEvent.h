@@ -49,7 +49,7 @@ void keyEvent (keyType kt) {
                 if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,playerID,kt, timeForMovement, false, true);
                 break;
             case PLAYER_CHANGE:
-                if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdRandom();
+                if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdRandom(moveGrid,playerID,false);
                 break;
             case RESTART:
                 restart();

@@ -22,7 +22,7 @@ void drawEvent() {
             backgroundColor = scheme.colorBACKGROUND;
             //ofBackground(backgroundColor);
 
-            if(winState()) {
+            if(winState(moveGrid)) {
                 winningAnimation();
             }
             

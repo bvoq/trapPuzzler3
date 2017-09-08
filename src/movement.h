@@ -13,7 +13,8 @@
 #include <iostream>
 using namespace std;
 
-void checkForMerge();
+void checkForMerge(ddd &, int &);
+void recheckGrid();
 struct movement {
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
@@ -41,7 +42,8 @@ struct movement {
     void changeGrid() {
         grid = newGrid;
         eyeGrid = newEyeGrid;
-        checkForMerge();
+        recheckGrid();
+        if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
     }
     
     float getDelay() {
@@ -103,7 +105,8 @@ void checkMovement() {
             if(movements.front().isUndoMove == false) previousMovements.push_back(movements.front());
             movements.pop_front();
             movements.front().timeWhenStarted = ofGetElapsedTimeMicros();
-            checkForMerge();
+            recheckGrid();
+            if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
         }
     }
 }
@@ -212,7 +215,7 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
 }
 
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
-bool move(deque<deque<int> > & moveGrid, int playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
+bool move(deque<deque<int> > & moveGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
@@ -270,6 +273,7 @@ bool move(deque<deque<int> > & moveGrid, int playerID, keyType input, long long 
                 }
             }
         }
+        checkForMerge(moveGrid,playerID);
         if(!solver) {
             movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false);
             movements.push_back(newMovement);
@@ -400,7 +404,8 @@ bool move(deque<deque<int> > & moveGrid, int playerID, keyType input, long long 
                     cropBordersOfBoth(moveGrid, moveEyeGrid);
                 } else cropBordersOf(moveGrid);
                 
-                
+                checkForMerge(moveGrid,playerID);
+
                 if(!solver && affectedByGravity.size() > 0) {
                     movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, (long long)(1./velocity), true);
                     movements.push_back(newGravityMovement);
@@ -426,9 +431,9 @@ bool move(deque<deque<int> > & moveGrid, int playerID, keyType input, long long 
 void changePlayerId(int i) {
     playerID = i;
     if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
-    checkForMerge();
+    //checkForMerge();
 }
-void changePlayerIdRandom() {
+int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solver) {
     set<int> playerIDs;
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
@@ -438,20 +443,20 @@ void changePlayerIdRandom() {
         }
     }
     
-    if (playerIDs.size() <= 1) return;
+    if (playerIDs.size() <= 1) return playerID;
     bool next = false;
     for(auto c : playerIDs) {
         if(next) {
             changePlayerId(c);
-            return;
+            return playerID;
         }
         if(c == playerID) next = true;
     }
-    changePlayerId(*playerIDs.begin());
+    if(!solver) changePlayerId(*playerIDs.begin());
+    return *playerIDs.begin();
 }
 
-void recheckGrid();
-void checkForMerge() {
+void checkForMerge(deque<deque<int> > & moveGrid, int & playerID) {
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
             if(getCellType(moveGrid[i][j]) == PLAYER || getCellType(moveGrid[i][j]) == LOVE) {
@@ -495,7 +500,6 @@ void checkForMerge() {
             }
         }
     }
-    recheckGrid();
-    if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
+
 }
 #endif
