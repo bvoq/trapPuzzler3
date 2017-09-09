@@ -46,7 +46,7 @@ void keyEvent (keyType kt) {
             case DOWN:
             case RIGHT:
             case LEFT:
-                if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,playerID,kt, timeForMovement, false, true);
+                if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,moveEyeGrid,playerID,kt, timeForMovement, false, true);
                 break;
             case PLAYER_CHANGE:
                 if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdRandom(moveGrid,playerID,false);
@@ -58,7 +58,8 @@ void keyEvent (keyType kt) {
                 if(!blockMovementDueToWinningAnimation) undoMovement(timeForMovement);
                 break;
             case SOLVE:
-                cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
+                solveInGame();
+                //cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
                 break;
             case EXPORT:
                 levelFormattedExportWithoutCropping(cout, moveEyeGrid);

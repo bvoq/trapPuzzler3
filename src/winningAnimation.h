@@ -14,7 +14,7 @@ void blockMovementForWinning() {
     playerTouches.clear(); //TODO Make it unplayable also for keyboard!
 }
 
-bool winState(deque<deque<int> > & moveGrid) {
+bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
     //gravity must be disabled in order to win!
     assert(moveGrid.size() != 0);
     bool gravityLevel = false;
@@ -62,37 +62,43 @@ bool winState(deque<deque<int> > & moveGrid) {
                 }
             }
         }
-        if(uP || dP || lP || rP) timeForMovement = timeForFastMovement;
-        if(uP) {
-            for(int i = lowestPoint; i >= 0; --i) {
-                move(moveGrid, playerID, UP, timeForMovement, false, true);
-            }
-            return true;
-        }
-        if(lP) {
-            for(int j = mostLeftPoint; j >= 0; --j) {
-                move(moveGrid, playerID, LEFT, timeForMovement, false, true);
-            }
-            return true;
-        }
-
-        if(rP) {
-            int origSize = moveGrid[0].size();
-            for(int j = mostRightPoint; j < origSize; ++j) {
-                move(moveGrid, playerID, RIGHT, timeForMovement, false, true);
-            }
-            return true;
-        }
-        if(dP) {
-            int origSize = moveGrid.size();
-            for(int i = highestPoint; i < origSize; ++i) {
-                move(moveGrid, playerID, DOWN, timeForMovement, false, true);
+        if(uP || dP || lP || rP) {
+            if(winningAnimationAction) {
+                if(uP || dP || lP || rP) timeForMovement = timeForFastMovement;
+                if(uP) {
+                    for(int i = lowestPoint; i >= 0; --i) {
+                        move(moveGrid, moveEyeGrid, playerID, UP, timeForMovement, false, true);
+                    }
+                    return true;
+                }
+                if(lP) {
+                    for(int j = mostLeftPoint; j >= 0; --j) {
+                        move(moveGrid, moveEyeGrid, playerID, LEFT, timeForMovement, false, true);
+                    }
+                    return true;
+                }
+                
+                if(rP) {
+                    int origSize = moveGrid[0].size();
+                    for(int j = mostRightPoint; j < origSize; ++j) {
+                        move(moveGrid, moveEyeGrid, playerID, RIGHT, timeForMovement, false, true);
+                    }
+                    return true;
+                }
+                if(dP) {
+                    int origSize = moveGrid.size();
+                    for(int i = highestPoint; i < origSize; ++i) {
+                        move(moveGrid, moveEyeGrid, playerID, DOWN, timeForMovement, false, true);
+                    }
+                    return true;
+                }
             }
             return true;
         }
     }
     return false;
 }
+
 
 void winningAnimation() {
     blockMovementForWinning();

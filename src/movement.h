@@ -140,7 +140,7 @@ void undoMovement(long long maxtime) {
     }
 }
 
-int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> >& tempGrid, set<pair<int, int> >& eyesToChange, bool solver) {
+int moveTile(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& input, set<int>& checked, ddd & tempGrid, set<pair<int, int> >& eyesToChange, bool solver) {
     checked.insert(elementId);
     for(int k = 0; k < tempGrid.size(); ++k) {
         for(int l = 0; l < tempGrid[k].size(); ++l) {
@@ -161,7 +161,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
                 else assert(false);
                 cellType cT = getCellType(moveGrid[i][j]);
                 int cB = 0;
-                if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid[i][j], input, checked, tempGrid, eyesToChange, solver);
+                if(cT == ENEMY || cT == PLAYER || cT == LOVE) cB = moveTile(moveGrid, moveEyeGrid, moveGrid[i][j], input, checked, tempGrid, eyesToChange, solver);
                 else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) return -1;
                 else if(cT != AIR) assert(false);
                 if(cB == -1) return -1;
@@ -174,7 +174,7 @@ int moveTile(int elementId, keyType& input, set<int>& checked, deque<deque<int> 
 }
 
 //returns a set with the blocks affected by gravity. currentlychecking makes sure no infinite loops happen.
-bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, set<int>& currentlyChecking, set<int> &
+bool affectGravity(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& gravityDirection, set<int>& checked, set<int>& currentlyChecking, set<int> &
                    affectedByGravity, set<pair<int,int> > & affectedEyes, bool solver ) {
     assert(elementId != 0);
     if(checked.count(elementId) != 0) return affectedByGravity.count(elementId) != 0;
@@ -195,7 +195,7 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
                 
                 if(moveGrid[i][j] != elementId && currentlyChecking.count(moveGrid[i][j])==0) { //currentlyChecking prevents infinite loops
                     cellType cT = getCellType(moveGrid[i][j]);
-                    if(cT == ENEMY || cT == PLAYER || cT == LOVE) isAffected = affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
+                    if(cT == ENEMY || cT == PLAYER || cT == LOVE) isAffected = affectGravity(moveGrid, moveEyeGrid, moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
                     else if(cT == UNMOVABLE_ENEMY || cT == GRAVITYMONSTERMOUTH || cT == GRAVITYMONSTEREYE || cT == GRAVITYMONSTERDEADEYE) isAffected = false;
                     else if(cT != AIR) assert(false);
                 }
@@ -215,7 +215,7 @@ bool affectGravity(int elementId, keyType& gravityDirection, set<int>& checked, 
 }
 
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
-bool move(deque<deque<int> > & moveGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
+bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
@@ -228,16 +228,18 @@ bool move(deque<deque<int> > & moveGrid, int & playerID, keyType input, long lon
     else if(input == LEFT) pushFrontColumnOf(moveGrid);
     else if(input == RIGHT) pushBackColumnOf(moveGrid);
     
-    if(input == UP) pushFrontRowOf(moveEyeGrid);
-    else if(input == DOWN) pushBackRowOf(moveEyeGrid);
-    else if(input == LEFT) pushFrontColumnOf(moveEyeGrid);
-    else if(input == RIGHT) pushBackColumnOf(moveEyeGrid);
+    if(!solver) {
+        if(input == UP) pushFrontRowOf(moveEyeGrid);
+        else if(input == DOWN) pushBackRowOf(moveEyeGrid);
+        else if(input == LEFT) pushFrontColumnOf(moveEyeGrid);
+        else if(input == RIGHT) pushBackColumnOf(moveEyeGrid);
+    }
     
     deque<deque<int> > tempGrid = moveGrid;
     
     set<int> checked;
     set<pair<int, int> > eyesToChange;
-    int theReturn = moveTile(playerID, input, checked, tempGrid, eyesToChange, solver);
+    int theReturn = moveTile(moveGrid, moveEyeGrid, playerID, input, checked, tempGrid, eyesToChange, solver);
     
     if(theReturn != -1) {
         //Move eyes
@@ -364,7 +366,7 @@ bool move(deque<deque<int> > & moveGrid, int & playerID, keyType input, long lon
                 
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
-                        if(moveGrid[i][j] != 0) affectGravity(moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
+                        if(moveGrid[i][j] != 0) affectGravity(moveGrid, moveEyeGrid, moveGrid[i][j], gravityDirection, checked, currentlyChecking, affectedByGravity, affectedEyes, solver);
                     }
                 }
                 tempGrid = moveGrid;
@@ -443,7 +445,8 @@ int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solve
         }
     }
     
-    if (playerIDs.size() <= 1) return playerID;
+    if(playerIDs.size() == 0) return playerID;
+    if(playerIDs.size() == 1) return *playerIDs.begin();
     bool next = false;
     for(auto c : playerIDs) {
         if(next) {
