@@ -9,18 +9,6 @@
 #ifndef globals_h
 #define globals_h
 
-
-//
-//  includes.h
-//  trapStory2
-//
-//  Created by Kivifreak on 25/12/15.
-//
-//
-
-#ifndef trapPuzzler3_includes_h
-#define trapPuzzler3_includes_h
-
 #define DEB(x) cout << x << endl;
 #define printVec(x) for(int __i = 0; __i < x.size(); ++__i) for(int __j = 0; __j < x[__i].size(); ++__j) cout << x[__i][__j] << (__j==x[__i].size() - 1) ? "\n" : "";
 string locationOfResources = "data/";// basically finds in Resources/data
