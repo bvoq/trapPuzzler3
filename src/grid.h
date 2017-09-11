@@ -191,7 +191,7 @@ cellType getCellType(int ID) {
     else if(ID == GRAVITYMONSTERDEADEYEID) return GRAVITYMONSTERDEADEYE;
     else assert(false);
 }
-
+#ifndef islevelgen
 ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX) {
     int w = getWidth(), h = getHeight();
     float scaleY = (h * 1.) / (MAX(gridY + 2, MIN_CELL_SIZE) * 1.);
@@ -220,6 +220,24 @@ pair<int,int> calculateInversePosition(int coordY, int coordX, int gridY, int gr
     int posX = coordX / scale;
     return {posY, posX};
 }
+
+#endif
+
+void levelExport(ostream & o, deque<deque<int> > copied) {
+    cropBordersOf(copied);
+    o << "{";
+    for(int i = 0; i < copied.size(); ++i) {
+        o << "{";
+        for(int j = 0; j < copied[i].size(); ++j) {
+            o << copied[i][j];
+            if(j != copied[i].size() - 1) o << ",";
+        }
+        o << "}";
+        if(i != copied.size() - 1) o << ",";
+    }
+    o << "}";
+}
+
 
 
 #endif

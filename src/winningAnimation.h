@@ -9,10 +9,12 @@
 #ifndef winningAnimation_h
 #define winningAnimation_h
 
+#ifndef islevelgen
 void blockMovementForWinning() {
     blockMovementDueToWinningAnimation = true;
     playerTouches.clear(); //TODO Make it unplayable also for keyboard!
 }
+#endif
 
 bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
     //gravity must be disabled in order to win!
@@ -99,7 +101,7 @@ bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
     return false;
 }
 
-
+#ifndef islevelgen
 void winningAnimation() {
     blockMovementForWinning();
     switchRenderMode(FULL);
@@ -112,6 +114,7 @@ void winningAnimation() {
         mode = MENU;
     }
 }
+#endif
 
 
 #endif /* winningAnimation_h */

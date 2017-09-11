@@ -132,6 +132,7 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution) {
     else return -1; //DEFINETELY UNSOLVABLE
 }
 
+#ifndef islevelgen
 void keyEvent(keyType);
 void solveInGame() {
     bool hasGravity = false;
@@ -150,7 +151,7 @@ void solveInGame() {
     else if(value == -2) cout << "Couldn't compute a solution in time." << endl;
     else cout << "Error when trying to solve the level." << endl;
 }
-
+#endif
 
 
 #endif

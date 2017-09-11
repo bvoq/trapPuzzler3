@@ -11,7 +11,7 @@
 
 deque<deque<int> > eyeGrid, moveEyeGrid;
 int currentWatchY = 0, currentWatchX = 0;
-
+#ifndef islevelgen
 void generateLookAt(deque<deque<int> > & eGrid) {
     currentWatchY = 0; currentWatchY = 0;
     for(int i = 0; i < grid.size(); ++i) {
@@ -130,6 +130,6 @@ void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGri
     else assert(false); //unknown eyes
     //if(eGrid[i][j] == 1) ofDrawRectangle(scale * 0.25, scale * 0.25, scale * 0.25, scale * 0.25);
 }
-
+#endif
 
 #endif

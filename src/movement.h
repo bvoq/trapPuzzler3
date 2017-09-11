@@ -15,6 +15,8 @@ using namespace std;
 
 void checkForMerge(ddd &, int &);
 void recheckGrid();
+
+#ifndef islevelgen
 struct movement {
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
@@ -139,6 +141,7 @@ void undoMovement(long long maxtime) {
         
     }
 }
+#endif
 
 int moveTile(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& input, set<int>& checked, ddd & tempGrid, set<pair<int, int> >& eyesToChange, bool solver) {
     checked.insert(elementId);
@@ -228,12 +231,14 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     else if(input == LEFT) pushFrontColumnOf(moveGrid);
     else if(input == RIGHT) pushBackColumnOf(moveGrid);
     
+    #ifndef islevelgen
     if(!solver) {
         if(input == UP) pushFrontRowOf(moveEyeGrid);
         else if(input == DOWN) pushBackRowOf(moveEyeGrid);
         else if(input == LEFT) pushFrontColumnOf(moveEyeGrid);
         else if(input == RIGHT) pushBackColumnOf(moveEyeGrid);
     }
+    #endif
     
     deque<deque<int> > tempGrid = moveGrid;
     
@@ -249,6 +254,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
         else if(input == LEFT) xTrans = -1;
         else if(input == RIGHT) xTrans = 1;
         
+        #ifndef islevelgen
         if(!solver) {
             vector<int> eyeColor;
             for(auto it : eyesToChange) {
@@ -261,8 +267,10 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             }
             cropBordersOfBoth(moveGrid, moveEyeGrid);
         }
-        else cropBordersOf(moveGrid);
-        
+        else
+        #else
+            cropBordersOf(moveGrid);
+        #endif
         if(possibleGravity) {
             //Extend monsters after cropping (maximum by one):
             for(int i = 0; i < moveGrid.size(); ++i) {
@@ -276,10 +284,12 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             }
         }
         checkForMerge(moveGrid,playerID);
+        #ifndef islevelgen
         if(!solver) {
             movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false);
             movements.push_back(newMovement);
         }
+        #endif
         checked.clear();
 
         bool hasEyeAndThereforeGravity = false;
@@ -393,6 +403,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
                 moveGrid = tempGrid;
                 
+                #ifndef islevelgen
                 if(!solver) {
                     vector<int> eyeColor;
                     for(auto it : affectedEyes) {
@@ -404,21 +415,29 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                         moveEyeGrid[it.first+yTrans][it.second+xTrans] = eyeColor[i++];
                     }
                     cropBordersOfBoth(moveGrid, moveEyeGrid);
-                } else cropBordersOf(moveGrid);
+                } else
+                #else
+                    cropBordersOf(moveGrid);
+                #endif
                 
                 checkForMerge(moveGrid,playerID);
-
+                #ifndef islevelgen
                 if(!solver && affectedByGravity.size() > 0) {
                     movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, (long long)(1./velocity), true);
                     movements.push_back(newGravityMovement);
                     velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;
                 }
+                #endif
             } while(affectedByGravity.size() > 0 && gravityMaxCount-->0);
+            if(solver && affectedByGravity.size()!=0) return false;
+            
+            #ifndef islevelgen
             while(affectedByGravity.size()!=0 && movements.size() > 10 && affectedByGravity == movements.back().hasMoved) {
                 moveGrid = movements.back().oldGrid;
                 moveEyeGrid = movements.back().oldEyeGrid;
                 movements.pop_back();
             }
+            #endif
             
         }
         return true;
@@ -430,11 +449,14 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     }
 }
 
+#ifndef islevelgen
 void changePlayerId(int i) {
     playerID = i;
     if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
     //checkForMerge();
 }
+#endif
+
 int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solver) {
     set<int> playerIDs;
     for(int i = 0; i < moveGrid.size(); ++i) {
@@ -450,12 +472,16 @@ int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solve
     bool next = false;
     for(auto c : playerIDs) {
         if(next) {
+            #ifndef islevelgen
             changePlayerId(c);
+            #endif
             return playerID;
         }
         if(c == playerID) next = true;
     }
+    #ifndef islevelgen
     if(!solver) changePlayerId(*playerIDs.begin());
+    #endif
     return *playerIDs.begin();
 }
 

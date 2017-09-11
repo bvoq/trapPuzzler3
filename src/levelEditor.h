@@ -93,21 +93,6 @@ void undoLevelEditorMove() {
     }
 }
 
-void levelExport(ostream & o, deque<deque<int> > copied) {
-    cropBordersOf(copied);
-    o << "{";
-    for(int i = 0; i < copied.size(); ++i) {
-        o << "{";
-        for(int j = 0; j < copied[i].size(); ++j) {
-            o << copied[i][j];
-            if(j != copied[i].size() - 1) o << ",";
-        }
-        o << "}";
-        if(i != copied.size() - 1) o << ",";
-    }
-    o << "}";
-}
-
 void levelFormattedExportWithoutCropping(ostream & o, deque<deque<int> > copied) {
     o << "{";
     for(int i = 0; i < copied.size(); ++i) {

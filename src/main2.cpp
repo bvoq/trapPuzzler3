@@ -21,9 +21,24 @@
 #include <map>
 using namespace std;
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
+#define islevelgen
 //#include "ofMain.h"
-#include "includes.h"
+#define ddd deque<deque<int> >
+#include "globals.h"
+#include "keyMap.h"
+#include "grid.h"
+#include "eyes.h"
+#include "movement.h"
+#include "levelGen.h"
+#include "puzzleSolver.h"
+//#include "keyEvent.h"
+#include "parallelLevelCreation.h"
+#include "winningAnimation.h"
+
+
 int main() {
     thread threads[threadCount];
     cout << "Executing with: " << threadCount << " threads." << endl;
@@ -31,7 +46,6 @@ int main() {
     for(int i = 0; i < threadCount; ++i) {
         threads[i] = thread(runThread,i,size,false);
     }
-    threads[0].join();
-    //arr[0].join(); //wait forever
+    threads[0].join(); //wait forever
     return 0;
 }

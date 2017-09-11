@@ -48,16 +48,21 @@ enum playMode {
     PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5
 } mode;
 
+#ifndef islevelgen
 ofColor backgroundColor;
+#endif
 
 #include <cassert>
 #include <cmath>
 #include <stdio.h>
 
 //Linked methods
+
 void updateGrid(deque<deque<int> >);
 int getWidth(); int getHeight();
 
+#ifndef islevelgen
 void switchRenderMode(RenderMode ini);
+#endif
 
 #endif /* globals_h */
