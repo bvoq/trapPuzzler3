@@ -40,12 +40,17 @@ using namespace std;
 
 
 int main() {
+    int maxSize = 4096*4;
+    
+    srand(time(0)); //seed only needs to be loaded once, every thread should execute something different.
+    // rand not thread safe, but shouldn't matter.
     thread threads[threadCount];
-    cout << "Executing with: " << threadCount << " threads." << endl;
-    int size = 10;
+    cout << "Executing with: " << threadCount << " threads and one main thread for a total of "<< threadCount+1<<"." << endl;
+    int size = 6; //!!!
     for(int i = 0; i < threadCount; ++i) {
-        threads[i] = thread(runThread,i,size,false);
+        threads[i] = thread(runThread,i,size,false,maxSize);
     }
-    threads[0].join(); //wait forever
+    runThread(1000,size,false,maxSize); //1000=main thread
+    threads[0].join(); //probs not necessairy
     return 0;
 }

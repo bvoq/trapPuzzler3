@@ -14,7 +14,7 @@ enum keyType {
     UP, LEFT, DOWN, RIGHT, PLAYER_CHANGE, UNDO, RESTART, EXPORT, CHANGE_TO_AIR, CHANGE_TO_PLAYER, CHANGE_TO_ENEMY, CHANGE_TO_UNMOVABLE_ENEMY, CHANGE_TO_LOVE, CHANGE_TO_MONSTERMOUTH, CHANGE_TO_MONSTEREYE, CHANGE_TO_SUPERAIR, CLEAR, SOLVE, TOGGLE_TOOLBAR
 };
 string strkeytype(keyType in) {
-    return in == UP ? "UP" : in == DOWN ? "DOWN" : in == LEFT ? "LEFT" : in == RIGHT ? "RIGHT" : "other";
+    return in == UP ? "UP" : in == DOWN ? "DOWN" : in == LEFT ? "LEFT" : in == RIGHT ? "RIGHT" : in == PLAYER_CHANGE ? "CHANGE" : "other";
 }
 map<int, keyType> keyMapper;
 map<keyType, bool> keyPressedDown;

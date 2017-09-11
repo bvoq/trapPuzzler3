@@ -17,10 +17,13 @@ deque<deque<int> > initField(int h, int w) {
     };
     vector< vector<pair<int,int> > > stonesRed = stonesBlack;
     vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
-    int minPlayers = 1, maxPlayers = 3;
+    int minPlayers = 2, maxPlayers = 2;
     int yellowBlocksToBePlaced = minPlayers+(rand()%(maxPlayers-minPlayers+1));
-    int darkBlocksToBePlaced = 15 + (rand() % 15);
-    int redBlocksToBePlaced = 10 + (rand()%10);
+    int darkBlocksToBePlaced = 4 + (rand()%8);
+    int redBlocksToBePlaced = 2 + (rand()%10);
+    //IDEAL FOR 10x10
+    //int darkBlocksToBePlaced = 15 + (rand() % 15);
+    //int redBlocksToBePlaced = 10 + (rand()%10);
     
     while(yellowBlocksToBePlaced != 0) {
         //offsetY = h/2; offsetX = w/2;

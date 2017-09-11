@@ -15,12 +15,11 @@ for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
 
 std::recursive_mutex m_mutex;
 int globalCount = 0;
-long long threadCount = 45; //should use 1 thread less than the total number of available cores, since the main thread is not counted.
+long long threadCount = 2; //should use 1 thread less than the total number of available cores, since the main thread is not counted.
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
 
-void runThread(int threadID, int size, bool symmetric) {
-    srand(time(0));
+void runThread(int threadID, int size, bool symmetric, int maxComputationFields) {
     long long biggestSolved = 0;
     long long biggestSolvedDepth = 0;
     //deque<deque<int> > debugLevel = {{0,0,105,105,0,0,0,0,0,0},{0,0,0,0,0,0,0,102,0,0},{0,0,1002,1002,0,0,0,102,0,0},{0,0,0,0,0,0,101,1001,0,0},{0,0,0,0,0,0,101,0,1003,0},{0,0,0,0,0,0,0,0,1003,0},{0,0,0,0,0,0,0,0,0,0},{103,103,0,0,0,0,0,0,0,1},{1004,0,0,0,0,0,104,0,0,1},{1004,0,0,0,0,0,0,0,0,0}};
@@ -41,11 +40,11 @@ void runThread(int threadID, int size, bool symmetric) {
         else field = initSymmetricField(symFieldSize, symFieldSize);
         
         vector<keyType> solution;
-        int hasSolved = newSolver(field, hasGravity, solution);
-
+        int hasSolved = newSolver(field, hasGravity, solution, maxComputationFields);
         int depthSolved = solution.size();
-        if(trapCount == -1) trapCount++;
-        else if(hasSolved == -2) tooLongCount++;
+        if(hasSolved == -1) trapCount++;
+        else if(hasSolved == -2) {tooLongCount++;}
+        else if(hasSolved < 0) cout << "UNKNOWN RES " << hasSolved << endl;
         //cout << hasSolved << endl;
         //cout << i << " " << hasSolved << endl;
         if(/*hasSolved >= enough ||*/ hasSolved >= biggestSolved || depthSolved >= biggestSolvedDepth) {

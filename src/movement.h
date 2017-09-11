@@ -457,7 +457,7 @@ void changePlayerId(int i) {
 }
 #endif
 
-int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solver) {
+int changePlayerIdDeterministic(deque<deque<int> > & moveGrid, int playerID, bool solver) {
     set<int> playerIDs;
     for(int i = 0; i < moveGrid.size(); ++i) {
         for(int j = 0; j < moveGrid[i].size(); ++j) {
@@ -475,7 +475,7 @@ int changePlayerIdRandom(deque<deque<int> > & moveGrid, int playerID, bool solve
             #ifndef islevelgen
             changePlayerId(c);
             #endif
-            return playerID;
+            return c;
         }
         if(c == playerID) next = true;
     }

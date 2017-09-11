@@ -71,7 +71,7 @@ void updateGrid(deque<deque<int> > newGrid) {
     cropBordersOf(grid);
     moveGrid = grid;
     playerID = 1; //Autochange
-    changePlayerIdRandom(moveGrid,playerID,false);
+    changePlayerIdDeterministic(moveGrid,playerID,false);
     //playerID = 1; //SHOULD BE THE CASE!!
     
     generateEyeGrid();
