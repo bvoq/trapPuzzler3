@@ -11,6 +11,7 @@
 //
 //
 
+#include <algorithm>
 #include <deque>
 #include <iostream>
 #include <queue>
