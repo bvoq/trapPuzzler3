@@ -18,10 +18,11 @@
 #include <thread>
 #include <climits>
 #include <string>
+#include <map>
 using namespace std;
 
 
-#include "ofMain.h"
+//#include "ofMain.h"
 #include "includes.h"
 int main() {
     thread threads[threadCount];
