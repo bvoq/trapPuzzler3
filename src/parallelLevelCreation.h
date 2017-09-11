@@ -15,7 +15,8 @@ for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
 
 std::recursive_mutex m_mutex;
 int globalCount = 0;
-long long threadCount = 2; //should use 1 thread less than the total number of available cores, since the main thread is not counted.
+long long threadCount = 46; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
+
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
 
