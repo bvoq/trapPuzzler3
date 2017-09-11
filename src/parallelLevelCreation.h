@@ -60,7 +60,7 @@ void runThread(int threadID, int size, bool symmetric, int maxComputationFields)
                     
                     levelExport(cout, field);
                     cout  << ";" << endl;
-                    cout << "#" << globalCount << " breadth: " << hasSolved << " depth: " << depthSolved  << " traps l.: " << trapCount << " toolong l.: " << tooLongCount << " total l.: " << i << " thread: " << threadID << endl;
+                    cout << "//#" << globalCount << " breadth: " << hasSolved << " depth: " << depthSolved  << " traps l.: " << trapCount << " toolong l.: " << tooLongCount << " total l.: " << i << " thread: " << threadID << endl;
                     cout << endl;
                 }
             }

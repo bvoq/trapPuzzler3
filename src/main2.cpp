@@ -1,3 +1,8 @@
+//POSSIBLE COMPILATION FLAGS: -frename-registers -funroll-loops -march=native
+
+//ALSO RUN USING PGO: -fprofile-generate
+//AFTER RUNNING RECOMPILE USING: -fprofile-use -fprofile-correction
+
 //
 //  main2.cpp
 //  trapPuzzler3

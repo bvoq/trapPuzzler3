@@ -111,9 +111,7 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
         }
         
         {
-            cout << "orig" << changeplayer.second << endl;
             changeplayer.second = changePlayerIdDeterministic(changeplayer.first,changeplayer.second,true);
-            cout << "second " << changeplayer.second << endl;
             if(computed.count(changeplayer) == 0 && newMovePosition + 1 < maxComputationFields) {
                 computed.insert(changeplayer);
                 newMovePosition++;
