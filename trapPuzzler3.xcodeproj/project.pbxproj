@@ -58,6 +58,7 @@
 		63308D601F667BE0007D3C5C /* levelGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelGen.h; sourceTree = "<group>"; };
 		63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallelLevelCreation.h; sourceTree = "<group>"; };
 		63308D661F66EFFD007D3C5C /* main2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main2.cpp; sourceTree = "<group>"; };
+		63308D681F66F289007D3C5C /* globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globals.h; sourceTree = "<group>"; };
 		635462FC1EA425B900B973D0 /* keyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyEvent.h; sourceTree = "<group>"; };
 		635462FD1EA4285100B973D0 /* setupDrawEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = setupDrawEvent.h; sourceTree = "<group>"; };
 		635463211EA42DB100B973D0 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = SOURCE_ROOT; };
@@ -137,6 +138,7 @@
 				226889FD1C635F8A00BA5D43 /* eyes.h */,
 				22CAB9B51C3E73DD00724B49 /* grid.h */,
 				22CAB9B61C3E73DD00724B49 /* includes.h */,
+				63308D681F66F289007D3C5C /* globals.h */,
 				63308D661F66EFFD007D3C5C /* main2.cpp */,
 				635462FC1EA425B900B973D0 /* keyEvent.h */,
 				22CAB9B71C3E73DD00724B49 /* keyMap.h */,
