@@ -16,6 +16,7 @@ void updateEvent() {
 void drawEvent() {
     //cout << "Draw: " << ofGetLastFrameTime() << endl;
     if(renderMode == FULL) ofBackground(backgroundColor);
+
     switch(mode) {
         case PLAYING:
             

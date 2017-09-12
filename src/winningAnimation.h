@@ -111,6 +111,7 @@ void winningAnimation() {
             beaten[currentLevel] = true;
             saveSaveData();
         }
+        blockMovementDueToWinningAnimation = false;
         mode = MENU;
     }
 }

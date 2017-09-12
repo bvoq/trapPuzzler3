@@ -71,7 +71,10 @@ void updateGrid(deque<deque<int> > newGrid) {
     cropBordersOf(grid);
     moveGrid = grid;
     playerID = 1; //Autochange
+    cout << "Choosing: " << playerID << endl;
     changePlayerIdDeterministic(moveGrid,playerID,false);
+    cout << "Choosing: " << playerID << endl;
+
     //playerID = 1; //SHOULD BE THE CASE!!
     
     generateEyeGrid();

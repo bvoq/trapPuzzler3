@@ -49,7 +49,6 @@ void displayToolBar() {
             }
             
             if(toolbarOrientation == BOTTOMTOOLBAR) {
-                
                 if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
                     //ofSetColor(scheme.colorTOOLBAR);
                     //ofDrawRectangle(0,ofGetHeight()-toolbarSize,ofGetWidth(),toolbarSize); //toolbar bar.
@@ -373,6 +372,7 @@ void displayToolBar() {
                 
                 
             }
+            else assert(false); //only know bottom toolbar as of now.
         }
     }
 }

@@ -971,6 +971,8 @@ void displayLevelWORefresh() {
                 
                 ofSetColor(scheme.colorBACKGROUND);
                 ofDrawRectangle(calculatePosition(i, j, grid.size(), grid[i].size()));
+                
+                //TODO: Perhaps lessen the number of draws here, since gravity blocks are loaded correctly.
                 if(j + 1 < grid[i].size() && getCellType(grid[i][j+1]) == GRAVITYMONSTERMOUTH || j + 2 < grid[i].size() && getCellType(grid[i][j+2]) == GRAVITYMONSTERMOUTH) {
                     for(int k = 0; k <= 0xF+1; ++k) {
                         //  2DE

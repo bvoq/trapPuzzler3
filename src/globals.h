@@ -47,6 +47,9 @@ enum RenderMode {
 enum playMode {
     PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5
 } mode;
+string strmode(playMode m) {
+    return m == PLAYING ? "PLAYING" : m == LEVEL_EDITOR_PLAYING ? "LEVEL_EDITOR_PLAYING" : m == LEVEL_EDITOR ? "LEVEL_EDITOR" : m == MENU ? "MENU" : m == MENUOLD ? "MENU_OLD" : "UNKNOWN";
+}
 
 #ifndef islevelgen
 ofColor backgroundColor;

@@ -176,7 +176,7 @@ void loadLevelData() {
             }
         }
     }
-    if(levels.size() != defaultlevels.size()) cout << "The levels and defaultlevels files contain a different number of levels." << endl;
+    if(levels.size() != defaultlevels.size()) cout << "The levels "<< levels.size() << " and defaultlevels "<< defaultlevels.size() << " files contain a different number of levels." << endl;
     assert(levels.size() == defaultlevels.size());
     
     for(int i = 0; i < levels.size(); ++i) {

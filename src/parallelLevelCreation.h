@@ -20,6 +20,9 @@ long long threadCount = 46; //48 is max core count i think, so utilising 47 with
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
 
+long long sufficientDepth = 16;
+long long sufficientBreadth = 16000;
+
 void runThread(int threadID, int size, bool symmetric, int maxComputationFields) {
     long long biggestSolved = 0;
     long long biggestSolvedDepth = 0;
@@ -53,7 +56,7 @@ void runThread(int threadID, int size, bool symmetric, int maxComputationFields)
             if(depthSolved > biggestSolvedDepth) biggestSolvedDepth = depthSolved;
             
             synchronized(m_mutex) {
-                if(hasSolved >= globalBiggestSolved || depthSolved >= globalBiggestSolvedDepth) {
+                if(hasSolved >= globalBiggestSolved || depthSolved >= globalBiggestSolvedDepth || hasSolved >= sufficientBreadth || depthSolved >= sufficientDepth) {
                     globalCount++;
                     
                     if(hasSolved > globalBiggestSolved) globalBiggestSolved = hasSolved;

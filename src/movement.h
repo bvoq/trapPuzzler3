@@ -468,12 +468,17 @@ int changePlayerIdDeterministic(deque<deque<int> > & moveGrid, int playerID, boo
     }
     
     if(playerIDs.size() == 0) return playerID;
-    if(playerIDs.size() == 1) return *playerIDs.begin();
+    if(playerIDs.size() == 1) {
+        #ifndef islevelgen
+        if(!solver) changePlayerId(*playerIDs.begin());
+        #endif
+        return *playerIDs.begin();
+    }
     bool next = false;
     for(auto c : playerIDs) {
         if(next) {
             #ifndef islevelgen
-            changePlayerId(c);
+            if(!solver) changePlayerId(c);
             #endif
             return c;
         }
