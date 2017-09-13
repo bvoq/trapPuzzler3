@@ -66,6 +66,7 @@
 		6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouseTouchEvent.h; sourceTree = "<group>"; };
 		6380CB8C1EAACA0900C8C260 /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		6380CB8D1EAACF6F00C8C260 /* toolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = toolbar.h; sourceTree = "<group>"; };
+		63A5DB121F693E3800E5FDAD /* PennerEasing */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PennerEasing; sourceTree = "<group>"; };
 		63A725341D69DBC200F8BC0A /* messages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		63CDFA5C1DAA539E00454DE3 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -131,6 +132,7 @@
 				635463211EA42DB100B973D0 /* data */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				63A5DB121F693E3800E5FDAD /* PennerEasing */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				63CDFA5C1DAA539E00454DE3 /* audio.h */,
 				22CAB9B31C3E73DD00724B49 /* colorScheme.h */,

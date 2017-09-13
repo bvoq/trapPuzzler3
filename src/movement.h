@@ -16,6 +16,51 @@ using namespace std;
 void checkForMerge(ddd &, int &);
 void recheckGrid();
 
+//from b to c, starting at time t taking d time.
+
+float easeInQuad (float t,float b , float c, float d) {
+    return c*(t/=d)*t + b;
+}
+float easeOutQuad(float t,float b , float c, float d) {
+    return -c *(t/=d)*(t-2) + b;
+}
+
+float easeInOutQuad(float t,float b , float c, float d) {
+    t /= d/2;
+    if (t < 1) return c/2*t*t + b;
+    t--;
+    return -c/2 * (t*(t-2) - 1) + b;
+}
+
+float easeInOutTripple(float t, float b, float c, float d) {
+    if ((t/=d/2) < 1) return c/2*t*t*t + b;
+    return c/2*((t-=2)*t*t + 2) + b;
+}
+
+float easeInOutQuint(float t,float b , float c, float d) {
+    if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
+    return c/2*((t-=2)*t*t*t*t + 2) + b;
+}
+
+float easeInOutElastic(float t,float b , float c, float d) {
+    if (t==0) return b;  if ((t/=d/2)==2) return b+c;
+    float p=d*(.3f*1.5f);
+    float a=c;
+    float s=p/4;
+    
+    if (t < 1) {
+        float postFix =a*pow(2,10*(t-=1)); // postIncrement is evil
+        return -.5f*(postFix* sin( (t*d-s)*(2*PI)/p )) + b;
+    }
+    float postFix =  a*pow(2,-10*(t-=1)); // postIncrement is evil
+    return postFix * sin( (t*d-s)*(2*PI)/p )*.5f + c + b;
+}
+
+float easeInOutSine(float t,float b , float c, float d) {
+    return -c/2 * (cos(PI*t/d) - 1) + b;
+}
+
+
 #ifndef islevelgen
 struct movement {
     long long timeWhenStarted;
@@ -86,12 +131,23 @@ struct movement {
         output.translate(w / 2, h / 2);
         
         //Add movement delay
+        
+        
         if(hasMoved.count(grid[i][j]) != 0) {
-            
-            if(movementDirection == UP) output.y -= scale * incr;
-            else if(movementDirection == DOWN) output.y += scale * incr;
-            else if(movementDirection == LEFT) output.x -= scale * incr;
-            else if(movementDirection == RIGHT) output.x += scale * incr;
+            //easeInOutQuad();
+            if(gravityMove) {
+                //alternative try easeInQuad(getDelay(),0.,1.,movementTime)
+                if(movementDirection == UP) output.y -= incr * scale;
+                else if(movementDirection == DOWN) output.y += incr * scale;
+                else if(movementDirection == LEFT) output.x -= incr * scale;
+                else if(movementDirection == RIGHT) output.x += incr * scale;
+            }
+            if(!gravityMove) {
+                if(movementDirection == UP) output.y -= easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
+                else if(movementDirection == DOWN) output.y += easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
+                else if(movementDirection == LEFT) output.x -= easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
+                else if(movementDirection == RIGHT) output.x += easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
+            }
         }
         return output;
     }
