@@ -79,7 +79,7 @@ struct movement {
         oldEyeGrid = _oEG;
         movementDirection = _mD;
         hasMoved = _hM;
-        timeWhenStarted = ofGetElapsedTimeMicros();
+        timeWhenStarted = getAdjustedTime();
         isUndoMove = _isUndoMove;
         movementTime = _movementTime;
         oldPlayerID = playerID;
@@ -94,7 +94,7 @@ struct movement {
     }
     
     float getDelay() {
-        return ofGetElapsedTimeMicros() - timeWhenStarted;
+        return getAdjustedTime() - timeWhenStarted;
     }
     
     bool isUsed = false;
@@ -171,7 +171,7 @@ void checkMovement() {
             movements.front().changeGrid();
             if(movements.front().isUndoMove == false) previousMovements.push_back(movements.front());
             movements.pop_front();
-            movements.front().timeWhenStarted = ofGetElapsedTimeMicros();
+            movements.front().timeWhenStarted = getAdjustedTime();
             recheckGrid();
             if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
         }

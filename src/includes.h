@@ -10,6 +10,7 @@
 #ifndef trapPuzzler3_includes_h
 #define trapPuzzler3_includes_h
 
+#include "timeTaker.h"
 #include "globals.h"
 #include "audio.h"
 #include "keyMap.h"
