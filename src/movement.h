@@ -141,18 +141,16 @@ struct movement {
         
         if(hasMoved.count(grid[i][j]) != 0) {
             //easeInOutQuad();
-            if(gravityMove || blockMovementDueToWinningAnimation) {
-                //alternative try easeInQuad(getDelay(),0.,1.,movementTime)
-                if(movementDirection == UP) output.y -= incr * scale;
-                else if(movementDirection == DOWN) output.y += incr * scale;
-                else if(movementDirection == LEFT) output.x -= incr * scale;
-                else if(movementDirection == RIGHT) output.x += incr * scale;
-            }
-            if(!gravityMove) {
+            if(!gravityMove && !blockMovementDueToWinningAnimation) {
                 if(movementDirection == UP) output.y -= easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
                 else if(movementDirection == DOWN) output.y += easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
                 else if(movementDirection == LEFT) output.x -= easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
                 else if(movementDirection == RIGHT) output.x += easeInOutQuad(getDelay(),0.,1.,movementTime) * scale;
+            } else {
+                if(movementDirection == UP) output.y -= incr * scale;
+                else if(movementDirection == DOWN) output.y += incr * scale;
+                else if(movementDirection == LEFT) output.x -= incr * scale;
+                else if(movementDirection == RIGHT) output.x += incr * scale;
             }
         }
         return output;
