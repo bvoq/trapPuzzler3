@@ -38,12 +38,12 @@ void playAudio(int title) {
 
 void playMoveSound() {
     int pos = rand() % walksfx.size();
-    walksfx[pos].play();
+    //walksfx[pos].play();
 }
 
 void playUndoSound() {
     int pos = rand() % undosfx.size();
-    undosfx[pos].play();
+    //undosfx[pos].play();
 }
 
 
