@@ -97,7 +97,13 @@ struct movement {
         return ofGetElapsedTimeMicros() - timeWhenStarted;
     }
     
+    bool isUsed = false;
     ofRectangle calculatePosition(int i, int j) {
+        if(!isUsed) {
+            if(!blockMovementDueToWinningAnimation && !isUndoMove && !gravityMove) playMoveSound();
+            else if(!blockMovementDueToWinningAnimation && isUndoMove && !gravityMove) playUndoSound();
+            isUsed = true;
+        }
         float gD = getDelay();
         
         float idY = i; float idX = j;
@@ -135,7 +141,7 @@ struct movement {
         
         if(hasMoved.count(grid[i][j]) != 0) {
             //easeInOutQuad();
-            if(gravityMove) {
+            if(gravityMove || blockMovementDueToWinningAnimation) {
                 //alternative try easeInQuad(getDelay(),0.,1.,movementTime)
                 if(movementDirection == UP) output.y -= incr * scale;
                 else if(movementDirection == DOWN) output.y += incr * scale;
@@ -170,7 +176,7 @@ void checkMovement() {
 }
 
 void undoMovement(long long maxtime) {
-    if(movements.size() == 0 && previousMovements.size() != 0) {
+    if((movements.size() == 0 || movements.back().isUndoMove) && previousMovements.size() != 0) {
         forceUndo = false;
         bool lastGravity = false;
         do {
@@ -275,7 +281,6 @@ bool affectGravity(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& gr
 
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
 bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
-    if(!solver) playMoveSound();
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
