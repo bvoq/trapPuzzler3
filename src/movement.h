@@ -98,6 +98,11 @@ struct movement {
     }
     
     bool isUsed = false;
+    
+    float linearIncr() {
+        return getDelay() / movementTime;
+    }
+    
     ofRectangle calculatePosition(int i, int j) {
         if(!isUsed) {
             if(!blockMovementDueToWinningAnimation && !isUndoMove && !gravityMove) playMoveSound();
@@ -115,7 +120,7 @@ struct movement {
         if(movementDirection == DOWN && newGridY < gridY) sign = -1;
         if(movementDirection == RIGHT && newGridX < gridX) sign = -1;
         
-        float incr = gD / movementTime;
+        float incr = linearIncr();
         if(incr > 1.0) incr = 1.0;
         int w = getWidth(), h = getHeight();
         float compGridY = gridY + sign * (1.*(newGridY - gridY)) * incr;
@@ -332,15 +337,12 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             cropBordersOf(moveGrid);
         
         if(possibleGravity) {
-            cout << "try extending " << endl;
             //Extend monsters after cropping (maximum by one):
             for(int i = 0; i < moveGrid.size(); ++i) {
                 for(int j = 0; j < moveGrid[i].size(); ++j) {
                     if((i-1 == moveGrid.size()-2 && i-2>=0 && getCellType(moveGrid[i-1][j]) == GRAVITYMONSTERMOUTH) || (i+1 == 1 && getCellType(moveGrid[i+1][j]) == GRAVITYMONSTERMOUTH)) {
-                        cout << "found mouth candidate " <<i << "," <<j  << endl;
                         if(moveGrid[i][j] == AIR) {
                             moveGrid[i][j] = GRAVITYMONSTERMOUTHID;
-                            cout << "succeeded extending" << endl;
                         }
                     }
                 }

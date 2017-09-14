@@ -18,11 +18,11 @@ string locationOfResources = "data/";// basically finds in Resources/data
 float MIN_CELL_SIZE = 12;
 int playerID;
 //int currentLevel; declared in levels.h
-long long timeForSlowMovement = 160000; //is relative
+long long timeForSlowMovement = 160000;//640000;//160000; //is relative
 
 //long long timeForSlowMovement = 160000; //is relative
 long long timeForFastMovement = 20000; //winning
-double gravityAcceleration = 1.2*1./160000, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
+double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
 
@@ -41,7 +41,7 @@ int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 bool forceUndo = false;
 
-bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
+bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
 enum RenderMode {
     PARTIAL, FULL
 } renderMode;

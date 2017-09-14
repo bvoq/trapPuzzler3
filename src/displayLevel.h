@@ -383,45 +383,22 @@ void drawCellMonsterFill(int i, int j,  float scale, float tScale, deque<deque<i
 
 
 
-void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > & grid) {
+//0. = alive, 1. = dead
+void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > & grid, float deathGradient) {
     ofEnableSmoothing();
+    
     ofFill();
-    ofSetColor(255,255,255);
+    ofSetColor(255,255-100*deathGradient,255-100*deathGradient);
     ofPushMatrix();
     ofTranslate(0,-scale*.1);
     drawCellFill(i,j,scale*1.2,tScale*1.2,grid);
     ofPopMatrix();
-    /*
-     float angle = atan2( (float)(currentWatchY - i) , (float)(currentWatchX - j) );
-     
-     //void ofPath::arc(float x, float y, float radiusX, float radiusY, float angleBegin, float angleEnd);
-     
-     ofSetColor(scheme.colorGRAVITYMONSTERSTROKE);
-     ofDrawEllipse(scale/2.,scale/2.,scale*.9, scale*.9);
-     ofSetColor(255,255,255);
-     ofDrawEllipse(scale/2.,scale/2.,scale*.9, scale*.9);
-     ofSetColor(scheme.colorENEMY);
-     //monsterangleeye = fmod(monsterangleeye,360);
-     float offset = 0;
-     for(float angle = 0; angle < 2*PI; angle += PI/3.) {
-     
-     ofPath eyeRed;
-     eyeRed.setColor(ofColor(255,0,0));
-     eyeRed.setFilled(false);
-     eyeRed.setStrokeWidth(1.5);
-     eyeRed.moveTo(scale/2.,scale/2.);
-     if(offset == PI/4) offset = -PI/2;
-     offset += PI/4;
-     
-     eyeRed.quadBezierTo(
-     scale/2., scale/2.,
-     scale/2. + scale*.4/2. * sin(angle+offset), scale/2. + scale*.4/2. * cos(angle+offset),
-     scale/2. + scale*.9/2. * sin(angle), scale/2. + scale*.9/2. * cos(angle));
-     eyeRed.draw();
-     }
-     ofSetColor(0);
-     ofDrawEllipse(scale/2.,scale/2.,scale*.3, scale*.3);*/
     
+    float center = 0;//scale*.2;
+    float rightShift = (1.-deathGradient) * scale * .3;
+    float rightCenter = deathGradient * (scale*1.2-center);
+    
+    if(deathGradient != 1.) {
     for(float a = 0; a <= 1; a += 0.2) {
         float leftPos = (currentWatchY-i) * 1./grid.size() * .25 * scale + scale*.6 * a + scale/2. - scale*.3;
         float rightPos = a*(scale*1.2-2.*tScale*1.2) + tScale*1.2 - scale*.1;
@@ -429,8 +406,21 @@ void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > 
         eyeRed.setColor(ofColor(255,0,0));
         eyeRed.setFilled(false);
         eyeRed.setStrokeWidth(1.5);
-        eyeRed.quadBezierTo(0, leftPos, scale/2.,scale/2., scale*1.2, rightPos);
+        eyeRed.quadBezierTo(center+rightCenter, leftPos, scale/2.+rightShift/2.,scale/2., scale*1.2, rightPos);
         eyeRed.draw();
+    }
+    }
+    if(deathGradient != 0.) {
+    for(float a = 0; a <= 1; a += 0.2) {
+        float leftPos = (currentWatchY-i) * 1./grid.size() * .25 * scale + scale*.6 * a + scale/2. - scale*.3;
+        float rightPos = a*(scale*1.2-2.*tScale*1.2) + tScale*1.2 - scale*.1;
+        ofPath eyeRed;
+        eyeRed.setColor(ofColor(255,0,0));
+        eyeRed.setFilled(false);
+        eyeRed.setStrokeWidth(1.5);
+        eyeRed.quadBezierTo(0, rightPos, (center+rightCenter)/2.,scale/2., center+rightCenter, leftPos);
+        eyeRed.draw();
+    }
     }
     ofPushMatrix();
     ofTranslate(0,(currentWatchY-i) * 1./grid.size() * .25 * scale);
@@ -438,15 +428,18 @@ void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > 
     ofPath eyeIris;
     eyeIris.setColor(ofColor(0,0,0));
     eyeIris.setFilled(true);
-    eyeIris.moveTo(0,scale/2. - scale*.3);
-    eyeIris.arc(0,scale/2.,scale*.2,scale*.3,-90,90);
+    eyeIris.moveTo(center+rightCenter/*rightShift*/, scale/2. - scale*.3);
+    eyeIris.arc(center+rightCenter/*rightShift*/,scale/2.,scale*.3-rightShift,scale*.3,90,270);
+    
+    
+    eyeIris.moveTo(center+rightCenter/*rightShift*/,scale/2. - scale*.3);
+    eyeIris.arc(center+rightCenter,scale/2.,rightShift,scale*.3,-90,90);
     eyeIris.draw();
     
     ofPopMatrix();
     //eyeIris.lineTo(0,scale/2. + scale*.3);
     // eyeIris.lineTo(0,scale/2. - scale*.3);
 }
-
 
 
 int fastrandtoothgenseed = 0;
@@ -823,11 +816,15 @@ void displayLevel() {
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                    drawMonsterEye(i,j,scale,tScale,grid);
+                    if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTERDEADEYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        drawMonsterEye(i,j,scale,tScale,grid,movements.front().linearIncr());
+                    } else {
+                        drawMonsterEye(i,j,scale,tScale,grid,0.0);
+                    }
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                    drawMonsterEye(i,j,scale,tScale,grid);
+                    drawMonsterEye(i,j,scale,tScale,grid,1.0);
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                     ofPushMatrix();
@@ -1035,11 +1032,15 @@ void displayLevelWORefresh() {
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                    drawMonsterEye(i,j,scale,tScale,grid);
+                    if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTERDEADEYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        drawMonsterEye(i,j,scale,tScale,grid,movements.front().linearIncr());
+                    } else {
+                        drawMonsterEye(i,j,scale,tScale,grid,0.0);
+                    }
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                    drawMonsterEye(i,j,scale,tScale,grid);
+                    drawMonsterEye(i,j,scale,tScale,grid,1.0);
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                     ofPushMatrix();
