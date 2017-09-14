@@ -328,16 +328,19 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             cropBordersOfBoth(moveGrid, moveEyeGrid);
         }
         else
-        #else
-            cropBordersOf(moveGrid);
         #endif
+            cropBordersOf(moveGrid);
+        
         if(possibleGravity) {
+            cout << "try extending " << endl;
             //Extend monsters after cropping (maximum by one):
             for(int i = 0; i < moveGrid.size(); ++i) {
                 for(int j = 0; j < moveGrid[i].size(); ++j) {
-                    if((i+1 == moveGrid.size()-1 && moveGrid[i+1][j] == GRAVITYMONSTERMOUTHID) || (i-1 == 0 && moveGrid[i-1][j] == GRAVITYMONSTERMOUTHID)) {
+                    if((i-1 == moveGrid.size()-2 && i-2>=0 && getCellType(moveGrid[i-1][j]) == GRAVITYMONSTERMOUTH) || (i+1 == 1 && getCellType(moveGrid[i+1][j]) == GRAVITYMONSTERMOUTH)) {
+                        cout << "found mouth candidate " <<i << "," <<j  << endl;
                         if(moveGrid[i][j] == AIR) {
                             moveGrid[i][j] = GRAVITYMONSTERMOUTHID;
+                            cout << "succeeded extending" << endl;
                         }
                     }
                 }
@@ -404,18 +407,18 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                             if(positionOfGravityMonsterX-3 >= 0 && (getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == PLAYER
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == ENEMY
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
-                                //moveGrid[i][positionOfGravityMonsterX] = GRAVITYMONSTERDEADEYEID;
+                                moveGrid[i][positionOfGravityMonsterX-2] = GRAVITYMONSTERDEADEYEID;
                             }
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
                         else {
                             cout << "Unexpected celltype: " << getCellType(moveGrid[i][positionOfGravityMonsterX]) << " at location (" << i << "," << positionOfGravityMonsterX << ")" << endl;
-                            for(int i = 0; i < moveGrid.size(); ++i) {
+                            /*for(int i = 0; i < moveGrid.size(); ++i) {
                                 for(int j = 0; j < moveGrid[i].size(); ++j) {
                                     cout << j << ":" << moveGrid[i][j] << ",";
                                 }
                                 cout << endl;
-                            }
+                            }*/
                             //assert(false);
                         } //should only be filled by GRAVITYMONSTERMOUTH and GRAVITYMONSTEREYE
                     }
