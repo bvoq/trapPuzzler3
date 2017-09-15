@@ -821,7 +821,6 @@ void displayLevel() {
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTERDEADEYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
-                        cout << "yeee" << endl;
                         drawMonsterEye(i,j,scale,tScale,grid,movements.front().linearIncr());
                     } else {
                         drawMonsterEye(i,j,scale,tScale,grid,0.0);

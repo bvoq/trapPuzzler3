@@ -319,12 +319,15 @@ bool affectGravity(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& gr
     return isAffected;
 }
 
+
+void screenShake(long long duration, keyType keytype);
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
 bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
     //moveGridX = gridX;
     //moveGridY = gridY;
     //moveGrid = grid;
+    
     deque<deque<int> > oldGrid = moveGrid;
     deque<deque<int> > oldEyeGrid = moveEyeGrid;
     
@@ -347,8 +350,13 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     set<int> checked;
     set<pair<int, int> > eyesToChange;
     int theReturn = moveTile(moveGrid, moveEyeGrid, playerID, input, checked, tempGrid, eyesToChange, solver);
-    
-    if(theReturn != -1) {
+    if(theReturn == -1) {
+        screenShake(timeAllowed*2, input);
+        moveGrid = oldGrid;
+        moveEyeGrid = oldEyeGrid;
+        return false;
+    }
+    else  {
         //Move eyes
         int yTrans = 0, xTrans = 0;
         if(input == UP) yTrans = -1;
@@ -544,11 +552,6 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             
         }
         return true;
-    }
-    else {
-        moveGrid = oldGrid;
-        moveEyeGrid = oldEyeGrid;
-        return false;
     }
 }
 

@@ -84,8 +84,7 @@ void drawEvent() {
 }
 
 void drawEventWithScreenShake() {
-    cout << (renderMode == FULL) << endl;
-    if(renderMode == FULL && screenShake) {
+    if(renderMode == FULL && isScreenShaking()) {
         ofPushMatrix();
         screenShakeRotationMatrix();
         //ofRotate(PI,ofGetWidth()/2, ofGetHeight()/2,0);
