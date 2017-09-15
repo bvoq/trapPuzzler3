@@ -278,7 +278,6 @@ void displayCharacterOnMap() {
          */
         ofPopMatrix();
     }
-    
 }
 
 void displayMenu() {

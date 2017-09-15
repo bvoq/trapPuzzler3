@@ -814,6 +814,7 @@ void displayLevel() {
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTERDEADEYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        cout << "yeee" << endl;
                         drawMonsterEye(i,j,scale,tScale,grid,movements.front().linearIncr());
                     } else {
                         drawMonsterEye(i,j,scale,tScale,grid,0.0);
@@ -821,7 +822,11 @@ void displayLevel() {
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
-                    drawMonsterEye(i,j,scale,tScale,grid,1.0);
+                    if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTEREYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        drawMonsterEye(i,j,scale,tScale,grid,1.-movements.front().linearIncr());
+                    } else {
+                        drawMonsterEye(i,j,scale,tScale,grid,1.0);
+                    }
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                     ofPushMatrix();

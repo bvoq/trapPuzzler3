@@ -91,6 +91,7 @@ struct movement {
         eyeGrid = newEyeGrid;
         recheckGrid();
         if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
+        //here the movement object basically gets destroyed.
     }
     
     float getDelay() {
@@ -376,6 +377,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             double velocity = 1./timeAllowed; //from here acceleration will take over.
             do {
                 
+                bool movementSlowDownDueToEyeKilling = false;
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
                         if(getCellType(moveGrid[i][j]) == GRAVITYMONSTERMOUTH) positionOfGravityMonsterX = j;
@@ -385,7 +387,6 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
                 if(positionOfGravityMonsterX-1 >= 0) {
                     for(int i = 0; i < moveGrid.size(); ++i) {
-                        
                         if(getCellType(moveGrid[i][positionOfGravityMonsterX]) == GRAVITYMONSTERMOUTH) {
                             if(getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == PLAYER
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-1]) == ENEMY
@@ -409,6 +410,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                             if(positionOfGravityMonsterX-3 >= 0 && (getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == PLAYER
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == ENEMY
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
+                                movementSlowDownDueToEyeKilling = true;
                                 moveGrid[i][positionOfGravityMonsterX-2] = GRAVITYMONSTERDEADEYEID;
                             }
                         }
@@ -487,8 +489,8 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
                 checkForMerge(moveGrid,playerID);
                 #ifndef islevelgen
-                if(!solver && affectedByGravity.size() > 0) {
-                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, (long long)(1./velocity), true);
+                if(!solver && moveGrid != oldGrid) {
+                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true);
                     movements.push_back(newGravityMovement);
                     velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;
                 }
