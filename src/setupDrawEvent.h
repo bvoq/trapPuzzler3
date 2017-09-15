@@ -82,4 +82,15 @@ void drawEvent() {
 
     isMouseReleased = false; //RESET MOUSE LISTENER
 }
+
+bool screenShake = true;
+void drawEventWithScreenShake() {
+    if(renderMode == FULL && screenShake) {
+        ofPushMatrix();
+        ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+        ofRotate(PI);
+        drawEvent();
+        ofPopMatrix();
+    }
+}
 #endif /* setupDrawEvent_h */

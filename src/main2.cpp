@@ -47,7 +47,7 @@ float PI = 3.1415926;
 
 
 int main() {
-    int maxSize = 4096*64;
+    int maxSize = 4096*16;
     
     srand(time(0)); //seed only needs to be loaded once, every thread should execute something different.
     // rand not thread safe, but shouldn't matter.
