@@ -20,7 +20,7 @@ long long threadCount = 46; //48 is max core count i think, so utilising 47 with
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
 
-long long sufficientDepth = 16;
+long long sufficientDepth = 25;
 long long sufficientBreadth = 16000;
 
 void runThread(int threadID, int size, bool symmetric, int maxComputationFields) {

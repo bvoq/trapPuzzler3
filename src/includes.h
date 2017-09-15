@@ -10,8 +10,10 @@
 #ifndef trapPuzzler3_includes_h
 #define trapPuzzler3_includes_h
 
-#include "timeTaker.h"
 #include "globals.h"
+
+#include "timeTaker.h"
+
 #include "audio.h"
 #include "keyMap.h"
 #include "colorScheme.h"
@@ -31,6 +33,8 @@
 #include "menu.h"
 #include "mouseTouchEvent.h"
 #include "winningAnimation.h"
+#include "screenShake.h"
+
 
 #include "setupDrawEvent.h"
 

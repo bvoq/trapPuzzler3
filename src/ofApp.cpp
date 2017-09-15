@@ -38,7 +38,7 @@ void ofApp::update(){
 void ofApp::draw(){
     mousetouchY = ofGetAppPtr()->mouseY;
     mousetouchX = ofGetAppPtr()->mouseX;
-    drawEvent();
+    drawEventWithScreenShake();
 }
 
 //--------------------------------------------------------------

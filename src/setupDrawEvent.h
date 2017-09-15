@@ -83,14 +83,16 @@ void drawEvent() {
     isMouseReleased = false; //RESET MOUSE LISTENER
 }
 
-bool screenShake = true;
 void drawEventWithScreenShake() {
+    cout << (renderMode == FULL) << endl;
     if(renderMode == FULL && screenShake) {
         ofPushMatrix();
-        ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-        ofRotate(PI);
+        screenShakeRotationMatrix();
+        //ofRotate(PI,ofGetWidth()/2, ofGetHeight()/2,0);
         drawEvent();
         ofPopMatrix();
+    } else {
+        drawEvent();
     }
 }
 #endif /* setupDrawEvent_h */

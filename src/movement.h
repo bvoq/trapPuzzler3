@@ -18,6 +18,42 @@ void recheckGrid();
 
 //from b to c, starting at time t taking d time.
 
+float easeInElastic(float t,float b , float c, float d) {
+    if (t==0) return b;  if ((t/=d)==1) return b+c;
+    float p=d*.3f;
+    float a=c;
+    float s=p/4;
+    float postFix =a*pow(2,10*(t-=1)); // this is a fix, again, with post-increment operators
+    return -(postFix * sin((t*d-s)*(2*PI)/p )) + b;
+}
+
+float easeOutElastic(float t,float b , float c, float d) {
+    if (t==0) return b;  if ((t/=d)==1) return b+c;
+    float p=d*.3f;
+    float a=c;
+    float s=p/4;
+    return (a*pow(2,-10*t) * sin( (t*d-s)*(2*PI)/p ) + c + b);
+}
+
+float easeOutBounce(float t,float b , float c, float d) {
+    if ((t/=d) < (1/2.75f)) {
+        return c*(7.5625f*t*t) + b;
+    } else if (t < (2/2.75f)) {
+        float postFix = t-=(1.5f/2.75f);
+        return c*(7.5625f*(postFix)*t + .75f) + b;
+    } else if (t < (2.5/2.75)) {
+        float postFix = t-=(2.25f/2.75f);
+        return c*(7.5625f*(postFix)*t + .9375f) + b;
+    } else {
+        float postFix = t-=(2.625f/2.75f);
+        return c*(7.5625f*(postFix)*t + .984375f) + b;
+    }
+}
+
+float easeInBounce (float t,float b , float c, float d) {
+    return c - easeOutBounce (d-t, 0, c, d) + b;
+}
+
 float easeInQuad (float t,float b , float c, float d) {
     return c*(t/=d)*t + b;
 }
