@@ -10,6 +10,9 @@
 #ifndef trapPuzzler3_includes_h
 #define trapPuzzler3_includes_h
 
+//For compability
+#define nogetvertices
+
 #include "globals.h"
 
 #include "timeTaker.h"

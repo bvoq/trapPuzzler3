@@ -32,6 +32,7 @@ using namespace std;
 float PI = 3.1415926;
 
 #define islevelgen
+#define nogetvertices
 //#include "ofMain.h"
 #define ddd deque<deque<int> >
 #include "globals.h"

@@ -161,7 +161,7 @@ ofMesh generateMeshTile(float w, float h, float r, ofFloatColor tlc, ofFloatColo
     ofTessellator tess;
     tess.tessellateToMesh(poly, OF_POLY_WINDING_ODD, m, true);
     
-    
+#ifndef nogetvertices
     vector<ofVec3f> meshVertices = m.getVertices();
     vector<ofFloatColor> colors(meshVertices.size());
     for(int i = 0; i < meshVertices.size(); ++i) {
@@ -172,11 +172,16 @@ ofMesh generateMeshTile(float w, float h, float r, ofFloatColor tlc, ofFloatColo
         else DEB("Weird error at ofMeshGenerateTile with i " << i << " and " << meshVertices[i].x << " " << meshVertices[i].y);
     }
     m.addColors(colors);
+#else
+    vector<ofFloatColor> colors(m.getNumVertices());
+    for(int i = 0; i < m.getNumVertices(); ++i) colors[i] = brc;
+    m.addColors(colors);
+#endif
     return m;
 }
 
 
-
+/*
 vector<ofMesh> fancyMeshes; //store all
 void generateFancyMeshes() {
     float w = 1*50, h = 1*50;
@@ -223,7 +228,9 @@ void generateFancyMeshes() {
         fancyMeshes.push_back(m);
     }
 }
+*/
 
+/*
 void fancyDrawCellFill(int i, int j, float scale, float tScale, deque<deque<int> > & grid) {
     int type = 0; //figure out bitmap 0000lrud
     if(i == 0 || grid[i-1][j] == grid[i][j]) type |= 1 << 3; //left
@@ -232,7 +239,7 @@ void fancyDrawCellFill(int i, int j, float scale, float tScale, deque<deque<int>
     if(j == (int)grid[i].size() - 1 || grid[i][j+1] == grid[i][j]) type |= 1 << 0; // bottom
     //cout << type << endl;
     fancyMeshes[type].draw();
-}
+}*/
 
 
 bool isCenterTile(int idX, int idY, deque<deque<int> > & grid) {
