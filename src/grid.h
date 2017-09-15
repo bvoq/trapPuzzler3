@@ -194,6 +194,7 @@ cellType getCellType(int ID) {
     else if(ID == GRAVITYMONSTEREYEID) return GRAVITYMONSTEREYE;
     else if(ID == GRAVITYMONSTERDEADEYEID) return GRAVITYMONSTERDEADEYE;
     else assert(false);
+    return SUPERAIR;
 }
 #ifndef islevelgen
 ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX) {
