@@ -34,6 +34,7 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
     
     ofNoFill();
     ofSetColor(0, 0, 0);
+    cout << "BAD ALLOC " << theLevel.size() << " " << theLevel[0].size() << endl;
     vector<vector<ofRectangle> > rects(theLevel.size(), vector<ofRectangle>(theLevel[0].size()));
     
     int w = width;
