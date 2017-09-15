@@ -19,73 +19,75 @@ void initMenu() {
 }
 
 void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int width, bool displayEyes) {
-    float scaleY = (getHeight() * 1.) / ((theLevel.size() + 2) * 1.);
-    float scaleX = (getWidth() * 1.) / ((theLevel[0].size() + 2) * 1.);
-    float scale = MIN(scaleY, scaleX);
-    LINE_WIDTH = MAX(1, scale / 20.);
-    
-    //for eyes
-    if(displayEyes) {
-        grid = theLevel;
-        generateEyeGrid();
-        recheckGrid();
-        //if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
-    }
-    
-    ofNoFill();
-    ofSetColor(0, 0, 0);
-    cout << "BAD ALLOC " << theLevel.size() << " " << theLevel[0].size() << endl;
-    vector<vector<ofRectangle> > rects(theLevel.size(), vector<ofRectangle>(theLevel[0].size()));
-    
-    int w = width;
-    int h = w;
-    float miniScale = min((h * 1.) / theLevel.size(),  (w * 1.) / theLevel[0].size());
-    
-    for(int i = 0; i < theLevel.size(); ++i) {
-        for(int j = 0; j < theLevel[i].size(); ++j) {
-            float idX = j - theLevel[i].size() / 2.;
-            float idY = i - theLevel.size() / 2.;
-            
-            ofRectangle output(idX * miniScale, idY * miniScale, miniScale, miniScale);
-            output.translate(w / 2., h / 2.);
-            
-            rects[i][j] = output;
+    if(theLevel.size() != 0) {
+        float scaleY = (getHeight() * 1.) / ((theLevel.size() + 2) * 1.);
+        float scaleX = (getWidth() * 1.) / ((theLevel[0].size() + 2) * 1.);
+        float scale = MIN(scaleY, scaleX);
+        LINE_WIDTH = MAX(1, scale / 20.);
+        
+        //for eyes
+        if(displayEyes) {
+            grid = theLevel;
+            generateEyeGrid();
+            recheckGrid();
+            //if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
         }
-    }
-    for(int i = 0; i < theLevel.size(); ++i) {
-        for(int j = 0; j < theLevel[i].size(); ++j) {
-            cellType cT = getCellType(theLevel[i][j]);
-            
-            if(theLevel[i][j] != 0 && (cT != PLAYER || displayPlayer == true)) {
-                ofFill();
-                ofPushMatrix();
-                ofTranslate(rects[i][j].getTopLeft());
-                //ofScale(roughScale,roughScale);
-                if(cT == PLAYER) ofSetColor(scheme.colorPLAYERSELECTED);//ofSetColor(255, 255, 0);
-                else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
-                else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50)
-                else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
-                drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
-                if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
+        
+        ofNoFill();
+        ofSetColor(0, 0, 0);
+        
+        vector<vector<ofRectangle> > rects(theLevel.size(), vector<ofRectangle>(theLevel[0].size()));
+        
+        int w = width;
+        int h = w;
+        float miniScale = min((h * 1.) / theLevel.size(),  (w * 1.) / theLevel[0].size());
+        
+        for(int i = 0; i < theLevel.size(); ++i) {
+            for(int j = 0; j < theLevel[i].size(); ++j) {
+                float idX = j - theLevel[i].size() / 2.;
+                float idY = i - theLevel.size() / 2.;
                 
-                ofPopMatrix();
+                ofRectangle output(idX * miniScale, idY * miniScale, miniScale, miniScale);
+                output.translate(w / 2., h / 2.);
+                
+                rects[i][j] = output;
             }
         }
-    }
-    
-    for(int i = 0; i < theLevel.size(); ++i) {
-        for(int j = 0; j < theLevel[i].size(); ++j) {
-            cellType cT = getCellType(theLevel[i][j]);
-            
-            if(theLevel[i][j] != 0 && cT != PLAYER) {
-                ofPushMatrix();
-                ofTranslate(rects[i][j].getTopLeft());
+        for(int i = 0; i < theLevel.size(); ++i) {
+            for(int j = 0; j < theLevel[i].size(); ++j) {
+                cellType cT = getCellType(theLevel[i][j]);
                 
-                if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE); //ofSetColor(255, 0, 0); //NOT SURE
-                else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE); //ofSetColor(0, 0, 0); //NOT SURE YET
-                else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
-                if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, miniScale, miniScale / 4., theLevel);
-                ofPopMatrix();
+                if(theLevel[i][j] != 0 && (cT != PLAYER || displayPlayer == true)) {
+                    ofFill();
+                    ofPushMatrix();
+                    ofTranslate(rects[i][j].getTopLeft());
+                    //ofScale(roughScale,roughScale);
+                    if(cT == PLAYER) ofSetColor(scheme.colorPLAYERSELECTED);//ofSetColor(255, 255, 0);
+                    else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
+                    else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50)
+                    else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
+                    drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
+                    if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
+                    
+                    ofPopMatrix();
+                }
+            }
+        }
+        
+        for(int i = 0; i < theLevel.size(); ++i) {
+            for(int j = 0; j < theLevel[i].size(); ++j) {
+                cellType cT = getCellType(theLevel[i][j]);
+                
+                if(theLevel[i][j] != 0 && cT != PLAYER) {
+                    ofPushMatrix();
+                    ofTranslate(rects[i][j].getTopLeft());
+                    
+                    if(cT == ENEMY) ofSetColor(scheme.colorENEMYSTROKE); //ofSetColor(255, 0, 0); //NOT SURE
+                    else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE); //ofSetColor(0, 0, 0); //NOT SURE YET
+                    else if(cT == LOVE) ofSetColor(scheme.colorLOVESTROKE);
+                    if(cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellStroke(i, j, miniScale, miniScale / 4., theLevel);
+                    ofPopMatrix();
+                }
             }
         }
     }
@@ -97,23 +99,23 @@ pair<pair<int,int>, ofMesh> backgroundTile  = {{-2,-2},ofMesh()};
 pair<pair<int,int>, ofMesh> levelselectTile = {{-2,-2},ofMesh()};
 
 /*
-map<int,ofImage> renderedImages;
-int previousLevel = 1;
-void displayOldMenu();
-void displayMenuIMGDPed() {
-    if(renderedImages.size() == 0 || renderedImages[0].getWidth() != getWidth() || renderedImages[0].getHeight() != getHeight()) renderedImages.clear();
-    if(renderedImages.count(currentLevel) != 0) {
-        displayOldMenu();
-        ofImage imgSaver;
-        imgSaver.grabScreen(0, 0, getWidth(), getHeight());
-        renderedImages[currentLevel] = imgSaver;
-    }
-    else {
-        renderedImages[currentLevel].draw();
-    }
-    previousLevel = currentLevel;
-    
-}*/
+ map<int,ofImage> renderedImages;
+ int previousLevel = 1;
+ void displayOldMenu();
+ void displayMenuIMGDPed() {
+ if(renderedImages.size() == 0 || renderedImages[0].getWidth() != getWidth() || renderedImages[0].getHeight() != getHeight()) renderedImages.clear();
+ if(renderedImages.count(currentLevel) != 0) {
+ displayOldMenu();
+ ofImage imgSaver;
+ imgSaver.grabScreen(0, 0, getWidth(), getHeight());
+ renderedImages[currentLevel] = imgSaver;
+ }
+ else {
+ renderedImages[currentLevel].draw();
+ }
+ previousLevel = currentLevel;
+ 
+ }*/
 
 void displayOldMenu() {
     ofFill();
