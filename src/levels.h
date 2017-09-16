@@ -71,6 +71,10 @@ void loadLevelData() {
                                 level.push_back(currentLayer);
                                 currentLayer.clear();
                             }
+                            if(depth == 0) {
+                                j++;
+                                break;
+                            }
                         }
                         else if(c == ',') {
                             if(depth == 2) {
@@ -79,10 +83,6 @@ void loadLevelData() {
                             }
                         }
                         else if(c >= '0' && c <= '9') info.push_back(c);
-                        if(depth == 0) {
-                            j++;
-                            break;
-                        }
                     }
                     for(; j < lines[i].size(); ++j) {
                         /*if(lines[i][j] == 'g') {
@@ -133,6 +133,10 @@ void loadLevelData() {
                                 info = "";
                                 level.push_back(currentLayer);
                                 currentLayer.clear();
+                            }
+                            if(depth == 0) {
+                                j++;
+                                break;
                             }
                         }
                         else if(c == ',') {
