@@ -24,18 +24,54 @@ vector<deque<deque<int> > > levelEditorSaves;
 
 deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth);
 void improveLevelEditor(){
+	assert(editorGrid.size() != 0);
+	int topRows = 0, botRows = 0, leftRows = 0, rightRows = 0;
+	
 	auto tempEditGrid = editorGrid;
-	//levelEditorSaves.push_back(editorGrid);
-	int size = editorGrid.size();
-	cropBordersOf(editorGrid);
-	cout << editorGrid.size() << " " << editorGrid[0].size() << endl;
-	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
-	for(int i = editorGrid.size(); i < size; i+=2){
-		pushBackRowOf(editorGrid);
-		pushFrontRowOf(editorGrid);
-		pushBackColumnOf(editorGrid);
-		pushFrontColumnOf(editorGrid);
+	bool doneSearchingSpaces = false;
+	for(int i = 0, doneSearchingSpaces = false; i < editorGrid.size() && !doneSearchingSpaces; ++i){
+		for(int j = 0; j < editorGrid[0].size(); ++j){
+			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+				doneSearchingSpaces = true;
+				break;
+			}
+		}
+		topRows = i+1;
 	}
+	for(int i = editorGrid.size()-1, doneSearchingSpaces = false; i >= 0 && !doneSearchingSpaces; --i){
+		for(int j = 0; j < editorGrid[0].size(); ++j){
+			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+				doneSearchingSpaces = true;
+				break;
+			}
+		}
+		botRows = editorGrid.size()-1-(i-1);
+	}
+	for(int j = 0, doneSearchingSpaces = false; j < editorGrid[0].size() && !doneSearchingSpaces; ++j){
+		for(int i = 0; i < editorGrid.size(); ++i){
+			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+				doneSearchingSpaces = true;
+				break;
+			}
+		}
+		leftRows = j+1;
+	} 
+	for(int j = editorGrid[0].size()-1, doneSearchingSpaces = false; j >= 0 && !doneSearchingSpaces; --j)
+		for(int i = 0; i < editorGrid.size(); ++i){
+			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+				doneSearchingSpaces = true;
+				break;
+			}
+		}
+		rightRows = editorGrid[0].size()-1-(j-1);
+	}
+	cropBordersOf(editorGrid);
+	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
+	for(int i = 0; i < topRows; ++i) pushFrontRowOf(editorGrid);
+	for(int i = 0; i < botRows; ++i) pushBackRowOf(editorGrid);
+	for(int i = 0; i < leftRows; ++i) pushFrontColumnOf(editorGrid);
+	for(int i = 0; i < rightRows; ++i) pushBackColumnOf(editorGrid);
+	
 	if(editorGrid != tempEditGrid) levelEditorSaves.push_back(tempEditGrid);
 }
 
