@@ -72,9 +72,10 @@ void keyEvent (keyType kt) {
                 else assert(false);
 				break;
 			case IMPROVE:
-				if(mode == LEVEL_EDITOR_PLAYING){
+				if(mode == LEVEL_EDITOR){
 					improve();
 				}
+				break;
             default:
                 DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
         }
