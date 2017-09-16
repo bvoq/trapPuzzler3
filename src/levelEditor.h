@@ -19,6 +19,11 @@ void changeBrush (cellType newPlaceType) {
     placeType = newPlaceType;
 }
 
+deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth);
+void improve(){
+	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
+}
+
 set<pair<int, int> > tilesToBePlaced;
 vector<deque<deque<int> > > levelEditorSaves;
 void placeSelectedTiles() {

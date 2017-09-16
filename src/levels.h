@@ -187,7 +187,7 @@ void loadLevelData() {
         cropBordersOf(defaultlevels[i]);
 
     }
-    
+cout << levels[0].size() << endl;
     saveLevelData();
     //locationOfLevels;
 }
