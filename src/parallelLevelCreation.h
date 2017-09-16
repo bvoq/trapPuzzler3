@@ -23,6 +23,8 @@ long long globalBiggestSolvedDepth = 0;
 long long sufficientDepth = 25;
 long long sufficientBreadth = 16000;
 
+ddd improveLevel(deque<deque<int> > oldLevel, bool hasGravity, int tries, int maxBreadth);
+int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int maxComputationFields);
 void runThread(int threadID, int size, bool symmetric, int maxComputationFields) {
     long long biggestSolved = 0;
     long long biggestSolvedDepth = 0;
@@ -49,6 +51,27 @@ void runThread(int threadID, int size, bool symmetric, int maxComputationFields)
         if(hasSolved == -1) trapCount++;
         else if(hasSolved == -2) {tooLongCount++;}
         else if(hasSolved < 0) cout << "UNKNOWN RES " << hasSolved << endl;
+        else{
+			
+			int improvementTries = 3;
+			vector< ddd > improvedFields(improvementTries, ddd ());
+			for(int i = 0; i < improvementTries; ++i){
+				improvedFields[i] = improveLevel(field, false, 10, 4096*16);
+				for(int j = 0; j < improvementTries; ++j){
+					improvedFields[i] = improveLevel(improvedFields[i], false, 10, 4096*16);
+				}
+			}
+			
+			vector<keyType> tempSol;
+			int best = 0;
+			for(int i = 0; i < improvementTries; ++i){
+				int depth = newSolver(improvedFields[i], false, tempSol, 4096*16);
+				if(depth > best){
+					best = depth;
+					field = improvedFields[i];
+				}
+			}
+		}
         //cout << hasSolved << endl;
         //cout << i << " " << hasSolved << endl;
         if(/*hasSolved >= enough ||*/ hasSolved >= biggestSolved || depthSolved >= biggestSolvedDepth) {

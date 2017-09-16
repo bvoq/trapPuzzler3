@@ -150,11 +150,12 @@ void solveInGame() {
     else if(value == -2) cout << "Couldn't compute a solution in time." << endl;
     else cout << "Error when trying to solve the level." << endl;
 }
+#endif
 
 deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, int tries, int maxBreadth){
 	vector<keyType> bestSol;
 	newSolver(oldLevel, hasGravity, bestSol, maxBreadth);
-	cout << "initial lvl: depth " << bestSol.size();
+	//cout << "initial lvl: depth " << bestSol.size();
 	vector<keyType> sol;
 	auto bestLevel = oldLevel;
 	int MAXRED = 1000000;
@@ -225,11 +226,9 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 			bestLevel = tempImprovedLevel;
 		}
 	}
-	cout << ", now: " << bestSol.size() << endl;
+	//cout << ", now: " << bestSol.size() << endl;
 	return bestLevel;
 }
-
-#endif
 
 
 #endif
