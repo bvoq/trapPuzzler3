@@ -156,7 +156,7 @@ struct movement {
         float gD = getDelay();
         
         float idY = i; float idX = j;
-        float sign = 0;
+        float sign = 1;
         int gridY = grid.size(), gridX = grid[0].size(), newGridY = newGrid.size(), newGridX = newGrid[0].size();
         
         if(movementDirection == UP && newGridY > gridY) sign = -1;
