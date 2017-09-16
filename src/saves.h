@@ -11,6 +11,7 @@
 
 void loadSaveData() {
     createLevels();
+    cout << "Loading user data from " << locationOfResources << "saves/saveState1" << endl;
     if(!ofFile::doesFileExist(locationOfResources+"saves/saveState1")) {
         ofstream ofstr(locationOfResources+"saves/saveState1");
         ofstr << levels.size() << endl;
@@ -27,7 +28,7 @@ void loadSaveData() {
 }
 
 void saveSaveData() {
-    cout << "Saving to " << locationOfResources << "saves/saveState1" << endl;
+    cout << "Saving user data to " << locationOfResources << "saves/saveState1" << endl;
     if(ofFile::doesFileExist(locationOfResources+"saves/saveState1")) ofFile::removeFile(locationOfResources+"saves/saveState1");
     ofstream ofstr(locationOfResources+"saves/saveState1");
     ofstr << beaten.size() << endl;

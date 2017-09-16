@@ -359,8 +359,10 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     int theReturn = moveTile(moveGrid, moveEyeGrid, playerID, input, checked, tempGrid, eyesToChange, solver);
     if(theReturn == -1) {
         #ifndef islevelgen
-        screenShake(timeAllowed*2, input);
-        playBlocking();
+        if(!solver) {
+            screenShake(timeAllowed*2, input);
+            playBlocking();
+        }
         #endif
         moveGrid = oldGrid;
         moveEyeGrid = oldEyeGrid;
