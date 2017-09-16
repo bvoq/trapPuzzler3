@@ -150,7 +150,103 @@ void solveInGame() {
     else if(value == -2) cout << "Couldn't compute a solution in time." << endl;
     else cout << "Error when trying to solve the level." << endl;
 }
+
+deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth){
+	vector<keyType> bestSol;
+	newSolver(lvl, false, bestSol, maxBreadth);
+	vector<keyType> sol;
+	auto newLevel = lvl;
+	for(int i = 0; i < tries; ++i){
+		auto level = lvl;
+		vector< vector<pair<int, int> > > stonesBlack = {
+			{{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
+		};
+		vector< vector<pair<int,int> > > stonesRed = stonesBlack;
+		
+		int darkBlocksToBePlaced = 1 + rand()%3;
+		int redBlocksToBePlaced = 1 + rand()%3;
+		int breakTries = 0;
+		int w = lvl.size();
+		int h = lvl[0].size();
+		while(darkBlocksToBePlaced != 0 && breakTries < 100) {
+			int offsetY = rand() % h; int offsetX = rand() % w;
+			int randTile = rand() % stonesBlack.size();
+			bool noAdd = false;
+			for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
+				if(stonesBlack[randTile][i].first + offsetY >= h || stonesBlack[randTile][i].second + offsetX >= w ||
+				   level[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] != 0) {
+					noAdd = true;
+				}
+			}
+			if(noAdd == false) {
+				for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
+					level[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
+				}
+				darkBlocksToBePlaced--;
+			}
+			breakTries++;
+		}
+		breakTries = 0;
+		while(redBlocksToBePlaced !=0 && breakTries < 100) {
+			int offsetY = rand() % h; int offsetX = rand() % w;
+			int randTile = rand() % stonesRed.size();
+			bool noAdd = false;
+			for(int i = 0; i < stonesRed[randTile].size(); ++i) {
+				if(stonesRed[randTile][i].first + offsetY >= h || stonesRed[randTile][i].second + offsetX >= w ||
+				   level[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] != 0) {
+					noAdd = true;
+				}
+			}
+			if(noAdd == false) {
+				for(int i = 0; i < stonesRed[randTile].size(); ++i) {
+					level[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 1000000+redBlocksToBePlaced;
+				}
+				redBlocksToBePlaced--;
+			}
+			breakTries++;
+		}
+    
+    
+    
+    
+		newSolver(lvl, false, sol, maxBreadth);
+		if(sol.size() >= bestSol.size()){
+			bestSol = sol;
+			newLevel = level;
+		}
+	}
+	
+	return newLevel;
+}
+
 #endif
 
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

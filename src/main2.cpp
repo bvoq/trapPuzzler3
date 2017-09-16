@@ -33,7 +33,7 @@ float PI = 3.1415926;
 
 #define islevelgen
 #define nogetvertices
-//#include "ofMain.h"
+////#include "ofMain.h"
 #define ddd deque<deque<int> >
 #include "globals.h"
 #include "keyMap.h"
@@ -49,7 +49,7 @@ float PI = 3.1415926;
 
 int main() {
     int maxSize = 4096*16;
-    
+
     srand(time(0)); //seed only needs to be loaded once, every thread should execute something different.
     // rand not thread safe, but shouldn't matter.
     thread threads[threadCount];
