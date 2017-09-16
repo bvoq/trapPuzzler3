@@ -69,7 +69,7 @@ void initDefaultKeyMapping() {
     
     keyMapper.insert({27, TOGGLE_TOOLBAR});
     
-    keyMapper.insert({74, IMPROVE});
+    keyMapper.insert({105, IMPROVE});
 
     
 }
