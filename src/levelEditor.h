@@ -19,9 +19,13 @@ void changeBrush (cellType newPlaceType) {
     placeType = newPlaceType;
 }
 
+set<pair<int, int> > tilesToBePlaced;
+vector<deque<deque<int> > > levelEditorSaves;
+
 deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth);
-void improve(){
-	levelEditorSaves.push_back(editorGrid);
+void improveLevelEditor(){
+	auto tempEditGrid = editorGrid;
+	//levelEditorSaves.push_back(editorGrid);
 	int size = editorGrid.size();
 	cropBordersOf(editorGrid);
 	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
@@ -31,10 +35,9 @@ void improve(){
 		pushBackColumnOf(editorGrid);
 		pushFrontColumnOf(editorGrid);
 	}
+	if(editorGrid != tempEditGrid) levelEditorSaves.push_back(tempEditGrid);
 }
 
-set<pair<int, int> > tilesToBePlaced;
-vector<deque<deque<int> > > levelEditorSaves;
 void placeSelectedTiles() {
     levelEditorSaves.push_back(editorGrid);
     int placeID;

@@ -1,3 +1,4 @@
+rm bin/trapPuzzler3
 mv src/main2.cpp main2.cpp
 make
 mv main2.cpp src

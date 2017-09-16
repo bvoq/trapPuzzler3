@@ -138,7 +138,7 @@ void solveInGame() {
     vector<keyType> solution;
     int value = newSolver(moveGrid, hasGravity, solution, 4096*16);
     if(value >= 0) {
-        cout << "It is solvable!" << endl;
+        cout << "It is solvable! Depth: " << solution.size() << " Breadth: " << value << endl;
         int firstPlayer = changePlayerIdDeterministic(moveGrid, -1,true);
         playerID = firstPlayer; //actually change to that player
         for(int i = 0; i < solution.size(); ++i) {
@@ -158,9 +158,11 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 	vector<keyType> sol;
 	auto bestLevel = oldLevel;
 	int MAXRED = 1000000;
+	int MAXBLACK = 2000000;
 	for(auto a : oldLevel){
 		for(auto b : a){
 			if(b < 2000000) MAXRED = MAX(MAXRED, b);
+			if(b < 3000000) MAXBLACK = MAX(MAXBLACK, b);
 		}
 	}
 	
@@ -188,7 +190,7 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 			}
 			if(noAdd == false) {
 				for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
-					tempImprovedLevel[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
+					tempImprovedLevel[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = MAXBLACK+1+darkBlocksToBePlaced;
 				}
 				darkBlocksToBePlaced--;
 			}

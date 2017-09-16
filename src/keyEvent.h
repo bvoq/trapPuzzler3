@@ -136,7 +136,7 @@ void keyEvent (keyType kt) {
                 else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
                 else assert(false);
             case IMPROVE:
-				improve();
+				improveLevelEditor();
 				break;
             default:
                 DEB("Unused keyMap: " << kt << " on key " << "(inv of keymap)" << " in mode " << mode);
