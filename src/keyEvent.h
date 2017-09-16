@@ -49,7 +49,14 @@ void keyEvent (keyType kt) {
                 if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,moveEyeGrid,playerID,kt, timeForMovement, false, true);
                 break;
             case PLAYER_CHANGE:
-                if(!blockMovementDueToWinningAnimation && !forceUndo) changePlayerIdDeterministic(moveGrid,playerID,false);
+                if(!blockMovementDueToWinningAnimation && !forceUndo) {
+                    //only change player AFTER adding movement.
+                    movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
+                                          CHANGE_TO_PLAYER, {}, false, timeForMovement, false
+                                          );
+                    movements.push_back(m);
+                    changePlayerIdDeterministic(moveGrid,playerID,false);
+                }
                 break;
             case RESTART:
                 restart();
