@@ -28,6 +28,7 @@ void improveLevelEditor(){
 	//levelEditorSaves.push_back(editorGrid);
 	int size = editorGrid.size();
 	cropBordersOf(editorGrid);
+	cout << editorGrid.size() << " " << editorGrid[0].size() << endl;
 	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
 	for(int i = editorGrid.size(); i < size; i+=2){
 		pushBackRowOf(editorGrid);
