@@ -35,7 +35,7 @@ void screenShakeRotationMatrix() {
             else if(shakeDirection == UP) ofTranslate(0,rect.getWidth()*incr*.5);
             else if(shakeDirection == DOWN) ofTranslate(0,-rect.getHeight()*incr*.5);
         }
-        ofRotate((incr-0.5) * PI/2.,ofGetWidth()/2, ofGetHeight()/2,0);
+        ofRotate((incr-0.5) * PI/1.5,ofGetWidth()/2, ofGetHeight()/2,0);
     }
 }
 
