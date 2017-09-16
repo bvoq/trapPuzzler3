@@ -195,6 +195,7 @@ cout << levels[0].size() << endl;
 
 #include <stdio.h> //for removing files
 void saveLevelData() {
+    cout << "Saving world data to " << locationOfResources << "levels/levels" << endl;
     ofFile writefile(locationOfResources+"levels/levels",ofFile::WriteOnly);
     for(int l = 0; l < levels.size(); ++l) {
         writefile << "Level "<<(l+1) << " =";
