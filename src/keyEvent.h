@@ -54,8 +54,11 @@ void keyEvent (keyType kt) {
                     movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
                                           CHANGE_TO_PLAYER, {}, false, timeForMovement, false
                                           );
-                    movements.push_back(m);
                     changePlayerIdDeterministic(moveGrid,playerID,false);
+                    m.newPlayerID = playerID;
+                    movements.push_back(m);
+                    
+                    
                 }
                 break;
             case RESTART:
