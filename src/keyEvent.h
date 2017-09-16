@@ -78,11 +78,6 @@ void keyEvent (keyType kt) {
                 else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
                 else assert(false);
 				break;
-			case IMPROVE:
-				if(mode == LEVEL_EDITOR){
-					improve();
-				}
-				break;
             default:
                 DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
         }
@@ -137,6 +132,9 @@ void keyEvent (keyType kt) {
                 if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
                 else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
                 else assert(false);
+            case IMPROVE:
+				improve();
+				break;
             default:
                 DEB("Unused keyMap: " << kt << " on key " << "(inv of keymap)" << " in mode " << mode);
         }

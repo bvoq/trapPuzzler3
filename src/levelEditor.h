@@ -21,7 +21,16 @@ void changeBrush (cellType newPlaceType) {
 
 deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth);
 void improve(){
+	levelEditorSaves.push_back(editorGrid);
+	int size = editorGrid.size();
+	cropBordersOf(editorGrid);
 	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
+	for(int i = editorGrid.size(); i < size; i+=2){
+		pushBackRowOf(editorGrid);
+		pushFrontRowOf(editorGrid);
+		pushBackColumnOf(editorGrid);
+		pushFrontColumnOf(editorGrid);
+	}
 }
 
 set<pair<int, int> > tilesToBePlaced;

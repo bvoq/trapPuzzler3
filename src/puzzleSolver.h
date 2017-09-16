@@ -151,36 +151,44 @@ void solveInGame() {
     else cout << "Error when trying to solve the level." << endl;
 }
 
-deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth){
+deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, int tries, int maxBreadth){
 	vector<keyType> bestSol;
-	newSolver(lvl, false, bestSol, maxBreadth);
+	newSolver(oldLevel, hasGravity, bestSol, maxBreadth);
+	cout << "initial lvl: depth " << bestSol.size();
 	vector<keyType> sol;
-	auto newLevel = lvl;
+	auto bestLevel = oldLevel;
+	int MAXRED = 1000000;
+	for(auto a : oldLevel){
+		for(auto b : a){
+			if(b < 2000000) MAXRED = MAX(MAXRED, b);
+		}
+	}
+	
 	for(int i = 0; i < tries; ++i){
-		auto level = lvl;
+		auto tempImprovedLevel = oldLevel;
 		vector< vector<pair<int, int> > > stonesBlack = {
 			{{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
 		};
 		vector< vector<pair<int,int> > > stonesRed = stonesBlack;
 		
-		int darkBlocksToBePlaced = 1 + rand()%3;
-		int redBlocksToBePlaced = 1 + rand()%3;
+		int darkBlocksToBePlaced = 1;
+		int redBlocksToBePlaced = 1;
 		int breakTries = 0;
-		int w = lvl.size();
-		int h = lvl[0].size();
+		int w = oldLevel.size();
+		int h = oldLevel[0].size();
 		while(darkBlocksToBePlaced != 0 && breakTries < 100) {
 			int offsetY = rand() % h; int offsetX = rand() % w;
 			int randTile = rand() % stonesBlack.size();
 			bool noAdd = false;
 			for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
 				if(stonesBlack[randTile][i].first + offsetY >= h || stonesBlack[randTile][i].second + offsetX >= w ||
-				   level[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] != 0) {
+				   tempImprovedLevel[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] != 0) {
 					noAdd = true;
 				}
 			}
 			if(noAdd == false) {
 				for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
-					level[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
+					tempImprovedLevel[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
 				}
 				darkBlocksToBePlaced--;
 			}
@@ -193,13 +201,13 @@ deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tri
 			bool noAdd = false;
 			for(int i = 0; i < stonesRed[randTile].size(); ++i) {
 				if(stonesRed[randTile][i].first + offsetY >= h || stonesRed[randTile][i].second + offsetX >= w ||
-				   level[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] != 0) {
+				   tempImprovedLevel[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] != 0) {
 					noAdd = true;
 				}
 			}
 			if(noAdd == false) {
 				for(int i = 0; i < stonesRed[randTile].size(); ++i) {
-					level[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 1000000+redBlocksToBePlaced;
+					tempImprovedLevel[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = MAXRED + 1 +redBlocksToBePlaced;
 				}
 				redBlocksToBePlaced--;
 			}
@@ -209,14 +217,14 @@ deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tri
     
     
     
-		newSolver(lvl, false, sol, maxBreadth);
+		if(newSolver(tempImprovedLevel, hasGravity, sol, maxBreadth) < 0) continue;
 		if(sol.size() >= bestSol.size()){
 			bestSol = sol;
-			newLevel = level;
+			bestLevel = tempImprovedLevel;
 		}
 	}
-	
-	return newLevel;
+	cout << ", now: " << bestSol.size() << endl;
+	return bestLevel;
 }
 
 #endif
