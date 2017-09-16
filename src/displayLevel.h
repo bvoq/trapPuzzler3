@@ -856,7 +856,28 @@ void displayLevel() {
                 cellType cT = getCellType(grid[i][j]);
                 if(cT == PLAYER) {
                     ofSetColor(scheme.colorPLAYERUNSELECTED);//ofSetColor(255, 255, 0);
-                    if(grid[i][j] == playerID) ofSetColor(scheme.colorPLAYERSELECTED);
+                    /*if(movements.size() != 0 && playerID != movements.front().playerID) {
+                        ofColor playerColor = scheme.colorPLAYERSELECTED;
+                        float incr = 0;
+                        int time = getAdjustedTime() % timeForFlickering;
+                        if(time < timeForFlickering/2) {
+                            if(time < timeForFlickering/4) {
+                                incr = easeInSine(time, 0., 1., timeForFlickering/4);
+                            }
+                            else {
+                                incr = 1.-easeOutSine(time - timeForFlickering/4, 0., 1., timeForFlickering/4);
+                            }
+                        }
+                        
+                        playerColor.r = playerColor.r + (0xFF-playerColor.r) * incr;
+                        playerColor.g = playerColor.g + (0xFF-playerColor.g) * incr;
+                        playerColor.b = playerColor.b + (0xFF-playerColor.b) * incr;
+                        
+                        ofSetColor(playerColor);
+                    }*/
+                    if(grid[i][j] == playerID) {
+                        ofSetColor(scheme.colorPLAYERSELECTED);
+                    }
                 }
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);

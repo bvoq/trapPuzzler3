@@ -92,6 +92,13 @@ float easeInOutElastic(float t,float b , float c, float d) {
     return postFix * sin( (t*d-s)*(2*PI)/p )*.5f + c + b;
 }
 
+float easeInSine (float t,float b , float c, float d) {
+    return -c * cos(t/d * (PI/2)) + c + b;
+}
+float easeOutSine (float t,float b , float c, float d) {
+    return c * sin(t/d * (PI/2)) + b;
+}
+
 float easeInOutSine(float t,float b , float c, float d) {
     return -c/2 * (cos(PI*t/d) - 1) + b;
 }
@@ -351,7 +358,10 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     set<pair<int, int> > eyesToChange;
     int theReturn = moveTile(moveGrid, moveEyeGrid, playerID, input, checked, tempGrid, eyesToChange, solver);
     if(theReturn == -1) {
+        #ifndef islevelgen
         screenShake(timeAllowed*2, input);
+        playBlocking();
+        #endif
         moveGrid = oldGrid;
         moveEyeGrid = oldEyeGrid;
         return false;

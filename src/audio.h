@@ -2,7 +2,7 @@
 #define audio_h
 
 
-vector<ofSoundPlayer> titles, walksfx, undosfx;
+vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx;
 int currentTitle = -1;
 void initAudio() {
     for(int i = 0; i <= 0; ++i) {
@@ -25,6 +25,13 @@ void initAudio() {
         temp.setLoop(false);
         undosfx.push_back(temp);
     }
+    
+    for(int i = 0; i <= 0; ++i) {
+        ofSoundPlayer temp;
+        temp.load(locationOfResources + "audio/blocking"+to_string(i)+".wav");
+        temp.setLoop(false);
+        blockingsfx.push_back(temp);
+    }
 }
 
 void playAudio(int title) {
@@ -46,7 +53,10 @@ void playUndoSound() {
     undosfx[pos].play();
 }
 
-
+void playBlocking() {
+    int pos = rand() % blockingsfx.size();
+    blockingsfx[pos].play();
+}
 
 
 #endif /* audio_h */
