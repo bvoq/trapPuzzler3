@@ -859,33 +859,39 @@ void displayLevel() {
                     if(((movements.size() != 0 && grid[i][j] == movements.front().oldPlayerID) ) || (movements.size() == 0 && grid[i][j] == playerID)) {
                         ofSetColor(scheme.colorPLAYERSELECTED);
                     }
-                    
-                    
-                    /*
-                    if(movements.size() != 0 && movements.front().movementDirection == CHANGE_TO_PLAYER && movements.front().oldPlayer == grid[i][j]) {
-                        
-                    }*/
-                    /*else {
-                     ofColor playerColor = scheme.colorPLAYERSELECTED;
-                     float incr = 0;
-                     int time = getAdjustedTime() % timeForFlickering;
-                     if(time < timeForFlickering/2) {
-                     if(time < timeForFlickering/4) {
-                     incr = easeInSine(time, 0., 1., timeForFlickering/4);
-                     }
-                     else {
-                     incr = 1.-easeOutSine(time - timeForFlickering/4, 0., 1., timeForFlickering/4);
-                     }
-                     }
-                     
-                     playerColor.r = playerColor.r + (0xFF-playerColor.r) * incr;
-                     playerColor.g = playerColor.g + (0xFF-playerColor.g) * incr;
-                     playerColor.b = playerColor.b + (0xFF-playerColor.b) * incr;
-                     
+                    if(movements.size() != 0 && movements.front().newPlayerID == grid[i][j] && movements.front().oldPlayerID != grid[i][j]) {
+                        ofColor playerColor = scheme.colorPLAYERUNSELECTED;
+                        float incr = 0;
+                        float time = movements.front().linearIncr();
+                        incr = easeInSine(time, 0., 1., 1.);
+
+                        playerColor.r = playerColor.r + (0xFF-playerColor.r) * incr;
+                        playerColor.g = playerColor.g + (0xFF-playerColor.g) * incr;
+                        playerColor.b = playerColor.b + (0xFF-playerColor.b) * incr;
+                        ofSetColor(playerColor);
                     }
-                    if(grid[i][j] == playerID) {
-                        ofSetColor(scheme.colorPLAYERSELECTED);
-                    }*/
+                    if(movements.size() != 0 && movements.front().newPlayerID == grid[i][j] && movements.front().oldPlayerID != grid[i][j]) {
+                        ofColor playerColor = scheme.colorPLAYERUNSELECTED;
+                        float incr = 0;
+                        float time = movements.front().linearIncr();
+                        incr = easeInSine(time, 0., 1., 1.);
+                        
+                        playerColor.r = playerColor.r + (scheme.colorPLAYERSELECTED.r-playerColor.r) * incr;
+                        playerColor.g = playerColor.g + (scheme.colorPLAYERSELECTED.g-playerColor.g) * incr;
+                        playerColor.b = playerColor.b + (scheme.colorPLAYERSELECTED.b-playerColor.b) * incr;
+                        ofSetColor(playerColor);
+                    }
+                    if(movements.size() != 0 && movements.front().newPlayerID != grid[i][j] && movements.front().oldPlayerID == grid[i][j]) {
+                        ofColor playerColor = scheme.colorPLAYERSELECTED;
+                        float incr = 0;
+                        float time = movements.front().linearIncr();
+                        incr = easeInSine(time, 0., 1., 1.);
+                        
+                        playerColor.r = playerColor.r + (scheme.colorPLAYERUNSELECTED.r-playerColor.r) * incr;
+                        playerColor.g = playerColor.g + (scheme.colorPLAYERUNSELECTED.g-playerColor.g) * incr;
+                        playerColor.b = playerColor.b + (scheme.colorPLAYERUNSELECTED.b-playerColor.b) * incr;
+                        ofSetColor(playerColor);
+                    }
                 }
                 else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                 else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50);

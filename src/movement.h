@@ -113,6 +113,7 @@ struct movement {
     bool isUndoMove;
     int movementTime;
     int oldPlayerID;
+    int newPlayerID; //will be overwritten.
     bool gravityMove;
     movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
              keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove) {
@@ -126,6 +127,7 @@ struct movement {
         isUndoMove = _isUndoMove;
         movementTime = _movementTime;
         oldPlayerID = playerID;
+        newPlayerID = playerID; //can be overwritten.
         gravityMove = _gravityMove;
     }
     
@@ -237,13 +239,16 @@ void undoMovement(long long maxtime) {
             //cropBordersOf(previousMovements.back().oldEyeGrid);
             
             moveGrid = previousMovements.back().oldGrid;
-            playerID = previousMovements.back().oldPlayerID;
             lastGravity = previousMovements.back().gravityMove;
             moveEyeGrid = previousMovements.back().oldEyeGrid;
             movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
-                          previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
-                          oppositeKeyType, previousMovements.back().hasMoved, true,
-                          MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
+                              previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
+                              oppositeKeyType, previousMovements.back().hasMoved, true,
+                              MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
+            
+            
+            playerID = previousMovements.back().oldPlayerID; //ONLY CHANGE AFTERWARDS, swaps new player and old player.
+            undoMove.newPlayerID = playerID;
             movements.push_back(undoMove);
             previousMovements.pop_back();
         } while(lastGravity);
