@@ -503,7 +503,9 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
                                 movementSlowDownDueToEyeKilling = true;
                                 moveGrid[i][positionOfGravityMonsterX-2] = GRAVITYMONSTERDEADEYEID;
+                                #ifndef islevelgen
                                 deadEyeCountForSlurping++;
+                                #endif
                             }
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
