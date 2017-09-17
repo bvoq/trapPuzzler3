@@ -2,7 +2,7 @@
 #define audio_h
 
 
-vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx;
+vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx;
 float musicvolume = 0.75, sfxvolume = 1.0;
 int currentTitle = -1;
 void initAudio() {
@@ -37,13 +37,29 @@ void initAudio() {
         temp.setVolume(sfxvolume);
         blockingsfx.push_back(temp);
     }
+    
+    for(int i = 0; i <= 3; ++i) {
+        ofSoundPlayer temp;
+        temp.load(locationOfResources + "audio/gravity/gravitysuck"+to_string(i)+".wav");
+        temp.setLoop(false);
+        temp.setVolume(sfxvolume);
+        gravitysucksfx.push_back(temp);
+    }
+    for(int i = 0; i <= 3; ++i) {
+        ofSoundPlayer temp;
+        temp.load(locationOfResources + "audio/gravity/gravityslurp"+to_string(i)+".wav");
+        temp.setLoop(false);
+        temp.setVolume(sfxvolume);
+        gravityslurpsfx.push_back(temp);
+    }
+    
 }
 
 void playAudio(int title) {
     if(currentTitle != title) {
-        if(currentTitle != -1) titles[title].stop();
-        titles[title].play();
-        currentTitle = title;
+        //if(currentTitle != -1) titles[title].stop();
+        //titles[title].play();
+        //currentTitle = title;
     }
 }
 
@@ -63,9 +79,14 @@ void playBlocking() {
     blockingsfx[pos].play();
 }
 
+void playGravitySuck(int gravityIntensity) {
+    assert(gravityIntensity >= 0 && gravityIntensity <= 3);
+    gravitysucksfx[gravityIntensity].play();
+}
 
-void playGravity() {
-    
+void playGravitySlurp(int gravityIntensity) {
+    assert(gravityIntensity >= 0 && gravityIntensity <= 3);
+    gravityslurpsfx[gravityIntensity].play();
 }
 
 #endif /* audio_h */

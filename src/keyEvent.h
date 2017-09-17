@@ -52,7 +52,7 @@ void keyEvent (keyType kt) {
                 if(!blockMovementDueToWinningAnimation && !forceUndo) {
                     //only change player AFTER adding movement.
                     movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
-                                          CHANGE_TO_PLAYER, {}, false, timeForMovement, false
+                                          CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
                                           );
                     changePlayerIdDeterministic(moveGrid,playerID,false);
                     m.newPlayerID = playerID;
