@@ -6,7 +6,7 @@
 		<waveclip offset="0.00000000">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="18673">
 				<waveblock start="0">
-					<simpleblockfile filename="e0000888.au" len="18673" min="-0.895168" max="0.974934" rms="0.074219"/>
+					<simpleblockfile filename="e0000cc0.au" len="18673" min="-0.389043" max="0.342685" rms="0.034396"/>
 				</waveblock>
 			</sequence>
 			<envelope numpoints="0"/>
@@ -16,7 +16,7 @@
 		<waveclip offset="0.00000000">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="18673">
 				<waveblock start="0">
-					<simpleblockfile filename="e0000ff2.au" len="18673" min="-0.895165" max="0.974956" rms="0.074219"/>
+					<simpleblockfile filename="e00001ed.au" len="18673" min="-0.389045" max="0.342686" rms="0.034396"/>
 				</waveblock>
 			</sequence>
 			<envelope numpoints="0"/>
