@@ -105,6 +105,10 @@ float easeInOutSine(float t,float b , float c, float d) {
 
 
 #ifndef islevelgen
+enum MusicType {
+    NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203
+};
+
 struct movement {
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
@@ -115,8 +119,10 @@ struct movement {
     int oldPlayerID;
     int newPlayerID; //will be overwritten.
     bool gravityMove;
+    bool gravitySound;
+    MusicType audioOnMove;
     movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
-             keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove) {
+             keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove, MusicType _audioOnMove) {
         newGrid = _nG;
         oldGrid = _oG;
         newEyeGrid = _nEG;
@@ -129,6 +135,7 @@ struct movement {
         oldPlayerID = playerID;
         newPlayerID = playerID; //can be overwritten.
         gravityMove = _gravityMove;
+        audioOnMove = _audioOnMove;
     }
     
     void changeGrid() {
@@ -151,8 +158,10 @@ struct movement {
     
     ofRectangle calculatePosition(int i, int j) {
         if(!isUsed) {
-            if(!blockMovementDueToWinningAnimation && !isUndoMove && !gravityMove) playMoveSound();
-            else if(!blockMovementDueToWinningAnimation && isUndoMove && !gravityMove) playUndoSound();
+            if(!blockMovementDueToWinningAnimation && audioOnMove == NORMALMT) playMoveSound();
+            else if(!blockMovementDueToWinningAnimation && audioOnMove == UNDOMT) playUndoSound();
+            else if(!blockMovementDueToWinningAnimation && audioOnMove >= 100 && audioOnMove <= 103) playGravitySuck(audioOnMove-100);
+            else if(!blockMovementDueToWinningAnimation && audioOnMove >= 200 && audioOnMove <= 203) playGravitySlurp(audioOnMove-200);
             isUsed = true;
         }
         float gD = getDelay();
@@ -188,7 +197,6 @@ struct movement {
         output.translate(w / 2, h / 2);
         
         //Add movement delay
-        
         
         if(hasMoved.count(grid[i][j]) != 0) {
             //easeInOutQuad();
@@ -244,7 +252,7 @@ void undoMovement(long long maxtime) {
             movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
                               previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
                               oppositeKeyType, previousMovements.back().hasMoved, true,
-                              MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove);
+                              MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove, UNDOMT);
             
             
             playerID = previousMovements.back().oldPlayerID; //ONLY CHANGE AFTERWARDS, swaps new player and old player.
@@ -413,7 +421,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
         checkForMerge(moveGrid,playerID);
         #ifndef islevelgen
         if(!solver) {
-            movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false);
+            movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false, NORMALMT);
             movements.push_back(newMovement);
         }
         #endif
@@ -429,7 +437,10 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 }
             }
         }
-        
+#ifndef islevelgen
+        size_t movementSizeNonGravity = movements.size();
+        bool doesSlurping = false;
+#endif
         if(hasEyeAndThereforeGravity) { //asserts gravity.
             set<int> checked, currentlyChecking, affectedByGravity; set<pair<int,int> > affectedEyes;
             int gravityMaxCount = 100;
@@ -465,6 +476,9 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                                     else forceUndo = mustUndo;
                                 }
                                 moveGrid[i][positionOfGravityMonsterX-1] = 0;
+                                #ifndef islevelgen
+                                doesSlurping = true;
+                                #endif
                             }
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTEREYE) {
@@ -551,7 +565,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 checkForMerge(moveGrid,playerID);
                 #ifndef islevelgen
                 if(!solver && moveGrid != oldGrid) {
-                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true);
+                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true, NONEMT);
                     movements.push_back(newGravityMovement);
                     velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;
                 }
@@ -560,10 +574,20 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             if(solver && affectedByGravity.size()!=0) return false;
             
             #ifndef islevelgen
-            while(affectedByGravity.size()!=0 && movements.size() > 10 && affectedByGravity == movements.back().hasMoved) {
-                moveGrid = movements.back().oldGrid;
-                moveEyeGrid = movements.back().oldEyeGrid;
-                movements.pop_back();
+            if(!solver && movements.size() - movementSizeNonGravity > 0) {
+                
+                //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " " << movements.size() << " " << movementSizeNonGravity << endl;
+                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity) / 4,3);
+                
+                assert(gravityIntensity >= 0 && gravityIntensity <= 3);
+                if(!doesSlurping) movements[movementSizeNonGravity-1].audioOnMove = (MusicType)(100 + gravityIntensity);
+                else movements[movementSizeNonGravity-1].audioOnMove = (MusicType)(200 + gravityIntensity);
+                
+                while(affectedByGravity.size()!=0 && movements.size() > 10 + movementSizeNonGravity && affectedByGravity == movements.back().hasMoved) {
+                    moveGrid = movements.back().oldGrid;
+                    moveEyeGrid = movements.back().oldEyeGrid;
+                    movements.pop_back();
+                }
             }
             #endif
             

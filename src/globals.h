@@ -22,7 +22,7 @@ long long timeForSlowEyeMovement = 800000;
 long long timeForSlowMovement = 160000;//160000; //is relative, also used for duration of sounds and shaking.
 long long timeForFastMovement = 20000; //winning
 long long timeForFlickering = 640000; //time it takes to cycle a flicker (done with modulo).
-double gravityAcceleration = 1.2*1./640000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
+double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
 
