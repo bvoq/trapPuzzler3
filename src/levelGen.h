@@ -19,10 +19,11 @@ deque<deque<int> > initField(int h, int w) {
     vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
     int minPlayers = 1, maxPlayers = 1;
     int yellowBlocksToBePlaced = minPlayers+(rand()%(maxPlayers-minPlayers+1));
+    int pinkBlocksToBePlaced = rand()%3;
     //int darkBlocksToBePlaced = 7 + (rand()%8);
     //int redBlocksToBePlaced = 2 + (rand()%14);
     //IDEAL FOR 10x10
-    int darkBlocksToBePlaced = 15 + (rand() % 15);
+    int darkBlocksToBePlaced = 14 + (rand() % 16);
     int redBlocksToBePlaced = 10 + (rand()%10);
     
     while(yellowBlocksToBePlaced != 0) {
@@ -41,6 +42,24 @@ deque<deque<int> > initField(int h, int w) {
                 field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] = yellowBlocksToBePlaced;
             }
             yellowBlocksToBePlaced--;
+        }
+    }
+    while(pinkBlocksToBePlaced != 0) {
+        //offsetY = h/2; offsetX = w/2;
+        int offsetY = (rand() % (h-1))+1; int offsetX = (rand() % (w-1))+1;
+        int randTile = rand() % stonesYellow.size();
+        bool noAdd = false;
+        for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+            if(stonesYellow[randTile][i].first + offsetY >= h || stonesYellow[randTile][i].second + offsetX >= w ||
+               field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] != 0) {
+                noAdd = true;
+            }
+        }
+        if(noAdd == false) {
+            for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+                field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] = 3000000+pinkBlocksToBePlaced;
+            }
+            pinkBlocksToBePlaced--;
         }
     }
     int breakTries = 0;
