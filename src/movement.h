@@ -106,7 +106,7 @@ float easeInOutSine(float t,float b , float c, float d) {
 
 #ifndef islevelgen
 enum MusicType {
-    NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203
+    NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203, RSUCK0MT=300, RSUCK1MT=301, RSUCK2MT=302, RSUCK3MT=303, RSLURP0MT = 400, RSLURP1MT = 401, RSLURP2MT = 402, RSLURP3MT = 403,
 };
 
 void screenShake(long long, keyType, float);
@@ -163,6 +163,8 @@ struct movement {
             else if(!blockMovementDueToWinningAnimation && audioOnMove == UNDOMT) playUndoSound();
             else if(!blockMovementDueToWinningAnimation && audioOnMove >= 100 && audioOnMove <= 103) playGravitySuck(audioOnMove-100);
             else if(!blockMovementDueToWinningAnimation && audioOnMove >= 200 && audioOnMove <= 203) playGravitySlurp(audioOnMove-200);
+            else if(!blockMovementDueToWinningAnimation && audioOnMove >= 300 && audioOnMove <= 303) playReverseGravitySuck(audioOnMove-300);
+            else if(!blockMovementDueToWinningAnimation && audioOnMove >= 400 && audioOnMove <= 403) playReverseGravitySlurp(audioOnMove-400);
             if(gravityMove && !isUndoMove) screenShake(movementTime, RIGHT, 0.5);
             isUsed = true;
         }
@@ -237,7 +239,8 @@ void checkMovement() {
 void undoMovement(long long maxtime) {
     if((movements.size() == 0 || movements.back().isUndoMove) && previousMovements.size() != 0) {
         forceUndo = false;
-        bool lastGravity = false;
+        bool isGravityMove = false; int locationOfFirstGravity = -1;
+        MusicType reverseMusicType = UNDOMT;
         do {
             keyType oppositeKeyType;
             if(previousMovements.back().movementDirection == UP) oppositeKeyType = DOWN;
@@ -249,19 +252,30 @@ void undoMovement(long long maxtime) {
             //cropBordersOf(previousMovements.back().oldEyeGrid);
             
             moveGrid = previousMovements.back().oldGrid;
-            lastGravity = previousMovements.back().gravityMove;
+            isGravityMove = previousMovements.back().gravityMove;
             moveEyeGrid = previousMovements.back().oldEyeGrid;
+            MusicType undoMusicType = isGravityMove ? NONEMT : UNDOMT;
+            
+            if(locationOfFirstGravity == -1 && previousMovements.back().gravityMove) {
+                locationOfFirstGravity = movements.size();
+            }
+            
+            if(locationOfFirstGravity != -1 && previousMovements.back().audioOnMove >= 100 && previousMovements.back().audioOnMove <= 103) movements[locationOfFirstGravity].audioOnMove = (MusicType)(previousMovements.back().audioOnMove + 200);
+            if(locationOfFirstGravity != -1 && previousMovements.back().audioOnMove >= 200 && previousMovements.back().audioOnMove <= 203) { movements[locationOfFirstGravity].audioOnMove = (MusicType)(previousMovements.back().audioOnMove + 200);
+            }
             movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
                               previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
                               oppositeKeyType, previousMovements.back().hasMoved, true,
-                              MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove, UNDOMT);
-            
-            
+                              MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove, undoMusicType);
             playerID = previousMovements.back().oldPlayerID; //ONLY CHANGE AFTERWARDS, swaps new player and old player.
             undoMove.newPlayerID = playerID;
             movements.push_back(undoMove);
             previousMovements.pop_back();
-        } while(lastGravity);
+        } while(isGravityMove);
+        
+        if(locationOfFirstGravity == -1) {
+            
+        }
         
     }
 }
@@ -441,7 +455,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
         }
 #ifndef islevelgen
         size_t movementSizeNonGravity = movements.size();
-        bool doesSlurping = false;
+        bool doesSlurping = false; int deadEyeCountForSlurping = 0;
 #endif
         if(hasEyeAndThereforeGravity) { //asserts gravity.
             set<int> checked, currentlyChecking, affectedByGravity; set<pair<int,int> > affectedEyes;
@@ -489,6 +503,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                                || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
                                 movementSlowDownDueToEyeKilling = true;
                                 moveGrid[i][positionOfGravityMonsterX-2] = GRAVITYMONSTERDEADEYEID;
+                                deadEyeCountForSlurping++;
                             }
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
@@ -579,11 +594,11 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             if(!solver && movements.size() - movementSizeNonGravity > 0) {
                 
                 //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " " << movements.size() << " " << movementSizeNonGravity << endl;
-                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity) / 4,3);
+                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 6,3);
                 
                 assert(gravityIntensity >= 0 && gravityIntensity <= 3);
-                if(!doesSlurping) movements[movementSizeNonGravity-1].audioOnMove = (MusicType)(100 + gravityIntensity);
-                else movements[movementSizeNonGravity-1].audioOnMove = (MusicType)(200 + gravityIntensity);
+                if(!doesSlurping) movements[movementSizeNonGravity].audioOnMove = (MusicType)(100 + gravityIntensity);
+                else movements[movementSizeNonGravity].audioOnMove = (MusicType)(200 + gravityIntensity);
                 
                 while(affectedByGravity.size()!=0 && movements.size() > 10 + movementSizeNonGravity && affectedByGravity == movements.back().hasMoved) {
                     moveGrid = movements.back().oldGrid;
