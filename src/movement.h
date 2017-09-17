@@ -109,6 +109,7 @@ enum MusicType {
     NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203
 };
 
+void screenShake(long long, keyType, float);
 struct movement {
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
@@ -162,6 +163,7 @@ struct movement {
             else if(!blockMovementDueToWinningAnimation && audioOnMove == UNDOMT) playUndoSound();
             else if(!blockMovementDueToWinningAnimation && audioOnMove >= 100 && audioOnMove <= 103) playGravitySuck(audioOnMove-100);
             else if(!blockMovementDueToWinningAnimation && audioOnMove >= 200 && audioOnMove <= 203) playGravitySlurp(audioOnMove-200);
+            if(gravityMove && !isUndoMove) screenShake(movementTime, RIGHT, 0.5);
             isUsed = true;
         }
         float gD = getDelay();
