@@ -37,6 +37,8 @@ int scrollX = 0;
 int scrollY = 0;
 int mousetouchX = -100, mousetouchY = -100;
 
+float wallShakeIntensity = .25+.125;
+
 int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 bool forceUndo = false;

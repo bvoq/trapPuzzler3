@@ -332,7 +332,7 @@ bool affectGravity(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& gr
 }
 
 
-void screenShake(long long duration, keyType keytype);
+void screenShake(long long duration, keyType keytype, float intensity);
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
 bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
@@ -365,7 +365,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     if(theReturn == -1) {
         #ifndef islevelgen
         if(!solver) {
-            screenShake(timeAllowed*2, input);
+            screenShake(timeAllowed*2, input, wallShakeIntensity);
             playBlocking();
         }
         #endif

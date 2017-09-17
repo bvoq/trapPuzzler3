@@ -29,41 +29,41 @@ void improveLevelEditor(){
 	
 	auto tempEditGrid = editorGrid;
 	bool doneSearchingSpaces = false;
-	for(int i = 0, doneSearchingSpaces = false; i < editorGrid.size() && !doneSearchingSpaces; ++i){
-		for(int j = 0; j < editorGrid[0].size(); ++j){
-			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+	for(int i = 0, doneSearchingSpaces = false; i < editorGrid.size() && !doneSearchingSpaces; ++i) {
+		for(int j = 0; j < editorGrid[0].size(); ++j) {
+			if(getCellType(editorGrid[i][j]) != AIR) {
 				doneSearchingSpaces = true;
 				break;
 			}
 		}
-		topRows = i+1;
+		topRows = i;
 	}
-	for(int i = editorGrid.size()-1, doneSearchingSpaces = false; i >= 0 && !doneSearchingSpaces; --i){
-		for(int j = 0; j < editorGrid[0].size(); ++j){
-			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+	for(int i = editorGrid.size()-1, doneSearchingSpaces = false; i >= 0 && !doneSearchingSpaces; --i) {
+		for(int j = 0; j < editorGrid[0].size(); ++j) {
+			if(getCellType(editorGrid[i][j]) != AIR) {
 				doneSearchingSpaces = true;
 				break;
 			}
 		}
-		botRows = editorGrid.size()-1-(i-1);
+		botRows = editorGrid.size()-1-(i);
 	}
-	for(int j = 0, doneSearchingSpaces = false; j < editorGrid[0].size() && !doneSearchingSpaces; ++j){
-		for(int i = 0; i < editorGrid.size(); ++i){
-			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+	for(int j = 0, doneSearchingSpaces = false; j < editorGrid[0].size() && !doneSearchingSpaces; ++j) {
+		for(int i = 0; i < editorGrid.size(); ++i) {
+			if(getCellType(editorGrid[i][j]) != AIR) {
 				doneSearchingSpaces = true;
 				break;
 			}
 		}
-		leftRows = j+1;
+		leftRows = j;
 	} 
-	for(int j = editorGrid[0].size()-1, doneSearchingSpaces = false; j >= 0 && !doneSearchingSpaces; --j)
-		for(int i = 0; i < editorGrid.size(); ++i){
-			if(getCellType(editorGrid[i][j]) != cellType.AIR){
+    for(int j = editorGrid[0].size()-1, doneSearchingSpaces = false; j >= 0 && !doneSearchingSpaces; --j) {
+		for(int i = 0; i < editorGrid.size(); ++i) {
+			if(getCellType(editorGrid[i][j]) != AIR) {
 				doneSearchingSpaces = true;
 				break;
 			}
 		}
-		rightRows = editorGrid[0].size()-1-(j-1);
+		rightRows = editorGrid[0].size()-1-(j);
 	}
 	cropBordersOf(editorGrid);
 	editorGrid = improveLevel(editorGrid, true, 100, 4096*16);
