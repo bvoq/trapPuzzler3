@@ -54,7 +54,7 @@ int main() {
     // rand not thread safe, but shouldn't matter.
     thread threads[threadCount];
     cout << "Executing with: " << threadCount << " threads and one main thread for a total of "<< threadCount+1<<"." << endl;
-    int size = 12; //!!!
+    int size = 10; //!!!
     for(int i = 0; i < threadCount; ++i) {
         threads[i] = thread(runThread,i,size,false,maxSize);
     }
