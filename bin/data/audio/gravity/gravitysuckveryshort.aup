@@ -1,22 +1,22 @@
 <?xml version="1.0" standalone="no" ?>
 <!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
-<project xmlns="http://audacity.sourceforge.net/xml/" projname="gravitysuckveryshort_data" version="1.3.0" audacityversion="2.1.2" sel0="0.0000000000" sel1="0.6640589569" vpos="0" h="0.0000000000" zoom="512.0095247955" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="gravitysuckveryshort_data" version="1.3.0" audacityversion="2.1.2" sel0="0.1074198800" sel1="0.6640638709" vpos="0" h="0.0000000000" zoom="512.0095247955" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
 	<tags/>
-	<wavetrack name="gravitysuckveryshort" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
-		<waveclip offset="0.10741988">
+	<wavetrack name="gravitysuckveryshort" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.10741497">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="24548">
 				<waveblock start="0">
-					<simpleblockfile filename="e000082e.au" len="24548" min="-0.413749" max="0.42658" rms="0.045319"/>
+					<simpleblockfile filename="e00002b2.au" len="24548" min="-0.417572" max="0.425297" rms="0.044906"/>
 				</waveblock>
 			</sequence>
 			<envelope numpoints="0"/>
 		</waveclip>
 	</wavetrack>
-	<wavetrack name="gravitysuckveryshort" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
-		<waveclip offset="0.10741988">
+	<wavetrack name="gravitysuckveryshort" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.10741497">
 			<sequence maxsamples="262144" sampleformat="262159" numsamples="24548">
 				<waveblock start="0">
-					<simpleblockfile filename="e0000853.au" len="24548" min="-0.413749" max="0.42658" rms="0.045319"/>
+					<simpleblockfile filename="e00006d3.au" len="24548" min="-0.417572" max="0.425297" rms="0.044906"/>
 				</waveblock>
 			</sequence>
 			<envelope numpoints="0"/>
