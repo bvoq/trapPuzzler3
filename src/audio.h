@@ -2,10 +2,11 @@
 #define audio_h
 
 
-vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx;
+vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx, reversegravitysucksfx, reversegravityslurpsfx;
 float musicvolume = 0.75, sfxvolume = 1.0;
 int currentTitle = -1;
 void initAudio() {
+    cout << "Attempting to load audio files in folder " << locationOfResources + "audio/" << endl;
     for(int i = 0; i <= 0; ++i) {
         ofSoundPlayer temp;
         temp.load(locationOfResources + "audio/title"+to_string(i)+".mp3");
@@ -53,6 +54,22 @@ void initAudio() {
         gravityslurpsfx.push_back(temp);
     }
     
+    for(int i = 0; i <= 3; ++i) {
+        ofSoundPlayer temp;
+        temp.load(locationOfResources + "audio/gravity/reversegravitysuck"+to_string(i)+".wav");
+        temp.setLoop(false);
+        temp.setVolume(sfxvolume);
+        reversegravitysucksfx.push_back(temp);
+    }
+    for(int i = 0; i <= 3; ++i) {
+        ofSoundPlayer temp;
+        temp.load(locationOfResources + "audio/gravity/reversegravityslurp"+to_string(i)+".wav");
+        temp.setLoop(false);
+        temp.setVolume(sfxvolume);
+        reversegravityslurpsfx.push_back(temp);
+    }
+    cout << "Done loading audio files." << endl;
+    
 }
 
 void playAudio(int title) {
@@ -87,6 +104,16 @@ void playGravitySuck(int gravityIntensity) {
 void playGravitySlurp(int gravityIntensity) {
     assert(gravityIntensity >= 0 && gravityIntensity <= 3);
     gravityslurpsfx[gravityIntensity].play();
+}
+
+void playReverseGravitySuck(int gravityIntensity) {
+    assert(gravityIntensity >= 0 && gravityIntensity <= 3);
+    reversegravitysucksfx[gravityIntensity].play();
+}
+
+void playReverseGravitySlurp(int gravityIntensity) {
+    assert(gravityIntensity >= 0 && gravityIntensity <= 3);
+    reversegravityslurpsfx[gravityIntensity].play();
 }
 
 #endif /* audio_h */

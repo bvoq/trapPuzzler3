@@ -54,7 +54,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
         if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             //UNDO
             if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
-                undoMovement(timeForMovement);
+                undoMovement(timeForSlowEyeMovement);
             }
             //RESTART
             if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {

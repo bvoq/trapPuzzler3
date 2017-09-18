@@ -3,6 +3,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    cout << "You must run this code from the folder in which the binary is contained." << endl;
     ofDisableDataPath();
     //ofSetDataPathRoot(locationOfResources); //this is for future use!!
     //SEE ALSO OFAPP.CPP AT THE SETUP
