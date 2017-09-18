@@ -15,7 +15,7 @@ for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
 
 std::recursive_mutex m_mutex;
 int globalCount = 0;
-long long threadCount = 3; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
+long long threadCount = 46; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
 
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
@@ -53,13 +53,10 @@ void runThread(int threadID, int size, bool symmetric, int maxComputationFields)
         else if(hasSolved < 0) cout << "UNKNOWN RES " << hasSolved << endl;
         else{
 			
-			int improvementTries = 3;
+			int improvementTries = 5;
 			vector< ddd > improvedFields(improvementTries, ddd ());
 			for(int i = 0; i < improvementTries; ++i){
 				improvedFields[i] = improveLevel(field, false, 10, 4096*16);
-				for(int j = 0; j < improvementTries; ++j){
-					improvedFields[i] = improveLevel(improvedFields[i], false, 10, 4096*16);
-				}
 			}
 			
 			vector<keyType> tempSol;
