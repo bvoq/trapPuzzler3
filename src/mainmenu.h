@@ -10,5 +10,8 @@
 #define mainmenu_h
 
 
+void displayMainMenu() {
+
+}
 
 #endif /* mainmenu_h */

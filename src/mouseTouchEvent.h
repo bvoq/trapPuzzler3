@@ -37,7 +37,13 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
                     if(getCellType(grid[tilePos.first][tilePos.second]) == PLAYER) {
                         playerTouchMovement newMovement(tilePos.first,tilePos.second,grid[tilePos.first][tilePos.second]);
                         playerTouches.insert({touchid,newMovement});
+                        
+                        movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
+                                              CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
+                                              );
                         changePlayerId(grid[tilePos.first][tilePos.second]);
+                        m.newPlayerID = playerID;
+                        movements.push_back(m);
                     }
                 }
             }

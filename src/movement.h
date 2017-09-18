@@ -272,11 +272,6 @@ void undoMovement(long long maxtime) {
             movements.push_back(undoMove);
             previousMovements.pop_back();
         } while(isGravityMove);
-        
-        if(locationOfFirstGravity == -1) {
-            
-        }
-        
     }
 }
 #endif

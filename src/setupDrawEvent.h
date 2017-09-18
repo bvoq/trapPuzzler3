@@ -73,7 +73,9 @@ void drawEvent() {
             backgroundColor = scheme.colorBACKGROUND_VOID;
             displayOldMenu();
 
-            
+        case MAINMENU:
+            backgroundColor = scheme.colorBACKGROUND_VOID;
+            displayMainMenu();
             break;
         default:
             cerr << "Unkown mode" << endl;

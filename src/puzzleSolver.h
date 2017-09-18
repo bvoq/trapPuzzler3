@@ -116,6 +116,7 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
                 computed.insert(changeplayer);
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, PLAYER_CHANGE};
+                
                 //should not make a win state
                 q.push(changeplayer);
             }
