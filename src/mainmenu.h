@@ -110,7 +110,6 @@ void initMainMenu() {
     assert(getCellType(2000000) == UNMOVABLE_ENEMY);
     mainMenuLevel = cellularAutomata();
     updateGrid(mainMenuLevel);
-    playerID = 0;
 }
 
 
@@ -120,7 +119,7 @@ void displayMainMenu() {
     
     //cout << "I am displaying the main menu " << rand() << endl;
     ofPushMatrix();
-    float menuWidth = min(getWidth(),getHeight());
+    float menuWidth = max(getWidth(),getHeight());
     
     //ofTranslate(getWidth()/2-squareWidth/2,getHeight()/2-squareWidth/2);
 
@@ -128,7 +127,7 @@ void displayMainMenu() {
     //ofTranslate((getWidth()-menuWidth)/1.5,(getHeight()-menuWidth)/2);
     //float singleMenuTileWidth = displayLevelInMenu(mainMenuLevel, true, menuWidth, false);
     
-    float singleMenuTileWidth = min((menuWidth * 1.) / (grid.size()+2),  (menuWidth * 1.) / (grid[0].size()+2));
+    float singleMenuTileWidth = min((getHeight() * 1.) / (grid.size()+2),  (getWidth() * 1.) / (grid[0].size()+2));
     
     /*if(renderMode == PARTIAL) displayLevelWORefresh();
     else*/ displayLevel(grid, moveGrid, movements);
@@ -146,9 +145,8 @@ void displayMainMenu() {
     ofSetColor(scheme.colorBACKGROUND);
     mainMenuFont.drawString("Zen-mode", 0, -singleMenuTileWidth*.25);
     */
-    ofTranslate(.5*(getWidth()-singleMenuTileWidth*grid[0].size()),.5*(getHeight()-singleMenuTileWidth*grid.size()));
-    ofDrawRectangle(0,0,20,20);
-    ofTranslate((additionalsfxwidth-2)*singleMenuTileWidth,.75*singleMenuTileWidth);
+    ofTranslate(.5*(getWidth()-singleMenuTileWidth*(grid[0].size()+2)),.5*(getHeight()-singleMenuTileWidth*(grid.size()+2)));
+    ofTranslate((additionalsfxwidth)*singleMenuTileWidth,4*singleMenuTileWidth-.125/2.*singleMenuTileWidth);
     
     if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -163,7 +161,11 @@ void displayMainMenu() {
         mainMenuFont.drawString("Story-mode", -mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth*.25);
     }
     
-    ofTranslate(0,6*singleMenuTileWidth);
+    if(getCellType(grid[2][additionalsfxwidth]) == PLAYER) {
+        initMenu();
+    }
+    
+    ofTranslate(0,5*singleMenuTileWidth);
     
     if(getCellType(grid[menulength/2-1][additionalsfxwidth+1]) == PLAYER) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -177,8 +179,12 @@ void displayMainMenu() {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         mainMenuFont.drawString("Zen-mode", -mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth*.25);
     }
+
+    if(getCellType(grid[menulength/2-1][additionalsfxwidth]) == PLAYER) {
+        initMenu();
+    }
     
-    ofTranslate(0,7*singleMenuTileWidth);
+    ofTranslate(0,6*singleMenuTileWidth);
     
     if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -193,18 +199,22 @@ void displayMainMenu() {
         mainMenuFont.drawString("Controls", -mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth*.25);
     }
     
+    if(getCellType(grid[menulength-3][additionalsfxwidth]) == PLAYER) {
+        initMenu();
+    }
     
-    ofTranslate(+.25*singleMenuTileWidth,7.75*singleMenuTileWidth);
+    
+    ofTranslate(-1.5*singleMenuTileWidth,(sfxlength-1.5)*singleMenuTileWidth);
     if(playerID == 2) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume"), -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
+        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
         ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume"), -singleMenuTileWidth*.25);
+        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth*.25);
     } else {
         ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume"), -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
+        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume"), -singleMenuTileWidth*.25);
+        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth*.25);
     }
     
     ofTranslate(17*singleMenuTileWidth,0);
@@ -250,6 +260,8 @@ void displayMainMenu() {
             updateVolume();
         }
     }
+    
+    
     
     //cout << "HEYO " << moveGrid.size() << endl;
     ofPopMatrix();

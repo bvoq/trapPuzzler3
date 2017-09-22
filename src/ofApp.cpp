@@ -19,8 +19,8 @@ void ofApp::setup(){
     loadSaveData();
     //loadLevel();
     
-    initMenu();
-    //initMainMenu();
+    //initMenu();
+    initMainMenu();
     
     //generateFancyMeshes();
     //initLevelEditor(currentLevel);
