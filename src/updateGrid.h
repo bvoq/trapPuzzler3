@@ -70,8 +70,9 @@ void updateGrid(deque<deque<int> > newGrid) {
     grid = newGrid;
     cropBordersOf(grid);
     moveGrid = grid;
-    playerID = 1; //Autochange
+    playerID = 0; //Autochange
     changePlayerIdDeterministic(moveGrid,playerID,false);
+    if(playerID == 0) playerID = 1;
     cout << "Choosing player: " << playerID << endl;
 
     //playerID = 1; //SHOULD BE THE CASE!!

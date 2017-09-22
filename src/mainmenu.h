@@ -114,7 +114,7 @@ void initMainMenu() {
 
 
 ofTrueTypeFont mainMenuFont; float previousMenuWidthForMainMenuFont = -2; //License see 1.4 http://theleagueof.github.io/licenses/ofl-faq.html
-
+ofTrueTypeFont mainMenuFontLarge;
 void displayMainMenu() {
     
     //cout << "I am displaying the main menu " << rand() << endl;
@@ -131,9 +131,10 @@ void displayMainMenu() {
     
     /*if(renderMode == PARTIAL) displayLevelWORefresh();
     else*/ displayLevel(grid, moveGrid, movements);
-    
+
     if(singleMenuTileWidth != previousMenuWidthForMainMenuFont) {
         mainMenuFont.load(locationOfResources + "font/Share/Share-Italic.ttf",singleMenuTileWidth/1.75);
+        mainMenuFontLarge.load(locationOfResources + "font/Share/Share-BoldItalic.ttf",singleMenuTileWidth/1.75);
         previousMenuWidthForMainMenuFont = singleMenuTileWidth;
     }
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -203,8 +204,21 @@ void displayMainMenu() {
         initMenu();
     }
     
+    ofTranslate(6*singleMenuTileWidth,(sfxlength/2)*singleMenuTileWidth);
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    ofDrawRectangle(-mainMenuFontLarge.stringWidth("E r e v a d e")/2., -singleMenuTileWidth, mainMenuFontLarge.stringWidth("E r e v a d e"), singleMenuTileWidth);
+    ofSetColor(scheme.colorBACKGROUND);
+    mainMenuFontLarge.drawString("E r e v a d e", -mainMenuFontLarge.stringWidth("E r e v a d e")/2., -singleMenuTileWidth*.25);
     
-    ofTranslate(-1.5*singleMenuTileWidth,(sfxlength-1.5)*singleMenuTileWidth);
+    ofTranslate(0, singleMenuTileWidth);
+    ofSetColor(scheme.colorBACKGROUND);
+    ofDrawRectangle(-mainMenuFont.stringWidth("Made by kdkdk & Baege")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Made by kdkdk & Baege"), singleMenuTileWidth);
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    mainMenuFont.drawString("Made by kdkdk & Baege", -mainMenuFont.stringWidth("Made by kdkdk & Baege")/2., -singleMenuTileWidth*.25);
+    
+    
+    ofTranslate(0,-5*singleMenuTileWidth);
+    ofTranslate(-7.5*singleMenuTileWidth,(sfxlength-1.5)*singleMenuTileWidth);
     if(playerID == 2) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
@@ -232,11 +246,7 @@ void displayMainMenu() {
     
     //ofTranslate(-13*singleMenuTileWidth,-3*singleMenuTileWidth);
     
-    ofTranslate(-20*singleMenuTileWidth,-3*singleMenuTileWidth);
-    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-    ofDrawRectangle(-mainMenuFont.stringWidth("Made by Kevin De Keyser & Lukas Baege")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Made by Kevin De Keyser & Lukas Baege"), singleMenuTileWidth);
-    ofSetColor(scheme.colorBACKGROUND);
-    mainMenuFont.drawString("Made by Kevin De Keyser & Lukas Baege",-mainMenuFont.stringWidth("Made by Kevin De Keyser & Lukas Baege")/2.,-singleMenuTileWidth*.25);
+
     
     
     /*
