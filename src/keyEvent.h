@@ -39,6 +39,7 @@ void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
     }
 }
 
+void initMainMenu();
 void keyEvent (keyType kt) {
     if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING || mode == MAINMENU) {
         switch(kt) {
@@ -174,7 +175,11 @@ void keyEvent (keyType kt) {
             case TOGGLE_TOOLBAR:
                 if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
                 else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
-                else assert(false);    
+                else assert(false);
+                break;
+            case RESTART:
+                initMainMenu();
+                break;
             default:;
         }
     }

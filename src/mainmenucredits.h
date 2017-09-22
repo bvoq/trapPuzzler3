@@ -56,6 +56,7 @@ int startPoint = menuwidth + additionalsfxwidth;
 int menulength = 16;
 int structurewidth = 16;
 int sfxlength = 8, sfxwidth = 15;//24; //looks cool with 31
+
 deque<deque<int> > cellularAutomata () {
     deque<deque<int> > cellLevel = deque<deque<int> > (menulength+sfxlength, deque<int> (startPoint+structurewidth-1,0)); //mainMenuLevel = deque<deque<int> > (32, deque<int> (65,0));
     cellLevel[0][startPoint-1] = 2000000;
@@ -73,8 +74,9 @@ deque<deque<int> > cellularAutomata () {
         for(int j = 0; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) cellLevel[i][j] = 0;
         for(int j = additionalsfxwidth; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) {
             if(j == additionalsfxwidth && i == 2) cellLevel[i][j] = 1000000;
-            else if(j == additionalsfxwidth && i == menulength/2-1) cellLevel[i][j] = 1000001;
-            else if(j == additionalsfxwidth && i == menulength-3) cellLevel[i][j] = 1000002;
+            else if(j == additionalsfxwidth && i == menulength/3) cellLevel[i][j] = 1000001;
+            else if(j == additionalsfxwidth && i == menulength/3*2) cellLevel[i][j] = 1000002;
+            else if(j == additionalsfxwidth && i == menulength-3) cellLevel[i][j] = 1000003;
             
             else if(i < 1 || j < additionalsfxwidth+1 || i >= menulength-1 || j >= additionalsfxwidth + menuwidth - 1) cellLevel[i][j] = 2000001+i*menulength+j;
             
@@ -112,6 +114,9 @@ void initMainMenu() {
     updateGrid(mainMenuLevel);
 }
 
+inline float getMenuTileWidth() {
+    return min((getHeight() * 1.) / (grid.size()+2),  (getWidth() * 1.) / (grid[0].size()+2));
+}
 
 ofTrueTypeFont mainMenuFont; float previousMenuWidthForMainMenuFont = -2; //License see 1.4 http://theleagueof.github.io/licenses/ofl-faq.html
 ofTrueTypeFont mainMenuFontLarge;
@@ -127,7 +132,7 @@ void displayMainMenu() {
     //ofTranslate((getWidth()-menuWidth)/1.5,(getHeight()-menuWidth)/2);
     //float singleMenuTileWidth = displayLevelInMenu(mainMenuLevel, true, menuWidth, false);
     
-    float singleMenuTileWidth = min((getHeight() * 1.) / (grid.size()+2),  (getWidth() * 1.) / (grid[0].size()+2));
+    float singleMenuTileWidth = getMenuTileWidth();
     
     /*if(renderMode == PARTIAL) displayLevelWORefresh();
     else*/ displayLevel(grid, moveGrid, movements);
@@ -147,9 +152,19 @@ void displayMainMenu() {
     mainMenuFont.drawString("Zen-mode", 0, -singleMenuTileWidth*.25);
     */
     ofTranslate(.5*(getWidth()-singleMenuTileWidth*(grid[0].size()+2)),.5*(getHeight()-singleMenuTileWidth*(grid.size()+2)));
+    float transX = .5*(getWidth()-singleMenuTileWidth*(grid[0].size()+2));
+    float transY = .5*(getHeight()-singleMenuTileWidth*(grid.size()+2));
     ofTranslate((additionalsfxwidth)*singleMenuTileWidth,4*singleMenuTileWidth-.125/2.*singleMenuTileWidth);
+    transX += (additionalsfxwidth)*singleMenuTileWidth;
+    transY += 4*singleMenuTileWidth-.125/2.*singleMenuTileWidth;
     
-    if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER) {
+    int locationOfPlayer1Y=0, gotoYOption = -1;
+    
+    for(int i = 1; i <= menulength; ++i) {
+        if(moveGrid[i][additionalsfxwidth+1] == PLAYER) locationOfPlayer1Y = i;
+    }
+    
+    if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         
         ofDrawRectangle(-mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Story-mode"), singleMenuTileWidth);
@@ -162,13 +177,17 @@ void displayMainMenu() {
         mainMenuFont.drawString("Story-mode", -mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth*.25);
     }
     
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
+        gotoYOption = 2;
+    }
     if(getCellType(grid[2][additionalsfxwidth]) == PLAYER) {
         initMenu();
     }
     
-    ofTranslate(0,5*singleMenuTileWidth);
+    ofTranslate(0,3*singleMenuTileWidth);
+    transY += 3*singleMenuTileWidth;
     
-    if(getCellType(grid[menulength/2-1][additionalsfxwidth+1]) == PLAYER) {
+    if(getCellType(grid[menulength/3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Zen-mode") && mousetouchX <= transX)) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         
         ofDrawRectangle(-mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Zen-mode"), singleMenuTileWidth);
@@ -181,13 +200,17 @@ void displayMainMenu() {
         mainMenuFont.drawString("Zen-mode", -mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth*.25);
     }
 
-    if(getCellType(grid[menulength/2-1][additionalsfxwidth]) == PLAYER) {
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Zen-mode") && mousetouchX <= transX)) {
+        gotoYOption = menulength/3;
+    }
+    if(getCellType(grid[menulength/3][additionalsfxwidth]) == PLAYER) {
         initMenu();
     }
     
-    ofTranslate(0,6*singleMenuTileWidth);
+    ofTranslate(0,5*singleMenuTileWidth);
+    transY += 5*singleMenuTileWidth;
     
-    if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER) {
+    if(getCellType(grid[menulength/3*2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         
         ofDrawRectangle(-mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth, mainMenuFont.stringWidth("Controls"), singleMenuTileWidth);
@@ -199,11 +222,56 @@ void displayMainMenu() {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         mainMenuFont.drawString("Controls", -mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth*.25);
     }
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
+        gotoYOption = menulength/3*2;
+    }
+    if(getCellType(grid[menulength/3*2][additionalsfxwidth]) == PLAYER) {
+        initMenu();
+    }
     
+    ofTranslate(0,3*singleMenuTileWidth);
+    transY += 3*singleMenuTileWidth;
+    
+    if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX) ) {
+        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+        
+        ofDrawRectangle(-mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth, mainMenuFont.stringWidth("Credits"), singleMenuTileWidth);
+        ofSetColor(scheme.colorBACKGROUND);
+        mainMenuFont.drawString("Credits", -mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth*.25);
+    } else {
+        ofSetColor(scheme.colorBACKGROUND);
+        ofDrawRectangle(-mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth, mainMenuFont.stringWidth("Credits"), singleMenuTileWidth);
+        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+        mainMenuFont.drawString("Credits", -mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth*.25);
+    }
+    
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX)) {
+        gotoYOption = menulength-3;
+    }
     if(getCellType(grid[menulength-3][additionalsfxwidth]) == PLAYER) {
         initMenu();
     }
     
+    
+    if(gotoYOption != -1 && movements.size() == 0) {
+        screenShake(timeForMovement*2, LEFT, wallShakeIntensity);
+        if(playerID != 1) {
+            movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
+                                  CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
+                                  );
+            changePlayerIdDeterministic(moveGrid,playerID,false);
+            m.newPlayerID = playerID;
+            movements.push_back(m);
+        }
+        for(int i = locationOfPlayer1Y; i < gotoYOption; ++i) move(moveGrid, moveEyeGrid, playerID, DOWN, timeForMovement, false, true);
+        for(int i = locationOfPlayer1Y; i > gotoYOption; --i) move(moveGrid, moveEyeGrid, playerID, UP, timeForMovement, false, true);
+        move(moveGrid, moveEyeGrid, playerID, LEFT, timeForMovement, false, true);
+    }
+    
+    
+    
+    
+    //E R E V A D E
     ofTranslate(6*singleMenuTileWidth,(sfxlength/2)*singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     ofDrawRectangle(-mainMenuFontLarge.stringWidth("E r e v a d e")/2., -singleMenuTileWidth, mainMenuFontLarge.stringWidth("E r e v a d e"), singleMenuTileWidth);
@@ -231,7 +299,7 @@ void displayMainMenu() {
         mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth*.25);
     }
     
-    ofTranslate(17*singleMenuTileWidth,0);
+    ofTranslate(17.5*singleMenuTileWidth,0);
     if(playerID == 3) {
         ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
         ofDrawRectangle(-mainMenuFont.stringWidth("SFX Volume"), -singleMenuTileWidth, mainMenuFont.stringWidth("SFX Volume"), singleMenuTileWidth);
@@ -246,6 +314,8 @@ void displayMainMenu() {
     
     //ofTranslate(-13*singleMenuTileWidth,-3*singleMenuTileWidth);
     
+
+    //float singleMenuTileWidth = getMenuTileWidth();
 
     
     
@@ -278,4 +348,11 @@ void displayMainMenu() {
     
 }
 
+/*
+void initCredits() {
+    mode = CREDITS;
+    assert(getCellType(2000000) == UNMOVABLE_ENEMY);
+    mainMenuLevel = cellularAutomata();
+    updateGrid(mainMenuLevel);
+}*/
 #endif /* mainmenu_h */

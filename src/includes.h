@@ -38,7 +38,7 @@
 #include "winningAnimation.h"
 #include "screenShake.h"
 
-#include "mainmenu.h"
+#include "mainmenucredits.h"
 
 
 #include "setupDrawEvent.h"

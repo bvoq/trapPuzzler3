@@ -153,7 +153,6 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
     scrollY =  mouseTouchX - origMouseTouch[touchid].second;
 }
 
-
 void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     //Call as if it moved one last time.
     if(mode == LEVEL_EDITOR) placeSelectedTiles();
@@ -187,6 +186,7 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
         }
         */
     }
+    
     
     /* SILLY IDEA
     if(mode == LEVEL_EDITOR) {
