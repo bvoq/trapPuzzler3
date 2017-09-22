@@ -11,17 +11,17 @@
 
 //int MENUlevelWidth;
 int MENUscrollDist = 100;
-int MENUselected;
+int MENUselected = 0;
 
 void initMenu() {
     mode = MENU;
-    MENUselected = 0;
 }
 
-void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int width, bool displayEyes) {
+//returns the width/height of a single block.
+float displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int width, bool displayEyes) {
     if(theLevel.size() != 0) {
-        float scaleY = (getHeight() * 1.) / ((theLevel.size() + 2) * 1.);
-        float scaleX = (getWidth() * 1.) / ((theLevel[0].size() + 2) * 1.);
+        float scaleY = (width * 1.) / ((theLevel.size() + 2) * 1.);
+        float scaleX = (width * 1.) / ((theLevel[0].size() + 2) * 1.);
         float scale = MIN(scaleY, scaleX);
         LINE_WIDTH = MAX(1, scale / 20.);
         
@@ -66,9 +66,10 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
                     else if(cT == ENEMY) ofSetColor(scheme.colorENEMY);//ofSetColor(255, 100, 0);
                     else if(cT == UNMOVABLE_ENEMY) ofSetColor(scheme.colorUNMOVABLE_ENEMY); //ofSetColor(50, 50, 50)
                     else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
-                    drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
-                    if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
-                    
+                    if(cT != GRAVITYMONSTERMOUTH && cT != GRAVITYMONSTEREYE && cT != GRAVITYMONSTERDEADEYE) {
+                        drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
+                        if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid);
+                    }
                     ofPopMatrix();
                 }
             }
@@ -90,7 +91,9 @@ void displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int w
                 }
             }
         }
+        return miniScale;
     }
+    return 0;
 }
 
 deque<deque<int> > questionMarkLevel = {{1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,2001001,2001001,2001001,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,1000011,2001001,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,2001001,2001001,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,2001001,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,2001000,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011},{1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011,1000011}};

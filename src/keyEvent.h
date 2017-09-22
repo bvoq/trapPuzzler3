@@ -40,7 +40,7 @@ void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
 }
 
 void keyEvent (keyType kt) {
-    if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
+    if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING || mode == MAINMENU) {
         switch(kt) {
             case UP:
             case DOWN:
@@ -57,33 +57,36 @@ void keyEvent (keyType kt) {
                     changePlayerIdDeterministic(moveGrid,playerID,false);
                     m.newPlayerID = playerID;
                     movements.push_back(m);
-                    
-                    
                 }
                 break;
-            case RESTART:
-                restart();
+        }
+        if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
+            switch(kt) {
+                case RESTART:
+                    restart();
                 break;
-            case UNDO:
-                if(!blockMovementDueToWinningAnimation) undoMovement(timeForSlowEyeMovement);
+                case UNDO:
+                    if(!blockMovementDueToWinningAnimation) undoMovement(timeForSlowEyeMovement);
                 break;
-            case SOLVE:
-                solveInGame();
-                //cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
+                case SOLVE:
+                    solveInGame();
+                    //cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
                 break;
-            case EXPORT:
-                levelFormattedExportWithoutCropping(cout, moveEyeGrid);
-                //!!!levelExport(cout, levels[currentLevel]);
+                case EXPORT:
+                    levelFormattedExportWithoutCropping(cout, moveEyeGrid);
+                    //!!!levelExport(cout, levels[currentLevel]);
                 cout << endl;
                 break;
-            case TOGGLE_TOOLBAR:
-                if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
-                else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
-                else assert(false);
-				break;
-            default:
-                DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
+                case TOGGLE_TOOLBAR:
+                    if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                    else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                    else assert(false);
+                break;
+            }
         }
+            //default:
+            //    DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
+        
     }
     else if(mode == LEVEL_EDITOR) {
         switch(kt) {

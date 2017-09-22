@@ -776,7 +776,7 @@ void recheckGrid() {
 
 
 //DO COPY THE DISPLAY MORE THAN ONCE!
-void displayLevel() {
+void displayLevel(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<movement> & movements) {
     float scaleY = (getHeight() * 1.) / (MAX(grid.size() + 2, MIN_CELL_SIZE) * 1.);
     float scaleX = (getWidth() * 1.) / (MAX(grid[0].size() + 2, MIN_CELL_SIZE) * 1.);
     float scale = MIN(scaleY, scaleX);
@@ -967,7 +967,7 @@ void switchRenderMode(RenderMode in) {
     }
 }
 
-void displayLevelWORefresh() {
+void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<movement> & movements) {
     float scaleY = (getHeight() * 1.) / (MAX(grid.size() + 2, MIN_CELL_SIZE) * 1.);
     float scaleX = (getWidth() * 1.) / (MAX(grid[0].size() + 2, MIN_CELL_SIZE) * 1.);
     float scale = MIN(scaleY, scaleX);

@@ -27,6 +27,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     switch(mode) {
         case PLAYING:
         case LEVEL_EDITOR_PLAYING:
+        case MAINMENU:
         {
             assert(grid.size() > 0);
             if(grid.size() > 0 && !blockMovementDueToWinningAnimation && !forceUndo) {
@@ -112,6 +113,7 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
     switch(mode) {
         case PLAYING:
         case LEVEL_EDITOR_PLAYING:
+        case MAINMENU:
             if(playerTouches.count(touchid) != 0) {
                 assert(grid.size() > 0);
                 pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());

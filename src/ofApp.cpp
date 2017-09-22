@@ -9,7 +9,6 @@ void ofApp::setup(){
     //SEE ALSO OFAPP.CPP AT THE SETUP
     
     ofSetBackgroundAuto(false);
-
     
     initAudio();
     
@@ -20,8 +19,8 @@ void ofApp::setup(){
     loadSaveData();
     //loadLevel();
     
-    
     initMenu();
+    //initMainMenu();
     
     //generateFancyMeshes();
     //initLevelEditor(currentLevel);

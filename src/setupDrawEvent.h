@@ -10,7 +10,7 @@
 #define setupDrawEvent_h
 
 void updateEvent() {
-    if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) checkMovement();
+    if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING || mode == MAINMENU) checkMovement();
 }
 
 void drawEvent() {
@@ -34,8 +34,8 @@ void drawEvent() {
                 switchRenderMode(PARTIAL);
                 ofBackground(backgroundColor);
             }
-            if(renderMode == PARTIAL) displayLevelWORefresh();
-            else displayLevel();
+            if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
+            else displayLevel(grid, moveGrid, movements);
             displayToolBar();
             break;
             
@@ -48,8 +48,8 @@ void drawEvent() {
                 switchRenderMode(PARTIAL);
                 ofBackground(backgroundColor);
             }
-            if(renderMode == PARTIAL) displayLevelWORefresh();
-            else displayLevel();
+            if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
+            else displayLevel(grid, moveGrid, movements);
             
             displayToolBar();
             break;
@@ -72,10 +72,20 @@ void drawEvent() {
             renderMode = FULL;
             backgroundColor = scheme.colorBACKGROUND_VOID;
             displayOldMenu();
-
+            break;
         case MAINMENU:
-            backgroundColor = scheme.colorBACKGROUND_VOID;
+            backgroundColor = scheme.colorBACKGROUND;
+            if(isWindowResized > 1) isWindowResized--;
+            if(isWindowResized == 1 && renderMode == PARTIAL) {
+                isWindowResized = 0;
+                cout << "Resize/Orientation flip happened" << endl;
+                switchRenderMode(PARTIAL);
+                ofBackground(backgroundColor);
+            }
             displayMainMenu();
+            
+            //displayMainMenu();
+            //if(renderMode == PARTIAL) displayLevelWORefresh(); else
             break;
         default:
             cerr << "Unkown mode" << endl;
