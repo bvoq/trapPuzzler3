@@ -15,9 +15,9 @@ void updateEvent() {
 
 void drawEvent() {
     //cout << "Draw: " << ofGetLastFrameTime() << endl;
-    static int redrawCount = 10; //Do one draw at 10 (should make it faster) and 1
+    static int redrawCount = 100; //Do one draw at 10 (should make it faster) and 1
     static playMode previousMode = UNKNOWN;
-    if(renderMode == FULL || redrawCount == 1 || redrawCount == 10) ofBackground(backgroundColor);
+    if(renderMode == FULL || redrawCount == 1 || redrawCount == 90 || redrawCount == 100) ofBackground(backgroundColor);
     switch(mode) {
         case PLAYING:
             
@@ -35,6 +35,8 @@ void drawEvent() {
                 switchRenderMode(PARTIAL);
                 ofBackground(backgroundColor);
             }
+            if(redrawCount == 1 || redrawCount == 90 || redrawCount == 100) switchRenderMode(PARTIAL);
+
             if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
             else displayLevel(grid, moveGrid, movements);
             displayToolBar();
@@ -49,6 +51,7 @@ void drawEvent() {
                 switchRenderMode(PARTIAL);
                 ofBackground(backgroundColor);
             }
+            if(redrawCount == 1 || redrawCount == 90 || redrawCount == 100) switchRenderMode(PARTIAL);
             if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
             else displayLevel(grid, moveGrid, movements);
             
@@ -84,7 +87,7 @@ void drawEvent() {
                 switchRenderMode(PARTIAL);
             }
             //if(yo > 0) displayLevel(grid, moveGrid, movements);
-            if(redrawCount == 1 || redrawCount == 10) displayLevel(grid,moveGrid,movements);
+            if(redrawCount == 1 || redrawCount == 90 || redrawCount == 100) switchRenderMode(PARTIAL);
             if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
             else displayLevel(grid, moveGrid, movements);
             displayMainMenu();
@@ -92,12 +95,17 @@ void drawEvent() {
             //displayMainMenu();
             //if(renderMode == PARTIAL) displayLevelWORefresh(); else
             break;
+        case CREDITS:
+            renderMode = FULL;
+            backgroundColor = scheme.colorBACKGROUND;
+            displayCredits();
+            break;
         default:
             cerr << "Unkown mode" << endl;
     }
     displayMessage();
     isMouseReleased = false; //RESET MOUSE LISTENER
-    if(mode != previousMode) redrawCount = 10;
+    if(mode != previousMode) redrawCount = 100;
     else redrawCount--;
     previousMode = mode;
 }

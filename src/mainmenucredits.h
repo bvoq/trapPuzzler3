@@ -159,6 +159,22 @@ void unhighlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidt
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     mainMenuFont.drawString(toprint, -mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth*.25);
 }
+
+void highlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    ofDrawRectangle(0, -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorBACKGROUND);
+    mainMenuFont.drawString(toprint, 0, -singleMenuTileWidth*.25);
+}
+
+void unhighlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorBACKGROUND);
+    ofDrawRectangle(0, -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    mainMenuFont.drawString(toprint, 0, -singleMenuTileWidth*.25);
+}
+
+
 void initCredits();
 void displayMainMenu() {
     
@@ -346,8 +362,34 @@ void displayCredits() {
     checkMainMenuFont(singleMenuTileWidth);
     
     ofPushMatrix();
-    ofTranslate(getWidth()/2.,singleMenuTileWidth);
-    highlightedMainMenuPrintRightAligned("Kevin Joël Phillippe De Keyser", singleMenuTileWidth);
+    ofTranslate(getWidth()/2.-singleMenuTileWidth*3,singleMenuTileWidth*2);
+    highlightedMainMenuPrintRightAligned("Developer 1", singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintRightAligned("Kevin Joël Philippe De Keyser (@kdkdkch)",singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintRightAligned("dekeyser.ch", singleMenuTileWidth);
+    
+    ofTranslate(singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-2*singleMenuTileWidth);
+    highlightedMainMenuPrintLeftAligned("Developer 2", singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintLeftAligned("Lukas Baege",singleMenuTileWidth);
+    //ofTranslate(0,singleMenuTileWidth*1);
+    //unhighlightedMainMenuPrintRightAligned("", singleMenuTileWidth);
+    
+    ofTranslate(-singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-1*singleMenuTileWidth);
+    highlightedMainMenuPrintRightAligned("BGM", singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintRightAligned("Night Driver",singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintRightAligned("nosoapradio.us",singleMenuTileWidth);
+    
+    ofTranslate(singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-2*singleMenuTileWidth);
+    highlightedMainMenuPrintLeftAligned("Font", singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintLeftAligned("Share by Carrois Apostrophe",singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintLeftAligned("carrois.com, fonts.google.com/specimen/Share",singleMenuTileWidth);
+
     ofPopMatrix();
 }
 #endif /* mainmenu_h */
