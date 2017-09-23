@@ -173,9 +173,6 @@ void displayMainMenu() {
     //float singleMenuTileWidth = displayLevelInMenu(mainMenuLevel, true, menuWidth, false);
     
     float singleMenuTileWidth = getMenuTileWidth();
-    
-    if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
-    else displayLevel(grid, moveGrid, movements);
 
     checkMainMenuFont(singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -351,6 +348,6 @@ void displayCredits() {
     ofPushMatrix();
     ofTranslate(getWidth()/2.,singleMenuTileWidth);
     highlightedMainMenuPrintRightAligned("Kevin Joël Phillippe De Keyser", singleMenuTileWidth);
-    
+    ofPopMatrix();
 }
 #endif /* mainmenu_h */

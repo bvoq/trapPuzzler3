@@ -959,10 +959,12 @@ void switchRenderMode(RenderMode in) {
     else {
         renderMode = in;
         if(renderMode == PARTIAL) {
-            cout << "Redraw due to switched render mode." << endl;
-            rectsDP.first.clear(); rectsDP.second.clear();
             ofBackground(backgroundColor);
+
+            cout << "Redraw due to switched render mode." << endl;
             ofSetBackgroundAuto(false);
+            ofBackground(backgroundColor);
+            rectsDP.first.clear(); rectsDP.second.clear();
         } else if(renderMode == FULL) {
             ofSetBackgroundAuto(true);
         }

@@ -8,8 +8,6 @@ void ofApp::setup(){
     //ofSetDataPathRoot(locationOfResources); //this is for future use!!
     //SEE ALSO OFAPP.CPP AT THE SETUP
     
-    ofSetBackgroundAuto(false);
-    
     initAudio();
     
     initDefaultKeyMapping();
@@ -19,6 +17,9 @@ void ofApp::setup(){
     loadSaveData();
     //loadLevel();
     
+    //Will change when accessing the menu.
+    if(!beautifulGraphics) switchRenderMode(PARTIAL);
+    else switchRenderMode(FULL);
     //initMenu();
     initMainMenu();
     

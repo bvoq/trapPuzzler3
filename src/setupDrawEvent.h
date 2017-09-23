@@ -15,8 +15,9 @@ void updateEvent() {
 
 void drawEvent() {
     //cout << "Draw: " << ofGetLastFrameTime() << endl;
-    if(renderMode == FULL) ofBackground(backgroundColor);
-
+    static int redrawCount = 10; //Do one draw at 10 (should make it faster) and 1
+    static playMode previousMode = UNKNOWN;
+    if(renderMode == FULL || redrawCount == 1 || redrawCount == 10) ofBackground(backgroundColor);
     switch(mode) {
         case PLAYING:
             
@@ -79,9 +80,13 @@ void drawEvent() {
             if(isWindowResized == 1 && renderMode == PARTIAL) {
                 isWindowResized = 0;
                 cout << "Resize/Orientation flip happened" << endl;
-                switchRenderMode(PARTIAL);
                 ofBackground(backgroundColor);
+                switchRenderMode(PARTIAL);
             }
+            //if(yo > 0) displayLevel(grid, moveGrid, movements);
+            if(redrawCount == 1 || redrawCount == 10) displayLevel(grid,moveGrid,movements);
+            if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
+            else displayLevel(grid, moveGrid, movements);
             displayMainMenu();
             
             //displayMainMenu();
@@ -92,6 +97,9 @@ void drawEvent() {
     }
     displayMessage();
     isMouseReleased = false; //RESET MOUSE LISTENER
+    if(mode != previousMode) redrawCount = 10;
+    else redrawCount--;
+    previousMode = mode;
 }
 
 void drawEventWithScreenShake() {
