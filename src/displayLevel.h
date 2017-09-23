@@ -959,7 +959,9 @@ void switchRenderMode(RenderMode in) {
     else {
         renderMode = in;
         if(renderMode == PARTIAL) {
+            cout << "Redraw due to switched render mode." << endl;
             rectsDP.first.clear(); rectsDP.second.clear();
+            ofBackground(backgroundColor);
             ofSetBackgroundAuto(false);
         } else if(renderMode == FULL) {
             ofSetBackgroundAuto(true);
@@ -1002,7 +1004,7 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
     set<pair<int,int> > needToBeDrawn;
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
-            if(rectsDP.first[i][j].getTopLeft() == rects[i][j].getTopLeft() && rectsDP.second[i][j] == getCellType(grid[i][j])) {}
+            if(rectsDP.first[i][j].getTopLeft() == rects[i][j].getTopLeft() && ((movements.size() == 0 && rectsDP.second[i][j] == getCellType(grid[i][j])) || (movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() &&  movements.front().newGrid[i][j] == rectsDP.second[i][j]))) {}
             else {
                 //In case the block moved, update all neighboring tiles!
                 // 0
@@ -1013,7 +1015,7 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
                 ofDrawRectangle(calculatePosition(i, j, grid.size(), grid[i].size()));
                 
                 //TODO: Perhaps lessen the number of draws here, since gravity blocks are loaded correctly.
-                if(j + 1 < grid[i].size() && getCellType(grid[i][j+1]) == GRAVITYMONSTERMOUTH || j + 2 < grid[i].size() && getCellType(grid[i][j+2]) == GRAVITYMONSTERMOUTH) {
+                if(j + 1 < grid[i].size() && ((grid[i][j+1] >= GRAVITYMONSTERMOUTHID && grid[i][j+1] <= GRAVITYMONSTERDEADEYEID) || (j + 2 < grid[i].size() && grid[i][j+2] >= GRAVITYMONSTERMOUTHID && grid[i][j+2] <= GRAVITYMONSTERDEADEYEID) /*|| (i-1>=0 && grid[i-1][j+1] >= GRAVITYMONSTERMOUTHID && grid[i-1][j+1] <= GRAVITYMONSTERDEADEYEID) || (i+1 < grid.size() && grid[i+1][j+1] >= GRAVITYMONSTERMOUTHID && grid[i+1][j+1] <= GRAVITYMONSTERDEADEYEID)*/)) {
                     for(int k = 0; k <= 0xF+1; ++k) {
                         //  2DE
                         //  39A
@@ -1048,6 +1050,8 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
         }
     }
     
+    
+                   
     //Draw the background of the monster.
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
@@ -1063,7 +1067,6 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
             }
         }
     }
-    
     //Draw the monster (beside right teeth overlay)
     for(int i = 0; i < grid.size(); ++i) {
         for(int j = 0; j < grid[i].size(); ++j) {
@@ -1074,21 +1077,27 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
                 if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) ofTranslate(-scale*2,0);
                 ofSetColor(scheme.colorGRAVITYMONSTER);
                 
-                
+
                 if(getCellType(grid[i][j]) == GRAVITYMONSTEREYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTERDEADEYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        cout << "GOOOOOD" << endl;
                         drawMonsterEye(i,j,scale,tScale,grid,movements.front().linearIncr());
                     } else {
+                        if(movements.size() != 0) cout << "ELSE DRAW though : " << getCellType(movements.front().newGrid[i][j]) << " old " << getCellType(movements.front().oldGrid[i][j]) << endl;
                         drawMonsterEye(i,j,scale,tScale,grid,0.0);
                     }
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERDEADEYE) {
                     drawCellMonsterFill(i, j, scale, tScale, grid, LEFT);
                     if(movements.size() != 0 && i < movements.front().newGrid.size() && j < movements.front().newGrid[i].size() && getCellType(movements.front().newGrid[i][j]) == GRAVITYMONSTEREYE) { //this works, since eyes should not move and the size of the screen shouldn't change.
+                        cout << "OTHER GOOD" << endl;
                         drawMonsterEye(i,j,scale,tScale,grid,1.-movements.front().linearIncr());
                     }
-                    else drawMonsterEye(i,j,scale,tScale,grid,1.0);
+                    else {
+                        cout << "OTHER ELSE" << endl;
+                        drawMonsterEye(i,j,scale,tScale,grid,1.0);
+                    }
                 }
                 else if(getCellType(grid[i][j]) == GRAVITYMONSTERMOUTH) {
                     ofPushMatrix();

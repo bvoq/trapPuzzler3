@@ -59,7 +59,8 @@ void updateGrid(deque<deque<int> > newGrid) {
     
     timeForMovement = timeForSlowMovement;
     
-    switchRenderMode(PARTIAL);
+    if(!beautifulGraphics) {switchRenderMode(PARTIAL);}
+    else {switchRenderMode(FULL);}
     backgroundColor = scheme.colorBACKGROUND;
     ofBackground(backgroundColor); //call this once to update buffer
     //deque<movement> empty;

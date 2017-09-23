@@ -62,7 +62,7 @@ void displayMessage() {
     else if(dynamicTime > getAdjustedTime() - 500000) {
         messageSize = prevMessageSize * ( 1. - ( (getAdjustedTime() - dynamicTime)/500000.0 ) );
         cout << "Dynamically resizing " << toolbarSize << " " << rand() << endl;
-        if(renderMode == PARTIAL) switchRenderMode(PARTIAL); //refresh window during change of toolbar from message.
+        if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);} //refresh window during change of toolbar from message.
         //TODO: Set message size dynamically AND update the frame if PARTIAL.
     } else {
         messageBlockingToolbar = false;

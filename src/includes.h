@@ -13,6 +13,11 @@
 //For compability
 #define nogetvertices
 
+//in %s at line %d
+//Enormously useful for debugging:
+//#define switchRenderMode printf("Calling switchRenderMode from %s at line %d in file %s.\n",__FUNCTION__,__LINE__,__FILE__);DEBUGswitchRenderModeDEBUG
+//needs to overwrite the function and forward declarations using this method.
+
 #include "globals.h"
 
 #include "timeTaker.h"

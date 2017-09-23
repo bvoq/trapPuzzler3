@@ -183,6 +183,14 @@ void keyEvent (keyType kt) {
             default:;
         }
     }
+    else if(mode == CREDITS) {
+        switch(kt) {
+            case RESTART:
+                initMainMenu();
+                break;
+            default:;
+        }
+    }
 }
 
 #endif /* keyEvent_h */

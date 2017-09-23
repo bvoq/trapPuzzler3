@@ -43,13 +43,13 @@ int isWindowResized = 0;
 bool blockMovementDueToWinningAnimation = false;
 bool forceUndo = false;
 
-bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
+bool beautifulGraphics = false; //This has to be false for iOS devices to run smooth
 enum RenderMode {
     PARTIAL, FULL
 } renderMode;
 
 enum playMode {
-    PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6
+    PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6, CREDITS=7
 } mode;
 string strmode(playMode m) {
     return m == PLAYING ? "PLAYING" : m == LEVEL_EDITOR_PLAYING ? "LEVEL_EDITOR_PLAYING" : m == LEVEL_EDITOR ? "LEVEL_EDITOR" : m == MENU ? "MENU" : m == MENUOLD ? "MENU_OLD" : m == MAINMENU ? "MAIN_MENU" : "UNKNOWN";

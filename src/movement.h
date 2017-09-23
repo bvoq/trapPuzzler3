@@ -143,7 +143,7 @@ struct movement {
         grid = newGrid;
         eyeGrid = newEyeGrid;
         recheckGrid();
-        if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
+        if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);}
         //here the movement object basically gets destroyed.
     }
     
@@ -231,7 +231,6 @@ void checkMovement() {
             movements.pop_front();
             movements.front().timeWhenStarted = getAdjustedTime();
             recheckGrid();
-            if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
         }
     }
 }
@@ -459,6 +458,19 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             
             double velocity = 1./timeAllowed; //from here acceleration will take over.
             do {
+                oldGrid = moveGrid;
+                oldEyeGrid = moveEyeGrid;
+                checked.clear(); affectedByGravity.clear(); affectedEyes.clear(); currentlyChecking.clear();
+                if(gravityDirection == UP) pushFrontRowOf(moveGrid);
+                else if(gravityDirection == DOWN) pushBackRowOf(moveGrid);
+                else if(gravityDirection == LEFT) pushFrontColumnOf(moveGrid);
+                else if(gravityDirection == RIGHT) pushBackColumnOf(moveGrid);
+                
+                if(gravityDirection == UP) pushFrontRowOf(moveEyeGrid);
+                else if(gravityDirection == DOWN) pushBackRowOf(moveEyeGrid);
+                else if(gravityDirection == LEFT) pushFrontColumnOf(moveEyeGrid);
+                else if(gravityDirection == RIGHT) pushBackColumnOf(moveEyeGrid);
+                
                 
                 bool movementSlowDownDueToEyeKilling = false;
                 for(int i = 0; i < moveGrid.size(); ++i) {
@@ -516,19 +528,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                         } //should only be filled by GRAVITYMONSTERMOUTH and GRAVITYMONSTEREYE
                     }
                 }
-                
-                oldGrid = moveGrid;
-                oldEyeGrid = moveEyeGrid;
-                checked.clear(); affectedByGravity.clear(); affectedEyes.clear(); currentlyChecking.clear();
-                if(gravityDirection == UP) pushFrontRowOf(moveGrid);
-                else if(gravityDirection == DOWN) pushBackRowOf(moveGrid);
-                else if(gravityDirection == LEFT) pushFrontColumnOf(moveGrid);
-                else if(gravityDirection == RIGHT) pushBackColumnOf(moveGrid);
-                
-                if(gravityDirection == UP) pushFrontRowOf(moveEyeGrid);
-                else if(gravityDirection == DOWN) pushBackRowOf(moveEyeGrid);
-                else if(gravityDirection == LEFT) pushFrontColumnOf(moveEyeGrid);
-                else if(gravityDirection == RIGHT) pushBackColumnOf(moveEyeGrid);
+
                 
                 for(int i = 0; i < moveGrid.size(); ++i) {
                     for(int j = 0; j < moveGrid[i].size(); ++j) {
@@ -591,12 +591,14 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             if(!solver && movements.size() - movementSizeNonGravity > 0) {
                 
                 //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " " << movements.size() << " " << movementSizeNonGravity << endl;
-                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 6,3);
+                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 5,3);
                 
                 assert(gravityIntensity >= 0 && gravityIntensity <= 3);
-                if(!doesSlurping) movements[movementSizeNonGravity].audioOnMove = (MusicType)(100 + gravityIntensity);
-                else movements[movementSizeNonGravity].audioOnMove = (MusicType)(200 + gravityIntensity);
-                
+                if(movements[movementSizeNonGravity].hasMoved.size() != 0) {
+                    if(!doesSlurping) movements[movementSizeNonGravity].audioOnMove = (MusicType)(100 + gravityIntensity);
+                    else movements[movementSizeNonGravity].audioOnMove = (MusicType)(200 + gravityIntensity);
+                }
+                    
                 while(affectedByGravity.size()!=0 && movements.size() > 10 + movementSizeNonGravity && affectedByGravity == movements.back().hasMoved) {
                     moveGrid = movements.back().oldGrid;
                     moveEyeGrid = movements.back().oldEyeGrid;
@@ -613,7 +615,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
 #ifndef islevelgen
 void changePlayerId(int i) {
     playerID = i;
-    if(renderMode == PARTIAL) switchRenderMode(PARTIAL);
+    if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);}
     //checkForMerge();
 }
 #endif

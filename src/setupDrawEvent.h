@@ -91,7 +91,6 @@ void drawEvent() {
             cerr << "Unkown mode" << endl;
     }
     displayMessage();
-
     isMouseReleased = false; //RESET MOUSE LISTENER
 }
 

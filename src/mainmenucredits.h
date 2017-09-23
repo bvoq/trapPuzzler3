@@ -120,6 +120,46 @@ inline float getMenuTileWidth() {
 
 ofTrueTypeFont mainMenuFont; float previousMenuWidthForMainMenuFont = -2; //License see 1.4 http://theleagueof.github.io/licenses/ofl-faq.html
 ofTrueTypeFont mainMenuFontLarge;
+
+void checkMainMenuFont(float singleMenuTileWidth) {
+    if(singleMenuTileWidth != previousMenuWidthForMainMenuFont) {
+        mainMenuFont.load(locationOfResources + "font/Share/Share-Italic.ttf",singleMenuTileWidth/1.75);
+        mainMenuFontLarge.load(locationOfResources + "font/Share/Share-BoldItalic.ttf",singleMenuTileWidth/1.75);
+        previousMenuWidthForMainMenuFont = singleMenuTileWidth;
+        if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);} //clears screen (or should)
+        displayLevel(grid, moveGrid, movements);
+
+    }
+}
+
+void highlightedMainMenuPrintRightAligned(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    ofDrawRectangle(-mainMenuFont.stringWidth(toprint), -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorBACKGROUND);
+    mainMenuFont.drawString(toprint, -mainMenuFont.stringWidth(toprint), -singleMenuTileWidth*.25);
+}
+
+void unhighlightedMainMenuPrintRightAligned(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorBACKGROUND);
+    ofDrawRectangle(-mainMenuFont.stringWidth(toprint), -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    mainMenuFont.drawString(toprint, -mainMenuFont.stringWidth(toprint), -singleMenuTileWidth*.25);
+}
+
+void highlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    ofDrawRectangle(-mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorBACKGROUND);
+    mainMenuFont.drawString(toprint, -mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth*.25);
+}
+
+void unhighlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidth) {
+    ofSetColor(scheme.colorBACKGROUND);
+    ofDrawRectangle(-mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
+    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+    mainMenuFont.drawString(toprint, -mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth*.25);
+}
+void initCredits();
 void displayMainMenu() {
     
     //cout << "I am displaying the main menu " << rand() << endl;
@@ -134,14 +174,10 @@ void displayMainMenu() {
     
     float singleMenuTileWidth = getMenuTileWidth();
     
-    /*if(renderMode == PARTIAL) displayLevelWORefresh();
-    else*/ displayLevel(grid, moveGrid, movements);
+    if(renderMode == PARTIAL) displayLevelWORefresh(grid, moveGrid, movements);
+    else displayLevel(grid, moveGrid, movements);
 
-    if(singleMenuTileWidth != previousMenuWidthForMainMenuFont) {
-        mainMenuFont.load(locationOfResources + "font/Share/Share-Italic.ttf",singleMenuTileWidth/1.75);
-        mainMenuFontLarge.load(locationOfResources + "font/Share/Share-BoldItalic.ttf",singleMenuTileWidth/1.75);
-        previousMenuWidthForMainMenuFont = singleMenuTileWidth;
-    }
+    checkMainMenuFont(singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     //ofTranslate(-singleMenuTileWidth*5, singleMenuTileWidth * 5);
     //ofScale(0.125/2.,0.125/2.);
@@ -165,16 +201,9 @@ void displayMainMenu() {
     }
     
     if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        
-        ofDrawRectangle(-mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Story-mode"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Story-mode", -mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintRightAligned("Story-mode", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Story-mode"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Story-mode", -mainMenuFont.stringWidth("Story-mode"), -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintRightAligned("Story-mode", singleMenuTileWidth);
     }
     
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
@@ -188,16 +217,9 @@ void displayMainMenu() {
     transY += 3*singleMenuTileWidth;
     
     if(getCellType(grid[menulength/3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Zen-mode") && mousetouchX <= transX)) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        
-        ofDrawRectangle(-mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Zen-mode"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Zen-mode", -mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintRightAligned("Zen-mode", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth, mainMenuFont.stringWidth("Zen-mode"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Zen-mode", -mainMenuFont.stringWidth("Zen-mode"), -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintRightAligned("Zen-mode", singleMenuTileWidth);
     }
 
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Zen-mode") && mousetouchX <= transX)) {
@@ -211,16 +233,9 @@ void displayMainMenu() {
     transY += 5*singleMenuTileWidth;
     
     if(getCellType(grid[menulength/3*2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        
-        ofDrawRectangle(-mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth, mainMenuFont.stringWidth("Controls"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Controls", -mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintRightAligned("Controls", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth, mainMenuFont.stringWidth("Controls"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Controls", -mainMenuFont.stringWidth("Controls"), -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintRightAligned("Controls", singleMenuTileWidth);
     }
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
         gotoYOption = menulength/3*2;
@@ -233,23 +248,16 @@ void displayMainMenu() {
     transY += 3*singleMenuTileWidth;
     
     if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX) ) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        
-        ofDrawRectangle(-mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth, mainMenuFont.stringWidth("Credits"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Credits", -mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintRightAligned("Credits", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth, mainMenuFont.stringWidth("Credits"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Credits", -mainMenuFont.stringWidth("Credits"), -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintRightAligned("Credits", singleMenuTileWidth);
     }
     
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX)) {
         gotoYOption = menulength-3;
     }
     if(getCellType(grid[menulength-3][additionalsfxwidth]) == PLAYER) {
-        initMenu();
+        initCredits();
     }
     
     
@@ -273,43 +281,24 @@ void displayMainMenu() {
     
     //E R E V A D E
     ofTranslate(6*singleMenuTileWidth,(sfxlength/2)*singleMenuTileWidth);
-    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-    ofDrawRectangle(-mainMenuFontLarge.stringWidth("E r e v a d e")/2., -singleMenuTileWidth, mainMenuFontLarge.stringWidth("E r e v a d e"), singleMenuTileWidth);
-    ofSetColor(scheme.colorBACKGROUND);
-    mainMenuFontLarge.drawString("E r e v a d e", -mainMenuFontLarge.stringWidth("E r e v a d e")/2., -singleMenuTileWidth*.25);
+    highlightedMainMenuPrintCentered("E r a v a d e", singleMenuTileWidth);
     
     ofTranslate(0, singleMenuTileWidth);
-    ofSetColor(scheme.colorBACKGROUND);
-    ofDrawRectangle(-mainMenuFont.stringWidth("Made by kdkdk & Baege")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Made by kdkdk & Baege"), singleMenuTileWidth);
-    ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-    mainMenuFont.drawString("Made by kdkdk & Baege", -mainMenuFont.stringWidth("Made by kdkdk & Baege")/2., -singleMenuTileWidth*.25);
-    
+    unhighlightedMainMenuPrintCentered("Made by kdkdk & Baege", singleMenuTileWidth);
     
     ofTranslate(0,-5*singleMenuTileWidth);
     ofTranslate(-7.5*singleMenuTileWidth,(sfxlength-1.5)*singleMenuTileWidth);
     if(playerID == 2) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintCentered("Music Volume", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth, mainMenuFont.stringWidth("Music Volume"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("Music Volume", -mainMenuFont.stringWidth("Music Volume")/2., -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintCentered("Music Volume", singleMenuTileWidth);
     }
     
-    ofTranslate(17.5*singleMenuTileWidth,0);
+    ofTranslate(15*singleMenuTileWidth,0);
     if(playerID == 3) {
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        ofDrawRectangle(-mainMenuFont.stringWidth("SFX Volume"), -singleMenuTileWidth, mainMenuFont.stringWidth("SFX Volume"), singleMenuTileWidth);
-        ofSetColor(scheme.colorBACKGROUND);
-        mainMenuFont.drawString("SFX Volume", -mainMenuFont.stringWidth("SFX Volume"), -singleMenuTileWidth*.25);
+        highlightedMainMenuPrintCentered("SFX Volume", singleMenuTileWidth);
     } else {
-        ofSetColor(scheme.colorBACKGROUND);
-        ofDrawRectangle(-mainMenuFont.stringWidth("SFX Volume"), -singleMenuTileWidth, mainMenuFont.stringWidth("SFX Volume"), singleMenuTileWidth);
-        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-        mainMenuFont.drawString("SFX Volume", -mainMenuFont.stringWidth("SFX Volume"), -singleMenuTileWidth*.25);
+        unhighlightedMainMenuPrintCentered("SFX Volume", singleMenuTileWidth);
     }
     
     //ofTranslate(-13*singleMenuTileWidth,-3*singleMenuTileWidth);
@@ -348,11 +337,20 @@ void displayMainMenu() {
     
 }
 
-/*
+
 void initCredits() {
     mode = CREDITS;
     assert(getCellType(2000000) == UNMOVABLE_ENEMY);
-    mainMenuLevel = cellularAutomata();
-    updateGrid(mainMenuLevel);
-}*/
+    if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);}
+}
+
+void displayCredits() {
+    float singleMenuTileWidth = getMenuTileWidth();
+    checkMainMenuFont(singleMenuTileWidth);
+    
+    ofPushMatrix();
+    ofTranslate(getWidth()/2.,singleMenuTileWidth);
+    highlightedMainMenuPrintRightAligned("Kevin Joël Phillippe De Keyser", singleMenuTileWidth);
+    
+}
 #endif /* mainmenu_h */
