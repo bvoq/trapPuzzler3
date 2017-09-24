@@ -302,9 +302,9 @@ void displayMainMenu() {
     ofTranslate(0,-5*singleMenuTileWidth);
     ofTranslate(-7.5*singleMenuTileWidth,(sfxlength-1.5)*singleMenuTileWidth);
     if(playerID == 2) {
-        highlightedMainMenuPrintCentered("Music Volume", singleMenuTileWidth);
+        highlightedMainMenuPrintCentered("BGM Volume", singleMenuTileWidth);
     } else {
-        unhighlightedMainMenuPrintCentered("Music Volume", singleMenuTileWidth);
+        unhighlightedMainMenuPrintCentered("BGM Volume", singleMenuTileWidth);
     }
     
     ofTranslate(15*singleMenuTileWidth,0);

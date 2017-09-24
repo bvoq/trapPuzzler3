@@ -31,7 +31,9 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
+void testForRekeyPress();
 void ofApp::update(){
+    testForRekeyPress();
     updateEvent();
 }
 
@@ -46,17 +48,37 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
     if(keyMapper.count(key) != 0) {
-        if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ] == false) keyEvent(keyMapper[key]);
-        keyPressedDown[keyMapper[key] ] = true;
+        if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ].second == false) {
+            keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
+            keyEvent(keyMapper[key]);
+        }
+        
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
     if(keyMapper.count(key) != 0) {
-        if(keyPressedDown.count(keyMapper[key]) != 0) keyPressedDown[keyMapper[key]] = false;
+        if(keyPressedDown.count(keyMapper[key]) != 0) {
+            keyPressedDown[keyMapper[key]] = {LLONG_MAX,false};
+            timeWaitForRepress[keyMapper[key]] = false;
+        }
     }
     DEB("Released key: " << key);
+}
+
+void testForRekeyPress() {
+    for(auto & a : keyPressedDown)
+    {
+        if(timeWaitForRepress.count(a.first) == 0) timeWaitForRepress[a.first] = false;
+        if(a.first == UP || a.first == DOWN || a.first == LEFT || a.first == RIGHT || a.first == PLAYER_CHANGE) {
+            if(movements.size() == 0 && (timeWaitForRepress[a.first] || (timeWaitForRepress[a.first]==false && ofGetElapsedTimeMicros() > a.second.first + timeForKeypressWait) )) {
+                a.second = {ofGetElapsedTimeMicros(),true};
+                timeWaitForRepress[a.first] = true;
+                keyEvent(a.first);
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------

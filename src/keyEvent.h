@@ -39,8 +39,9 @@ void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
     }
 }
 
+
 void initMainMenu();
-void keyEvent (keyType kt) {
+void keyEvent (keyType kt) {    
     if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING || mode == MAINMENU) {
         switch(kt) {
             case UP:

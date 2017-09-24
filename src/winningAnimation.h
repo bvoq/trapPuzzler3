@@ -12,7 +12,7 @@
 #ifndef islevelgen
 void blockMovementForWinning() {
     blockMovementDueToWinningAnimation = true;
-    playerTouches.clear(); //TODO Make it unplayable also for keyboard!
+    playerTouches.clear();
 }
 #endif
 

@@ -17,7 +17,8 @@ string strkeytype(keyType in) {
     return in == UP ? "UP" : in == DOWN ? "DOWN" : in == LEFT ? "LEFT" : in == RIGHT ? "RIGHT" : in == PLAYER_CHANGE ? "CHANGE" : "other";
 }
 map<int, keyType> keyMapper;
-map<keyType, bool> keyPressedDown;
+map<keyType, pair<long long,bool> > keyPressedDown;
+map<keyType, bool> timeWaitForRepress;
 /*
  Key Codes:
  ----------

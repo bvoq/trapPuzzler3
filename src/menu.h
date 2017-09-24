@@ -251,18 +251,18 @@ void displayCharacterOnMap() {
         characterOnMapLocation.push_front({getWidth() / 2, getHeight() / 2});
     }
     
-    if(keyPressedDown[UP] || keyPressedDown[DOWN] || keyPressedDown[LEFT] || keyPressedDown[RIGHT]) {
+    if(keyPressedDown[UP].second || keyPressedDown[DOWN].second || keyPressedDown[LEFT].second || keyPressedDown[RIGHT].second) {
         for(int i = 0; i < (int)characterOnMapLocation.size() - 1; ++i) {
             characterOnMapLocation[i+1] = characterOnMapLocation[i];
         }
         pair<float, float> currentLocation = characterOnMapLocation.front();
         
         float actualVelocity = velocity;
-        if(keyPressedDown[UP] + keyPressedDown[DOWN] + keyPressedDown[LEFT] + keyPressedDown[RIGHT] > 1) actualVelocity *= sin(3.1415926/4.);
-        if(keyPressedDown[UP]) characterOnMapLocation.front().first -= actualVelocity;
-        if(keyPressedDown[DOWN]) characterOnMapLocation.front().first += actualVelocity;
-        if(keyPressedDown[LEFT]) characterOnMapLocation.front().second -= actualVelocity;
-        if(keyPressedDown[RIGHT]) characterOnMapLocation.front().second += actualVelocity;
+        if(keyPressedDown[UP].second + keyPressedDown[DOWN].second + keyPressedDown[LEFT].second + keyPressedDown[RIGHT].second > 1) actualVelocity *= sin(3.1415926/4.);
+        if(keyPressedDown[UP].second) characterOnMapLocation.front().first -= actualVelocity;
+        if(keyPressedDown[DOWN].second) characterOnMapLocation.front().first += actualVelocity;
+        if(keyPressedDown[LEFT].second) characterOnMapLocation.front().second -= actualVelocity;
+        if(keyPressedDown[RIGHT].second) characterOnMapLocation.front().second += actualVelocity;
     }
     
     ///!!! Make sure the appropriate characters are in here.
