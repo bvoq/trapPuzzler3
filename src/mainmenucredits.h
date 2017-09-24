@@ -133,6 +133,7 @@ void checkMainMenuFont(float singleMenuTileWidth) {
 }
 
 void highlightedMainMenuPrintRightAligned(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     ofDrawRectangle(-mainMenuFont.stringWidth(toprint), -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorBACKGROUND);
@@ -140,6 +141,7 @@ void highlightedMainMenuPrintRightAligned(string toprint, float singleMenuTileWi
 }
 
 void unhighlightedMainMenuPrintRightAligned(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorBACKGROUND);
     ofDrawRectangle(-mainMenuFont.stringWidth(toprint), -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -147,6 +149,7 @@ void unhighlightedMainMenuPrintRightAligned(string toprint, float singleMenuTile
 }
 
 void highlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     ofDrawRectangle(-mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorBACKGROUND);
@@ -154,6 +157,7 @@ void highlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidth)
 }
 
 void unhighlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorBACKGROUND);
     ofDrawRectangle(-mainMenuFont.stringWidth(toprint)/2., -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -161,6 +165,7 @@ void unhighlightedMainMenuPrintCentered(string toprint, float singleMenuTileWidt
 }
 
 void highlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
     ofDrawRectangle(0, -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorBACKGROUND);
@@ -168,6 +173,7 @@ void highlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileWid
 }
 
 void unhighlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileWidth) {
+    ofFill();
     ofSetColor(scheme.colorBACKGROUND);
     ofDrawRectangle(0, -singleMenuTileWidth, mainMenuFont.stringWidth(toprint), singleMenuTileWidth);
     ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
@@ -176,8 +182,9 @@ void unhighlightedMainMenuPrintLeftAligned(string toprint, float singleMenuTileW
 
 
 void initCredits();
+void initControlChange();
 void displayMainMenu() {
-    
+    ofFill();
     //cout << "I am displaying the main menu " << rand() << endl;
     ofPushMatrix();
     float menuWidth = max(getWidth(),getHeight());
@@ -213,6 +220,7 @@ void displayMainMenu() {
         if(moveGrid[i][additionalsfxwidth+1] == PLAYER) locationOfPlayer1Y = i;
     }
     
+    //STORY-MODE
     if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
         highlightedMainMenuPrintRightAligned("Story-mode", singleMenuTileWidth);
     } else {
@@ -226,6 +234,7 @@ void displayMainMenu() {
         initMenu();
     }
     
+    //ZEN-MODE
     ofTranslate(0,3*singleMenuTileWidth);
     transY += 3*singleMenuTileWidth;
     
@@ -242,6 +251,8 @@ void displayMainMenu() {
         initMenu();
     }
     
+    
+    //CONTROLS
     ofTranslate(0,5*singleMenuTileWidth);
     transY += 5*singleMenuTileWidth;
     
@@ -254,9 +265,10 @@ void displayMainMenu() {
         gotoYOption = menulength/3*2;
     }
     if(getCellType(grid[menulength/3*2][additionalsfxwidth]) == PLAYER) {
-        initMenu();
+        initControlChange();
     }
     
+    //MAIN MENU
     ofTranslate(0,3*singleMenuTileWidth);
     transY += 3*singleMenuTileWidth;
     
@@ -345,7 +357,6 @@ void displayMainMenu() {
     
     
     
-    //cout << "HEYO " << moveGrid.size() << endl;
     ofPopMatrix();
     
 }
@@ -358,6 +369,7 @@ void initCredits() {
 }
 
 void displayCredits() {
+    ofFill();
     float singleMenuTileWidth = getMenuTileWidth();
     checkMainMenuFont(singleMenuTileWidth);
     
@@ -397,8 +409,95 @@ void displayCredits() {
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintLeftAligned("Share by Carrois Apostrophe",singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
-    unhighlightedMainMenuPrintLeftAligned("carrois.com, fonts.google.com/specimen/Share",singleMenuTileWidth);
+    unhighlightedMainMenuPrintLeftAligned("carrois.com",singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth*1);
+    unhighlightedMainMenuPrintLeftAligned("fonts.google.com/specimen/Share",singleMenuTileWidth);
+    ofPopMatrix();
+}
 
+
+void initControlChange() {
+    mode = CONTROL_CHANGE;
+    setRemapKey = false;
+    remapKey = UNKNOWNKEYT;
+    if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);}
+}
+
+void displayKeyCode(string keyStr, keyType keyT, float singleMenuTileWidth, float & translationY) {
+    ofFill();
+    if(mousetouchY >= translationY && mousetouchY <= translationY + singleMenuTileWidth) {
+        ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
+        ofDrawRectangle(-getWidth(),0,getWidth()*2,singleMenuTileWidth);
+        if(isMousePressed) {
+            setRemapKey = true;
+            remapKey = keyT;
+        }
+    }
+    
+    if(remapKey == keyT && setRemapKey) {
+        ofSetColor(scheme.colorENEMY);
+        ofDrawRectangle(-getWidth(),0,getWidth()*2,singleMenuTileWidth);
+    }
+    
+    ofTranslate(-singleMenuTileWidth*3,singleMenuTileWidth);
+    unhighlightedMainMenuPrintRightAligned(keyStr,singleMenuTileWidth);
+    string keycodesstr = "";
+    for(auto k : keyMapper) if(k.second == keyT) {
+        string kcstr = keycodeToStr(k.first);
+        
+        keycodesstr += (keycodesstr.size() != 0 ? "," : "") + to_string(k.first) + (kcstr.size() != 0 ? "(" : "") + kcstr +  (kcstr.size() != 0 ? ")" : "");
+    }
+    ofTranslate(+singleMenuTileWidth*6,0);
+    unhighlightedMainMenuPrintLeftAligned(keycodesstr,singleMenuTileWidth);
+    ofTranslate(-singleMenuTileWidth*3,0);
+    translationY += singleMenuTileWidth;
+    
+}
+
+void displayControlChange() {
+    ofFill();
+    float singleMenuTileWidth = getMenuTileWidth();
+    checkMainMenuFont(singleMenuTileWidth);
+
+    float translationY = 0;
+    ofPushMatrix();
+    ofTranslate(getWidth()/2.,singleMenuTileWidth*2);
+    translationY += singleMenuTileWidth*2;
+    highlightedMainMenuPrintCentered("Change controls", singleMenuTileWidth);
+    ofTranslate(0,singleMenuTileWidth);
+    translationY += singleMenuTileWidth;
+    unhighlightedMainMenuPrintCentered("by clicking on a movement and pressing the key to remap", singleMenuTileWidth);
+    ofTranslate(-singleMenuTileWidth*3,singleMenuTileWidth*3);
+    translationY += singleMenuTileWidth*3;
+    highlightedMainMenuPrintRightAligned("KEY", singleMenuTileWidth);
+    ofTranslate(singleMenuTileWidth*6,0);
+    highlightedMainMenuPrintLeftAligned("MAP CODES", singleMenuTileWidth);
+    ofTranslate(-singleMenuTileWidth*3,0);
+    
+    displayKeyCode("Left",LEFT, singleMenuTileWidth, translationY);
+    displayKeyCode("Right",RIGHT, singleMenuTileWidth, translationY);
+    displayKeyCode("Up",UP, singleMenuTileWidth, translationY);
+    displayKeyCode("Down",DOWN, singleMenuTileWidth, translationY);
+    displayKeyCode("Change player",PLAYER_CHANGE, singleMenuTileWidth, translationY);
+    displayKeyCode("Undo",UNDO, singleMenuTileWidth, translationY);
+    displayKeyCode("Restart",RESTART, singleMenuTileWidth, translationY);
+    displayKeyCode("Toggle toolbar",TOGGLE_TOOLBAR, singleMenuTileWidth, translationY);
+    
+    ofTranslate(0,singleMenuTileWidth*2);
+    translationY += singleMenuTileWidth*2;
+    highlightedMainMenuPrintCentered("LEVEL EDITOR KEYS", singleMenuTileWidth);
+    
+    displayKeyCode("Change to PLAYER",CHANGE_TO_PLAYER, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to MOVABLE BLOCK",CHANGE_TO_ENEMY, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to UNMOVABLE BLOCK",CHANGE_TO_UNMOVABLE_ENEMY, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to CONNECT BLOCK",CHANGE_TO_UNMOVABLE_ENEMY, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to RIGHT MONSTER MOUTH",CHANGE_TO_MONSTERMOUTH, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to RIGHT MONSTER EYE",CHANGE_TO_MONSTEREYE, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to DELETE TILE",CHANGE_TO_AIR, singleMenuTileWidth, translationY);
+    displayKeyCode("Change to DELETE STRUCTURE",CHANGE_TO_SUPERAIR, singleMenuTileWidth, translationY);
+    displayKeyCode("Clear level",CLEAR, singleMenuTileWidth, translationY);
+
+    
     ofPopMatrix();
 }
 #endif /* mainmenu_h */

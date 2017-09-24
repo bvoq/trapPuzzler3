@@ -20,6 +20,11 @@ struct playerTouchMovement {
 map<int, playerTouchMovement> playerTouches; //player id of touch.
 map<int,pair<int,int> > origMouseTouch;
 void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
+    if(origMouseTouch.count(touchid) == 0) {
+        setRemapKey = !setRemapKey;
+        if(!setRemapKey) remapKey = UNKNOWNKEYT;
+    }
+    
     isMousePressed = true;
     mousePressedY = mouseTouchY;
     mousePressedX = mouseTouchX;

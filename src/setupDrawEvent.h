@@ -100,6 +100,10 @@ void drawEvent() {
             backgroundColor = scheme.colorBACKGROUND;
             displayCredits();
             break;
+        case CONTROL_CHANGE:
+            renderMode = FULL;
+            backgroundColor = scheme.colorBACKGROUND;
+            displayControlChange();
         default:
             cerr << "Unkown mode" << endl;
     }

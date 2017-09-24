@@ -39,6 +39,19 @@ void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
     }
 }
 
+string keycodeToStr(int keycode) {
+    string outstr = "";
+    if(keycode >= 'A' && keycode <= 'Z') outstr = (char)keycode;
+    else if(keycode >= 'a' && keycode <= 'z') outstr = (char)keycode;
+    else if(keycode >= '0' && keycode <= '9') outstr = (char)keycode;
+    else if(keycode == 32) outstr = "SPACE";
+    else if(keycode == 356) outstr = "LEFT"; 
+    else if(keycode == 357) outstr = "UP";
+    else if(keycode == 358) outstr = "RIGHT";
+    else if(keycode == 359) outstr = "DOWN";
+    else if(keycode == 27) outstr = "ESC";
+    return outstr;
+}
 
 void initMainMenu();
 void keyEvent (keyType kt) {    
@@ -190,6 +203,16 @@ void keyEvent (keyType kt) {
                 initMainMenu();
                 break;
             default:;
+        }
+    }
+    else if(mode == CONTROL_CHANGE) {
+        if(!setRemapKey) {
+            switch(kt) {
+                case RESTART:
+                    initMainMenu();
+                    break;
+                default:;
+            }
         }
     }
 }

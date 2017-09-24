@@ -52,7 +52,9 @@ void ofApp::keyPressed(int key){
             keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
             keyEvent(keyMapper[key]);
         }
-        
+        if(mode == CONTROL_CHANGE && setRemapKey) {
+            keyMapper[key] = remapKey;
+        }
     }
 }
 
