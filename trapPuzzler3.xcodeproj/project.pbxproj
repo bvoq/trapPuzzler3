@@ -142,7 +142,6 @@
 				63308D681F66F289007D3C5C /* globals.h */,
 				22CAB9B51C3E73DD00724B49 /* grid.h */,
 				22CAB9B61C3E73DD00724B49 /* includes.h */,
-				63308D661F66EFFD007D3C5C /* main2.cpp */,
 				635462FC1EA425B900B973D0 /* keyEvent.h */,
 				22CAB9B71C3E73DD00724B49 /* keyMap.h */,
 				22CAB9B81C3E73DD00724B49 /* levelEditor.h */,
@@ -152,9 +151,6 @@
 				63A725341D69DBC200F8BC0A /* messages.h */,
 				6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */,
 				22CAB9BA1C3E73DD00724B49 /* movement.h */,
-				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
-				63308D601F667BE0007D3C5C /* levelGen.h */,
-				63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */,
 				22A39D901C5387FA0007A506 /* saves.h */,
 				63807F7C1F6C51F500BFBBFE /* screenShake.h */,
 				635462FD1EA4285100B973D0 /* setupDrawEvent.h */,
@@ -162,6 +158,10 @@
 				6380CB8D1EAACF6F00C8C260 /* toolbar.h */,
 				22CAB9BC1C3E73DD00724B49 /* updateGrid.h */,
 				6380CB8A1EAAC73500C8C260 /* winningAnimation.h */,
+				63308D661F66EFFD007D3C5C /* main2.cpp */,
+				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
+				63308D601F667BE0007D3C5C /* levelGen.h */,
+				63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */,
 				6380CB8C1EAACA0900C8C260 /* TODO.rtf */,
 			);
 			path = src;

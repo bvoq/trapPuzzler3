@@ -364,12 +364,17 @@ void displayCredits() {
     ofPushMatrix();
     ofTranslate(getWidth()/2.-singleMenuTileWidth*3,singleMenuTileWidth*2);
     highlightedMainMenuPrintRightAligned("Developer 1", singleMenuTileWidth);
+    ofTranslate(+singleMenuTileWidth*3,-singleMenuTileWidth);
+    static ofImage kevinImg(locationOfResources + "imgs/kevin.jpg");
+    kevinImg.draw(0,0,singleMenuTileWidth*4,singleMenuTileWidth*4);
+    ofTranslate(-singleMenuTileWidth*3,+singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintRightAligned("Kevin Joël Philippe De Keyser (@kdkdkch)",singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintRightAligned("dekeyser.ch", singleMenuTileWidth);
     
     ofTranslate(singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-2*singleMenuTileWidth);
+
     highlightedMainMenuPrintLeftAligned("Developer 2", singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintLeftAligned("Lukas Baege",singleMenuTileWidth);
@@ -378,6 +383,10 @@ void displayCredits() {
     
     ofTranslate(-singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-1*singleMenuTileWidth);
     highlightedMainMenuPrintRightAligned("BGM", singleMenuTileWidth);
+    ofTranslate(+singleMenuTileWidth*3,-singleMenuTileWidth);
+    static ofImage nightdriverImg(locationOfResources + "imgs/nightdriver.jpg");
+    nightdriverImg.draw(0,0,singleMenuTileWidth*4,singleMenuTileWidth*4);
+    ofTranslate(-singleMenuTileWidth*3,+singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintRightAligned("Night Driver",singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
