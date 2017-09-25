@@ -53,7 +53,8 @@ void ofApp::keyPressed(int key){
             keyEvent(keyMapper[key]);
         }
         if(mode == CONTROL_CHANGE && setRemapKey) {
-            keyMapper[key] = remapKey;
+            if(keyMapper.count(key) == 0) keyMapper[key] = remapKey;
+            else keyMapper.erase(key);
         }
     }
 }
