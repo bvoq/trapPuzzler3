@@ -62,7 +62,7 @@ void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gri
     ofEnableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
-    ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 + incr*scale*.1, scale * 0.5+ incr*scale*.1);
+    ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 + incr*scale*.05, scale * 0.5+ incr*scale*.05);
     ofSetColor(0, 0, 0);
     float angle = atan2( (float)(currentWatchY - i) , (float)(currentWatchX - j) );
     ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25 + incr*scale*.1, scale * 0.25 + incr*scale*.1);
