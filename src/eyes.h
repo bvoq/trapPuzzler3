@@ -57,20 +57,21 @@ void generateEyeGrid() {
     moveEyeGrid = eyeGrid;
 }
 
-void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX) {
+void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX, float incr) {
+    cout << "INCR: " << incr << endl;
     ofEnableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
-    ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5, scale * 0.5);
+    ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 + incr*scale*.1, scale * 0.5+ incr*scale*.1);
     ofSetColor(0, 0, 0);
     float angle = atan2( (float)(currentWatchY - i) , (float)(currentWatchX - j) );
-    ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25, scale * 0.25);
+    ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25 + incr*scale*.1, scale * 0.25 + incr*scale*.1);
     ofSetColor(scheme.colorENEMY);
-    ofDrawRectangle(scale * 0.25, 0, scale * 0.5, scale * 0.33);
+    ofDrawRectangle(scale * 0.25, 0, scale * 0.5, scale * 0.33 - scale*.1*incr);
     ofSetColor(scheme.colorENEMYSTROKE);
     ofSetLineWidth(scale * 0.05);
-    if(direction == false) ofDrawLine(scale * 0.25, scale * 0.25, scale * 0.75, scale * 0.33);
-    else ofDrawLine(scale * 0.25, scale * 0.33, scale * 0.75, scale * 0.25);
+    if(direction == false) ofDrawLine(scale * 0.25, scale * 0.25, scale * 0.75, scale * 0.33 - scale*.33*incr);
+    else ofDrawLine(scale * 0.25, scale * 0.33 - scale*.33*incr , scale * 0.75, scale * 0.25);
     ofSetLineWidth(1);
 }
 
@@ -112,13 +113,13 @@ void drawPlayerEye(float scale) {
     ofDrawEllipse(scale * 0.5, scale * 0.5, scale * 0.25, scale * 0.25);
 }
 
-void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid) {
+void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid, float incr) {
     if(eGrid[i][j] == 0) {} //eyeless
     else if(eGrid[i][j] == 2) {
-        drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size());
+        drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), incr);
         ofPushMatrix();
         ofTranslate(scale * 0.25, 0);
-        drawEnemyEye(true, i, j, scale * 0.75, eGrid.size(), eGrid[0].size());
+        drawEnemyEye(true, i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), incr);
         ofPopMatrix();
     }
     else if(eGrid[i][j] == 1) {

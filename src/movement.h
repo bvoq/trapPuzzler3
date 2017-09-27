@@ -157,6 +157,16 @@ struct movement {
         return getDelay() / movementTime;
     }
     
+    float quadInOutIncr() {
+        return easeInOutQuad(linearIncr(), 0., 1., 1.);
+    }
+    
+    float upDownSine() {
+        float lincr = linearIncr();
+        if(lincr < .5) return easeInOutSine(lincr,0.,1.,.5);
+        else return 1.-easeInOutSine(lincr-.5,0.,1.,.5);
+    }
+    
     ofRectangle calculatePosition(int i, int j) {
         if(!isUsed) {
             if(!blockMovementDueToWinningAnimation && audioOnMove == NORMALMT) playMoveSound();

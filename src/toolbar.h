@@ -175,7 +175,7 @@ void displayToolBar() {
                     }
                     ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
                     drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1, yellowOne);
-                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, yellowOne);
+                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, yellowOne, 0);
                     ofPopMatrix();
                     
                     //RED BLOCK
@@ -194,7 +194,7 @@ void displayToolBar() {
                     ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
                     drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1, redOne);
                     //ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, redOne);
+                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, redOne, 0);
                     ofPopMatrix();
                     
                     //GRAY BLOCK
@@ -234,7 +234,7 @@ void displayToolBar() {
                     ofTranslate(toolbarSize*.25-toolbarSize*0.05,toolbarSize*.25-toolbarSize*0.05);
                     drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1, loveOne);
                     //ofSetColor(scheme.colorUNMOVABLE_ENEMYSTROKE);
-                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, loveOne);
+                    drawEyes(0,0, toolbarSize*.5, toolbarSize*.1, loveOne, 0);
                     ofPopMatrix();
                     
                     
