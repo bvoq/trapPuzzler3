@@ -900,9 +900,9 @@ void displayLevel(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, dequ
                 if(cT == PLAYER || cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellFill(i, j, scale, tScale, grid);
                 
                 float incr = 0;
-                if(cT == ENEMY) incr = (movements.size() != 0 && movements.front().hasMoved.count(grid[i][j]) != 0) ? movements.front().upDownSine() : 0.;
+                if(cT == PLAYER || cT == ENEMY) incr = (movements.size() != 0 && movements.front().hasMoved.count(grid[i][j]) != 0) ? movements.front().upDownSine() : 0.;
 
-                drawEyes(i, j, scale, tScale, eyeGrid, incr);
+                drawEyes(i, j, scale, tScale, eyeGrid, grid, incr);
                 ofPopMatrix();
             }
             
@@ -1145,7 +1145,7 @@ void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveG
                 }*/
                 if(cT == PLAYER || cT == ENEMY || cT == UNMOVABLE_ENEMY || cT == LOVE) drawCellFill(ti, tj, scale, tScale, grid);
                 
-                drawEyes(ti, tj, scale, tScale, eyeGrid,0);
+                drawEyes(ti, tj, scale, tScale, eyeGrid, grid, 0);
                 
                 /*
                  if(grid[ti][tj] != 0) {

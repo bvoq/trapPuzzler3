@@ -68,7 +68,7 @@ float displayLevelInMenu(deque<deque<int> > & theLevel, bool displayPlayer, int 
                     else if(cT == LOVE) ofSetColor(scheme.colorLOVE);
                     if(cT != GRAVITYMONSTERMOUTH && cT != GRAVITYMONSTEREYE && cT != GRAVITYMONSTERDEADEYE) {
                         drawCellFill(i, j, miniScale, (miniScale / 4.), theLevel);
-                        if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid,0);
+                        if(displayEyes) drawEyes(i, j, miniScale, miniScale / 2., eyeGrid, theLevel, 0);
                     }
                     ofPopMatrix();
                 }

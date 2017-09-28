@@ -45,6 +45,7 @@ void initDefaultKeyMapping() {
     keyMapper.insert({100, RIGHT});
     keyMapper.insert({358, RIGHT});
     
+    keyMapper.insert({13, PLAYER_CHANGE});
     keyMapper.insert({32, PLAYER_CHANGE});
 
     keyMapper.insert({85, UNDO});

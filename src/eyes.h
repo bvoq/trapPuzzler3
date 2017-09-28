@@ -57,21 +57,33 @@ void generateEyeGrid() {
     moveEyeGrid = eyeGrid;
 }
 
-void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX, float incr) {
-    cout << "INCR: " << incr << endl;
+//surpriseOrAnger == surprise
+void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX, bool surpriseOrAnger, float incr) {
     ofEnableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
-    ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 + incr*scale*.05, scale * 0.5+ incr*scale*.05);
+    if(surpriseOrAnger) ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 + incr*scale*.05, scale * 0.5+ incr*scale*.05);
+    else ofDrawEllipse(scale * 0.5, scale * 0.33, scale * 0.5 - incr*scale*.05, scale * 0.5 - incr*scale*.05);
+  
     ofSetColor(0, 0, 0);
+    
     float angle = atan2( (float)(currentWatchY - i) , (float)(currentWatchX - j) );
-    ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25 + incr*scale*.1, scale * 0.25 + incr*scale*.1);
+    
+    if(surpriseOrAnger) ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25 + incr*scale*.1, scale * 0.25 + incr*scale*.1);
+    else ofDrawEllipse(scale * 0.5  + cos(angle)*2 , scale * 0.33 + sin(angle)*2, scale * 0.25 - incr*scale*.1, scale * 0.25 - incr*scale*.1);
     ofSetColor(scheme.colorENEMY);
-    ofDrawRectangle(scale * 0.25, 0, scale * 0.5, scale * 0.33 - scale*.1*incr);
+    if(surpriseOrAnger) ofDrawRectangle(scale * 0.25, 0, scale * 0.5, scale * 0.33 - scale*.1*incr);
+    else ofDrawRectangle(scale * 0.25, 0, scale * 0.5, scale * 0.33 + scale*.1*incr);
     ofSetColor(scheme.colorENEMYSTROKE);
     ofSetLineWidth(scale * 0.05);
-    if(direction == false) ofDrawLine(scale * 0.25, scale * 0.25, scale * 0.75, scale * 0.33 - scale*.33*incr);
-    else ofDrawLine(scale * 0.25, scale * 0.33 - scale*.33*incr , scale * 0.75, scale * 0.25);
+    
+    if(surpriseOrAnger) {
+        if(direction == false) ofDrawLine(scale * 0.25, scale * 0.25, scale * 0.75, scale * 0.33 - scale*.33*incr);
+        else ofDrawLine(scale * 0.25, scale * 0.33 - scale*.33*incr , scale * 0.75, scale * 0.25);
+    } else {
+        if(direction == false) ofDrawLine(scale * 0.25, scale * 0.25, scale * 0.75, scale * 0.33 + scale*.1*incr);
+        else ofDrawLine(scale * 0.25, scale * 0.33 + scale*.1*incr , scale * 0.75, scale * 0.25);
+    }
     ofSetLineWidth(1);
 }
 
@@ -104,26 +116,44 @@ void drawLoveEye(float scale) {
     ofPopMatrix();
 }
 
-void drawPlayerEye(float scale) {
+void drawPlayerEye(float scale, float incr) {
     ofDisableSmoothing();
     ofFill();
     ofSetColor(255, 255, 255);
     ofDrawEllipse(scale * 0.5, scale * 0.5, scale * 0.5, scale * 0.5);
     ofSetColor(0, 0, 0);
-    ofDrawEllipse(scale * 0.5, scale * 0.5, scale * 0.25, scale * 0.25);
+    ofDrawEllipse(scale * 0.5, scale * 0.5, scale * 0.25 - incr*scale*.05, scale * 0.25 - incr*scale*.05);
+    /*
+    else {
+        ofPath satisfiedEye;
+        satisfiedEye.setColor(0);
+        satisfiedEye.setFilled(true);
+        float rad = scale*.25/2.;
+        //void ofPath::arc(const ofPoint &centre, float radiusX, float radiusY, float angleBegin, float angleEnd)
+        satisfiedEye.arc(scale*.5,scale*.5,  rad,rad,  -90, 0);
+        satisfiedEye.arc(scale*.5+rad/3.*2.*(1.-incr),scale*.5+rad/3.*2,  rad/3.,rad/3.,  0, 180);
+        satisfiedEye.arc(scale*.5,scale*.5+rad/3.*2+rad/3.*(1.-incr),  rad/3.,rad/3.,  180, 360);
+        satisfiedEye.arc(scale*.5-rad/3.*2.*(1.-incr),scale*.5+rad/3.*2,  rad/3.,rad/3.,  0, 180);
+        satisfiedEye.arc(scale*.5,scale*.5,  rad,rad,  -180, -90);
+        //satisfiedEye.arc(scale*.5,scale*.5,  rad,rad,  270, 360);
+
+        
+        satisfiedEye.draw();
+    }
+*/
 }
 
-void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid, float incr) {
+void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid, deque<deque<int> > & grid, float incr) {
     if(eGrid[i][j] == 0) {} //eyeless
     else if(eGrid[i][j] == 2) {
-        drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), incr);
+        drawEnemyEye(false,i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), true, incr);
         ofPushMatrix();
         ofTranslate(scale * 0.25, 0);
-        drawEnemyEye(true, i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), incr);
+        drawEnemyEye(true, i, j, scale * 0.75, eGrid.size(), eGrid[0].size(), true, incr);
         ofPopMatrix();
     }
     else if(eGrid[i][j] == 1) {
-        drawPlayerEye(scale);
+        drawPlayerEye(scale, incr);
     }
     else if(eGrid[i][j] == 3) {
         drawLoveEye(scale);
