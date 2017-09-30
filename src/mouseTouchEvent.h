@@ -63,7 +63,13 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     cout << "NO I'M PRESSING DOWN " << rand() << endl;
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
-        if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
+        if(mode == CREDITS || mode == CONTROL_CHANGE) {
+            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+                setRemapKey = false;
+                keyEvent(RESTART);
+            }
+        }
+        else if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             //UNDO
             if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
                 undoMovement(timeForSlowEyeMovement);

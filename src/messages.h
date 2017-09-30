@@ -19,7 +19,9 @@ int prevMessageSize = 0;
 vector<string> prevMessage = {""};
 void displayMessage() {
     if(getWidth() != previousWindowWidth) {
-        font.load(locationOfResources + "font/Rammetto_One/RammettoOne-Regular.ttf",getWidth()/36);
+        //mainMenuFont.load(locationOfResources + "font/Share/Share-Italic.ttf",singleMenuTileWidth/1.75);
+
+        font.load(locationOfResources + "font/Share/Share-Regular.ttf",getWidth()/36);
         previousWindowWidth = getWidth();
     }
     
@@ -44,13 +46,15 @@ void displayMessage() {
             ofSetColor(scheme.colorBACKGROUND);
             ofDrawRectangle(0, ofGetHeight() - messageSize, getWidth(), messageSize);
             
-            ofSetColor(255,255,255);
+            if(mode == MENU) ofSetColor(255,255,255);
+            else ofSetColor(0);
             for(int i = message.front().first.size() - 1; i >= 0; --i) {
                 font.drawString(message.front().first[i], getWidth()/2 - font.stringWidth(message.front().first[i])/2, ofGetHeight() - font.stringHeight("Tg") * (message.front().first.size() - i));
             }
         }
         else {
-            ofSetColor(255,255,255);
+            if(mode == MENU) ofSetColor(255,255,255);
+            else ofSetColor(0);
             for(int i = message.front().first.size() - 1; i >= 0; --i) {
                 font.drawString(message.front().first[i], getWidth()/2 - font.stringWidth(message.front().first[i])/2, ofGetHeight() - font.stringHeight("Tg") * (message.front().first.size() - i));
             }

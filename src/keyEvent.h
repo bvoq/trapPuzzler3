@@ -44,6 +44,7 @@ string keycodeToStr(int keycode) {
     if(keycode >= 'A' && keycode <= 'Z') outstr = (char)keycode;
     else if(keycode >= 'a' && keycode <= 'z') outstr = (char)keycode;
     else if(keycode >= '0' && keycode <= '9') outstr = (char)keycode;
+    else if(keycode == 13) outstr = "ENTER";
     else if(keycode == 32) outstr = "SPACE";
     else if(keycode == 356) outstr = "LEFT"; 
     else if(keycode == 357) outstr = "UP";
@@ -153,6 +154,7 @@ void keyEvent (keyType kt) {
                 if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
                 else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
                 else assert(false);
+                break;
             case IMPROVE:
 				improveLevelEditor();
 				break;
@@ -201,6 +203,11 @@ void keyEvent (keyType kt) {
         switch(kt) {
             case RESTART:
                 initMainMenu();
+                break;
+            case TOGGLE_TOOLBAR:
+                if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                else assert(false);
                 break;
             default:;
         }

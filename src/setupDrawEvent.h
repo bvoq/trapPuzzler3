@@ -99,13 +99,16 @@ void drawEvent() {
             renderMode = FULL;
             backgroundColor = scheme.colorBACKGROUND;
             displayCredits();
+            displayToolBar();
             break;
         case CONTROL_CHANGE:
             renderMode = FULL;
             backgroundColor = scheme.colorBACKGROUND;
             displayControlChange();
+            displayToolBar();
+            break;
         default:
-            cerr << "Unkown mode" << endl;
+            cerr << "Unknown mode" << endl;
     }
     displayMessage();
     isMouseReleased = false; //RESET MOUSE LISTENER

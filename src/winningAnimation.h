@@ -105,6 +105,8 @@ bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
 void winningAnimation() {
     blockMovementForWinning();
     switchRenderMode(FULL);
+    if(beautifulGraphics) scrollX = getWidth()/2;
+    else scrollX = 0;
     cout << max(grid.size(), grid[0].size()) << endl;
     if(grid.size() > 100 || grid[0].size() > 100) {
         if(currentLevel >= 0 && currentLevel < beaten.size()) {

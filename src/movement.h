@@ -587,6 +587,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 #endif
                 
                 checkForMerge(moveGrid,playerID);
+                
                 #ifndef islevelgen
                 if(!solver && moveGrid != oldGrid) {
                     movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true, NONEMT);

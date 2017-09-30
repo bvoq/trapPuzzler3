@@ -25,12 +25,12 @@ int toolbarSize = 100; //TODO! Make this dynamic and initialize its height
 int messageSize = 0;
 
 int getWidth() {
-    if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR) && toolbarOrientation == RIGHTTOOLBAR) return ofGetWidth() - toolbarSize;
+    if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR || mode == CREDITS || mode == CONTROL_CHANGE) && toolbarOrientation == RIGHTTOOLBAR) return ofGetWidth() - toolbarSize;
     else return ofGetWidth();
 }
 int getHeight() {
     if(messageBlockingToolbar) return ofGetHeight() - max(messageSize,toolbarSize); //might look nicer during transition of messages.
-    if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR) && toolbarOrientation == BOTTOMTOOLBAR) return ofGetHeight() - toolbarSize;
+    if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR || mode == CREDITS || mode == CONTROL_CHANGE) && toolbarOrientation == BOTTOMTOOLBAR) return ofGetHeight() - toolbarSize;
     return ofGetHeight();
 }
 
@@ -47,8 +47,41 @@ void displayToolBar() {
                 backgroundKeySelected = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED_LIGHT, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED);
                 
             }
-            
+            //PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6, CREDITS=7, CONTROL_CHANGE=8, UNKNOWN=100
+
             if(toolbarOrientation == BOTTOMTOOLBAR) {
+                
+                if(mode == CREDITS || mode == CONTROL_CHANGE) {
+                    //MAIN MENU
+                    ofPushMatrix();
+                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    backgroundKey.draw();
+                    deque<deque<int> > blackOnly = {{1000}};
+                    ofSetColor(255);
+                    ofFill();
+                    // ...
+                    // :::
+                    if(mousetouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                        ofScale(1.05,1.05);
+                        ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
+                    }
+                    
+                    float actualtilesize = toolbarSize*.9*.175;
+                    float tilesize = toolbarSize*.9*.25;
+                    for(int i = 0; i < 3; ++i) {
+                        for(int j = 0; j < 3; ++j) {
+                            ofPushMatrix();
+                            ofTranslate((toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+i*tilesize,
+                                        (toolbarSize*.9-toolbarSize*.9*.75)/2. + (tilesize-actualtilesize)/2.+j*tilesize);
+                            drawCellFill(0,0, actualtilesize, actualtilesize*.75/6., blackOnly);
+                            ofPopMatrix();
+                        }
+                    }
+                    ofPopMatrix();
+                }
+                
+                
                 if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
                     //ofSetColor(scheme.colorTOOLBAR);
                     //ofDrawRectangle(0,ofGetHeight()-toolbarSize,ofGetWidth(),toolbarSize); //toolbar bar.
@@ -342,9 +375,6 @@ void displayToolBar() {
                     
                     //drawCellFill(0,0,toolbarSize*.5, toolbarSize*.1,blackOnly);
                     ofPopMatrix();
-
-                    
-                    
                 }
                 
                 

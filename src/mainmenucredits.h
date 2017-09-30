@@ -306,7 +306,7 @@ void displayMainMenu() {
     
     //E R E V A D E
     ofTranslate(6*singleMenuTileWidth,(sfxlength/2)*singleMenuTileWidth);
-    highlightedMainMenuPrintCentered("E r a v a d e", singleMenuTileWidth);
+    highlightedMainMenuPrintCentered("t r a p p u z z l e r", singleMenuTileWidth);
     
     ofTranslate(0, singleMenuTileWidth);
     unhighlightedMainMenuPrintCentered("Made by kdkdk & Baege", singleMenuTileWidth);
