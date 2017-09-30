@@ -74,7 +74,7 @@ deque<deque<int> > cellularAutomata () {
         for(int j = 0; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) cellLevel[i][j] = 0;
         for(int j = additionalsfxwidth; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) {
             if(j == additionalsfxwidth && i == 2) cellLevel[i][j] = 1000000;
-            else if(j == additionalsfxwidth && i == menulength/3) cellLevel[i][j] = 1000001;
+            // UNCOMMENTFORZENMODE else if(j == additionalsfxwidth && i == menulength/3) cellLevel[i][j] = 1000001;
             else if(j == additionalsfxwidth && i == menulength/3*2) cellLevel[i][j] = 1000002;
             else if(j == additionalsfxwidth && i == menulength-3) cellLevel[i][j] = 1000003;
             
@@ -202,11 +202,7 @@ void displayMainMenu() {
     //ofTranslate(-singleMenuTileWidth*5, singleMenuTileWidth * 5);
     //ofScale(0.125/2.,0.125/2.);
     ofFill();
-    /* For CinzelDecorative
-    ofDrawRectangle(0, -singleMenuTileWidth, mainMenuFont.stringWidth("Zen-mode"), singleMenuTileWidth);
-    ofSetColor(scheme.colorBACKGROUND);
-    mainMenuFont.drawString("Zen-mode", 0, -singleMenuTileWidth*.25);
-    */
+
     ofTranslate(.5*(getWidth()-singleMenuTileWidth*(grid[0].size()+2)),.5*(getHeight()-singleMenuTileWidth*(grid.size()+2)));
     float transX = .5*(getWidth()-singleMenuTileWidth*(grid[0].size()+2));
     float transY = .5*(getHeight()-singleMenuTileWidth*(grid.size()+2));
@@ -221,13 +217,13 @@ void displayMainMenu() {
     }
     
     //STORY-MODE
-    if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
-        highlightedMainMenuPrintRightAligned("Story-mode", singleMenuTileWidth);
+    if(getCellType(grid[2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("DEMO-mode") && mousetouchX <= transX)) {
+        highlightedMainMenuPrintRightAligned("DEMO-mode", singleMenuTileWidth);
     } else {
-        unhighlightedMainMenuPrintRightAligned("Story-mode", singleMenuTileWidth);
+        unhighlightedMainMenuPrintRightAligned("DEMO-mode", singleMenuTileWidth);
     }
     
-    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Story-mode") && mousetouchX <= transX)) {
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("DEMO-mode") && mousetouchX <= transX)) {
         gotoYOption = 2;
     }
     if(getCellType(grid[2][additionalsfxwidth]) == PLAYER) {
@@ -237,6 +233,7 @@ void displayMainMenu() {
     //ZEN-MODE
     ofTranslate(0,3*singleMenuTileWidth);
     transY += 3*singleMenuTileWidth;
+    /* UNCOMMENTFORZENMODE
     
     if(getCellType(grid[menulength/3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Zen-mode") && mousetouchX <= transX)) {
         highlightedMainMenuPrintRightAligned("Zen-mode", singleMenuTileWidth);
@@ -250,7 +247,7 @@ void displayMainMenu() {
     if(getCellType(grid[menulength/3][additionalsfxwidth]) == PLAYER) {
         initMenu();
     }
-    
+    */
     
     //CONTROLS
     ofTranslate(0,5*singleMenuTileWidth);

@@ -1214,9 +1214,10 @@ void displayPencil(bool selected) {
     ofPushMatrix();
     ofScale(min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.);
     ofFill();
-    ofSetColor((int)0x0f,(int)0x8d,(int)0x00);
+
+    ofSetColor(scheme.colorPENCILCOLOR_LOWERBASE);
     ofDrawEllipse(-20, 10, 45, 45);
-    ofSetColor(0,255,0);
+    ofSetColor(scheme.colorPENCILCOLOR_BASE);
     if(selected) ofTranslate(0,3);
     ofDrawEllipse(-20, 5, 45, 45);
     
@@ -1225,11 +1226,11 @@ void displayPencil(bool selected) {
     ofRotate(-45);
     ofTranslate(20,-5); //undo center rotation
     
-    ofSetColor((int)0xc8,(int)0xff,(int)0x00);
+    ofSetColor(scheme.colorPENCILCOLOR_BASE);
     ofDrawEllipse(-20,5,45,20);
     
     //Pencil body
-    ofSetColor((int)0xec,(int)0xf7,(int)0xc3);
+    ofSetColor(scheme.colorPENCILCOLOR_BODY);
     ofFill();
     ofBeginShape();
     ofVertex(0,0);
@@ -1239,7 +1240,7 @@ void displayPencil(bool selected) {
     ofEndShape();
     
     //Pencil head
-    ofSetColor(255,255,255);
+    ofSetColor(scheme.colorPENCILCOLOR_HEAD);
     ofFill();
     ofBeginShape();
     ofVertex(-30,0);
@@ -1248,7 +1249,7 @@ void displayPencil(bool selected) {
     ofEndShape();
     
     //Pencil point
-    ofSetColor(0);
+    ofSetColor(scheme.colorPENCILCOLOR_FRAME);
     ofFill();
     ofBeginShape();
     ofVertex(-35,2.5);
@@ -1258,7 +1259,7 @@ void displayPencil(bool selected) {
     
     
     //Pencil head frame
-    ofSetColor(0);
+    ofSetColor(scheme.colorPENCILCOLOR_FRAME);
     ofNoFill();
     ofVertex(-35,2.5);
     ofVertex(-40,5);
@@ -1267,7 +1268,7 @@ void displayPencil(bool selected) {
     ofEndShape();
     
     
-    ofSetColor(0,0,0);
+    ofSetColor(scheme.colorPENCILCOLOR_FRAME);
     ofNoFill();
     for(int i = 0; i < 3; ++i) {
         ofPushMatrix();

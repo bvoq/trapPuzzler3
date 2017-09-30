@@ -11,7 +11,7 @@
 #define trapPuzzler3_includes_h
 
 //For compability
-#define nogetvertices
+//#define nogetvertices
 
 //in %s at line %d
 //Enormously useful for debugging:
