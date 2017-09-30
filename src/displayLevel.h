@@ -392,6 +392,8 @@ void drawCellMonsterFill(int i, int j,  float scale, float tScale, deque<deque<i
 
 //0. = alive, 1. = dead
 void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > & grid, float deathGradient) {
+    //deathGradient = 0.5;
+    //else if(deathGradient > 0.75) deathGradient = 0.75;
     ofEnableSmoothing();
     
     ofFill();
@@ -401,8 +403,10 @@ void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > 
     drawCellFill(i,j,scale*1.2,tScale*1.2,grid);
     ofPopMatrix();
     
+    deathGradient = deathGradient * .7+.3;
+    
     float center = 0;//scale*.2;
-    float rightShift = (1.-deathGradient) * scale * .3;
+    float rightShift = (1.-deathGradient) * scale * .3 * 2;
     float rightCenter = deathGradient * (scale*1.2-center);
     
     if(deathGradient != 1.) {
@@ -436,10 +440,10 @@ void drawMonsterEye(int i, int j, float scale, float tScale, deque<deque<int> > 
     eyeIris.setColor(ofColor(0,0,0));
     eyeIris.setFilled(true);
     eyeIris.moveTo(center+rightCenter/*rightShift*/, scale/2. - scale*.3);
-    eyeIris.arc(center+rightCenter/*rightShift*/,scale/2.,scale*.3-rightShift,scale*.3,90,270);
+    eyeIris.arc(center+rightCenter/*rightShift*/,scale/2.,scale*.6-rightShift,scale*.3,90,270); //left
     
     eyeIris.moveTo(center+rightCenter/*rightShift*/,scale/2. - scale*.3);
-    eyeIris.arc(center+rightCenter,scale/2.,rightShift,scale*.3,-90,90);
+    eyeIris.arc(center+rightCenter,scale/2.,rightShift,scale*.3,-90,90); //right
     eyeIris.draw();
     
     ofPopMatrix();

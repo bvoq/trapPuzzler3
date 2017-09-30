@@ -46,7 +46,27 @@ void loadLevelData() {
         assert(false);
     }
     else {
-        vector<string> lines = ofSplitString(ofBufferFromFile(locationOfResources+"levels/levels"), "\n");
+        vector<string> lineswithcomments = ofSplitString(ofBufferFromFile(locationOfResources+"levels/levels"), "\n");
+        
+        vector<string> lines;
+        bool iscomment = false; string currentstr = "";
+        for(int i = 0; i < lineswithcomments.size(); ++i) {
+            for(int j = 0; j < lineswithcomments[i].size();++j) {
+                if(j+1<lineswithcomments[i].size() && lineswithcomments[i][j] == '/' && lineswithcomments[i][j+1] == '*' && !iscomment) {
+                    iscomment = true;
+                    j++;
+                }
+                else if(lineswithcomments[i][j] == '*' && lineswithcomments[i][j+1] == '/' && iscomment) {
+                    iscomment = false;
+                    j++;
+                }
+                else if(!iscomment) currentstr.push_back(lineswithcomments[i][j]);
+            }
+            if(currentstr.size() > 0) {
+                lines.push_back(currentstr);
+                currentstr = "";
+            }
+        }
         for(int i = 0; i < lines.size(); ++i) {
             if(lines[i].size() > 2) {
                 if(lines[i][0] == '/' && lines[i][1] == '/') { /* ignore */ }
@@ -109,7 +129,28 @@ void loadLevelData() {
             }
         }
         
-        vector<string> lines2 = ofSplitString(ofBufferFromFile(locationOfResources+"levels/defaultlevels"), "\n");
+        vector<string> lines2withcomments = ofSplitString(ofBufferFromFile(locationOfResources+"levels/defaultlevels"), "\n");
+        
+        vector<string> lines2;
+        iscomment = false; currentstr = "";
+        for(int i = 0; i < lines2withcomments.size(); ++i) {
+            for(int j = 0; j < lines2withcomments[i].size();++j) {
+                if(j+1<lines2withcomments[i].size() && lines2withcomments[i][j] == '/' && lines2withcomments[i][j+1] == '*' && !iscomment) {
+                    iscomment = true;
+                    j++;
+                }
+                else if(lines2withcomments[i][j] == '*' && lines2withcomments[i][j+1] == '/' && iscomment) {
+                    iscomment = false;
+                    j++;
+                }
+                else if(!iscomment) currentstr.push_back(lines2withcomments[i][j]);
+            }
+            if(currentstr.size() > 0) {
+                lines2.push_back(currentstr);
+                currentstr = "";
+            }
+        }
+
         for(int i = 0; i < lines2.size(); ++i) {
             if(lines2[i].size() > 2) {
                 if(lines2[i][0] == '/' && lines2[i][1] == '/') { /* ignore */ }
