@@ -493,7 +493,6 @@ void displayControlChange() {
     displayKeyCode("Change to DELETE TILE",CHANGE_TO_AIR, singleMenuTileWidth, translationY);
     displayKeyCode("Change to DELETE STRUCTURE",CHANGE_TO_SUPERAIR, singleMenuTileWidth, translationY);
     displayKeyCode("Clear level",CLEAR, singleMenuTileWidth, translationY);
-
     
     ofPopMatrix();
 }

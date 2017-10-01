@@ -104,7 +104,7 @@ bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
 #ifndef islevelgen
 void winningAnimation() {
     blockMovementForWinning();
-    switchRenderMode(FULL);
+    switchRenderMode(FULL); //will enable cool after graphics.
     if(beautifulGraphics) scrollX = getWidth()/2;
     else scrollX = 0;
     cout << max(grid.size(), grid[0].size()) << endl;
