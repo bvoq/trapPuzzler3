@@ -128,3 +128,10 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }
+
+/*
+void ofBaseApp::exit() {
+    cout << "Exiting..." << endl;
+    if(mode == LEVEL_EDITOR || mode == LEVEL_EDITOR_PLAYING) saveLevelData();
+}
+*/
