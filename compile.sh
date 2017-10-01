@@ -1,7 +1,14 @@
-rm bin/trapPuzzler3
-mv src/main2.cpp main2.cpp
+mv src/main2.cpp .
+make clean
 make
 mv main2.cpp src
 cd bin
-./trapPuzzler3
+if [ $(uname | grep MSYS | wc -l) == 1 ]
+	then
+	echo Windows detected
+	./trapPuzzler3.exe
+else
+	echo no Windows detected
+	./trapPuzzler3
+fi
 cd ..
