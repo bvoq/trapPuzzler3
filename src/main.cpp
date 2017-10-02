@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 #else // _WIN32
 //========================================================================
-int main( ){
+int main(){
     //ofAppGlutWindow window;
     //window.setGlutDisplayString("rgba double samples>=4");
     ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context

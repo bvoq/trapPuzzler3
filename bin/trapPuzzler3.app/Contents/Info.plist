@@ -38,5 +38,7 @@
 	<string>0833</string>
 	<key>DTXcodeBuild</key>
 	<string>8E3004b</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 </dict>
 </plist>
