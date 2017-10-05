@@ -6,16 +6,17 @@
 //
 //
 
+#include "hopscotch_set.h"
 #ifndef trapPuzzler3_puzzleSolver_h
 #define trapPuzzler3_puzzleSolver_h
-
 
 
 //Set hasGravity = true, if uncertain.
 //returns -1 = UNSOLVABLE, non-negative = Number of steps used to compute the solution , -2 = UNKNOWN (not fully computed), -3 = ERROR, such as no player
 bool winState(deque<deque<int> > &,bool);
 int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int maxComputationFields) {
-    set<pair<ddd,int> > computed; //<*,THIS> :=  ID of player
+    //set<pair<ddd,int> > computed; //<*,THIS> :=  ID of player
+    tsl::hopscotch_set<pair<ddd, int> > computed(true);
     vector<pair<int,keyType> > previousMove; //can then be used to backtrace the solution.
     
     previousMove = vector<pair<int,keyType> >(maxComputationFields);
