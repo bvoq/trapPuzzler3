@@ -211,8 +211,8 @@ void displayOldMenu() {
                 //min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.,min(getWidth(),getHeight())/750.
                 
                 if(i / levelCountPerWorld == currentWorld) {
-                    if(mousetouchX >  positionX + .1*w - 50 && mousetouchX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
-                       && mousetouchY >  positionY + .1*h - 20 && mousetouchY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                    if(mousetouchX >  positionX + .1*w - 50.*min(getWidth(),getHeight())/750. && mousetouchX < positionX + .1*w + 10.*min(getWidth(),getHeight())/750.
+                       && mousetouchY >  positionY + .1*h - 20.*min(getWidth(),getHeight())/750. && mousetouchY < positionY + .1*h + 30.*min(getWidth(),getHeight())/750.) {
                         selectedPencil = true;
                     }
                     
@@ -224,8 +224,8 @@ void displayOldMenu() {
             }
             
             if(isMouseReleased) {
-                if(beaten[i] && mouseReleasedX >  positionX + .1*w - 50 && mouseReleasedX < positionX + .1*w + 50.*min(getWidth(),getHeight())/750. - 50
-                   && mouseReleasedY >  positionY + .1*h - 20 && mouseReleasedY < positionY + .1*h + 50.*min(getWidth(),getHeight())/750. - 20) {
+                if(beaten[i] && mousetouchX >  positionX + .1*w - 50.*min(getWidth(),getHeight())/750. && mousetouchX < positionX + .1*w + 10.*min(getWidth(),getHeight())/750.
+                   && mousetouchY >  positionY + .1*h - 20.*min(getWidth(),getHeight())/750. && mousetouchY < positionY + .1*h + 30.*min(getWidth(),getHeight())/750.) {
                     currentLevel = i;
                     tryPlayLevel(i,true);
                 }

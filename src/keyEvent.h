@@ -218,6 +218,11 @@ void keyEvent (keyType kt) {
                 case RESTART:
                     initMainMenu();
                     break;
+                case TOGGLE_TOOLBAR:
+                    if(toolbarOrientation == NOTOOLBAR) toolbarOrientation = BOTTOMTOOLBAR;
+                    else if(toolbarOrientation == BOTTOMTOOLBAR) toolbarOrientation = NOTOOLBAR;
+                    else assert(false);
+                    break;
                 default:;
             }
         }
