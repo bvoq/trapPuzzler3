@@ -24,8 +24,8 @@ deque<deque<int> > initField(int h, int w) {
     //int darkBlocksToBePlaced = 7 + (rand()%8);
     //int redBlocksToBePlaced = 2 + (rand()%14);
     //IDEAL FOR 10x10
-    int darkBlocksToBePlaced = 16 + (rand() % 10);
-    int redBlocksToBePlaced = 15 + (rand() % 8);
+    int darkBlocksToBePlaced = 14 + (rand() % 5);
+    int redBlocksToBePlaced = 13 + (rand() % 5);
     
     while(yellowBlocksToBePlaced != 0) {
         //offsetY = h/2; offsetX = w/2;
