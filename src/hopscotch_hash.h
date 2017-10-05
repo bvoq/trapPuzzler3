@@ -74,8 +74,8 @@ namespace std
         size_t operator()(const pair<ddd, int>& k) const
         {
 			size_t dddhash = 3;
-			for(auto dd : k.first){
-				for(auto d : dd){
+			for(auto & dd : k.first){
+				for(auto & d : dd){
 					dddhash = 2*dddhash + hash<int>()(d);
 				}
 			}
