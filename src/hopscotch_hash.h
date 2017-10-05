@@ -45,8 +45,6 @@
 #include <utility>
 #include <vector>
 
-#include <bits/stdc++.h>
-
 #if (defined(__GNUC__) && (__GNUC__ == 4) && (__GNUC_MINOR__ < 9))
 #define TSL_NO_RANGE_ERASE_WITH_CONST_ITERATOR
 #endif
@@ -74,8 +72,8 @@ namespace std
         size_t operator()(const pair<ddd, int>& k) const
         {
 			size_t dddhash = 3;
-			for(auto dd : k.first){
-				for(auto d : dd){
+			for(const auto & dd : k.first){
+				for(const auto & d : dd){
 					dddhash = 2*dddhash + hash<int>()(d);
 				}
 			}
