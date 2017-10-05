@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		631249781F86239700BBA1A9 /* main2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63308D661F66EFFD007D3C5C /* main2.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
-		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +54,8 @@
 		22CAB9BA1C3E73DD00724B49 /* movement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movement.h; sourceTree = "<group>"; };
 		22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = puzzleSolver.h; sourceTree = "<group>"; };
 		22CAB9BC1C3E73DD00724B49 /* updateGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updateGrid.h; sourceTree = "<group>"; };
+		631249761F86206A00BBA1A9 /* hopscotch_set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_set.h; sourceTree = "<group>"; };
+		631249771F86206A00BBA1A9 /* hopscotch_hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_hash.h; sourceTree = "<group>"; };
 		63308D601F667BE0007D3C5C /* levelGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelGen.h; sourceTree = "<group>"; };
 		63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallelLevelCreation.h; sourceTree = "<group>"; };
 		63308D661F66EFFD007D3C5C /* main2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main2.cpp; sourceTree = "<group>"; };
@@ -162,6 +163,8 @@
 				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
 				63308D601F667BE0007D3C5C /* levelGen.h */,
 				63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */,
+				631249771F86206A00BBA1A9 /* hopscotch_hash.h */,
+				631249761F86206A00BBA1A9 /* hopscotch_set.h */,
 				6380CB8C1EAACA0900C8C260 /* TODO.rtf */,
 			);
 			path = src;
@@ -263,8 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				631249781F86239700BBA1A9 /* main2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

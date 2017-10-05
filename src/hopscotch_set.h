@@ -35,7 +35,6 @@
 #include <utility>
 #include "hopscotch_hash.h"
 
-#include <bits/stdc++.h>
 namespace tsl {
 
 /**
