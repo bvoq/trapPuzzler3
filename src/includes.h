@@ -39,6 +39,7 @@
 #include "puzzleSolver.h"
 #include "keyEvent.h"
 #include "menu.h"
+#include "adventureMenu.h"
 #include "mouseTouchEvent.h"
 #include "winningAnimation.h"
 #include "screenShake.h"

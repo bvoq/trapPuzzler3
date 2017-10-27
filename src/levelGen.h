@@ -221,4 +221,112 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
 }
 
 
+
+
+
+
+deque<deque<int> > initGravityField(int h, int w) {
+    deque<deque<int> > field(h, deque<int> (w+3,0));
+    
+    vector< vector<pair<int, int> > > stonesBlack = {
+        {{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}, {{0,0},{1,0},{2,0}}
+    };
+    vector< vector<pair<int,int> > > stonesRed = stonesBlack;
+    vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
+    int minPlayers = 1, maxPlayers = 1;
+    int minPink = 0, maxPink = 1;
+    int yellowBlocksToBePlaced = minPlayers + (rand() % (maxPlayers - minPlayers + 1));
+    int pinkBlocksToBePlaced = minPink + (rand() % (maxPink - minPink + 1));
+    //int darkBlocksToBePlaced = 7 + (rand()%8);
+    //int redBlocksToBePlaced = 2 + (rand()%14);
+    //IDEAL FOR 10x10
+    int darkBlocksToBePlaced = 10 + (rand() % 5); //less dark blocks needed for gravity levels.
+    int redBlocksToBePlaced = 13 + (rand() % 5);
+    
+    while(yellowBlocksToBePlaced != 0) {
+        //offsetY = h/2; offsetX = w/2;
+        int offsetY = (rand() % (h-1))+1; int offsetX = (rand() % (w-1))+1;
+        int randTile = rand() % stonesYellow.size();
+        bool noAdd = false;
+        for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+            if(stonesYellow[randTile][i].first + offsetY >= h || stonesYellow[randTile][i].second + offsetX >= w ||
+               field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] != 0) {
+                noAdd = true;
+            }
+        }
+        if(noAdd == false) {
+            for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+                field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] = yellowBlocksToBePlaced;
+            }
+            yellowBlocksToBePlaced--;
+        }
+    }
+    assert(h > 5 && w > 5);
+    while(pinkBlocksToBePlaced != 0) {
+        //offsetY = h/2; offsetX = w/2;
+        int offsetY = (rand() % (h/2))+h/4; int offsetX = (rand() % (w/2))+w/4;
+        int randTile = rand() % stonesYellow.size();
+        bool noAdd = false;
+        for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+            if(stonesYellow[randTile][i].first + offsetY >= h || stonesYellow[randTile][i].second + offsetX >= w ||
+               field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] != 0) {
+                noAdd = true;
+            }
+        }
+        if(noAdd == false) {
+            for(int i = 0; i < stonesYellow[randTile].size(); ++i) {
+                field[stonesYellow[randTile][i].first + offsetY][stonesYellow[randTile][i].second + offsetX] = 3000000+pinkBlocksToBePlaced;
+            }
+            pinkBlocksToBePlaced--;
+        }
+    }
+    int breakTries = 0;
+    while(darkBlocksToBePlaced != 0 && breakTries < 100) {
+        int offsetY = rand() % h; int offsetX = rand() % w;
+        int randTile = rand() % stonesBlack.size();
+        bool noAdd = false;
+        for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
+            if(stonesBlack[randTile][i].first + offsetY >= h || stonesBlack[randTile][i].second + offsetX >= w ||
+               field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] != 0) {
+                noAdd = true;
+            }
+        }
+        if(noAdd == false) {
+            for(int i = 0; i < stonesBlack[randTile].size(); ++i) {
+                field[stonesBlack[randTile][i].first + offsetY][stonesBlack[randTile][i].second + offsetX] = 2000000+darkBlocksToBePlaced;
+            }
+            darkBlocksToBePlaced--;
+        }
+        breakTries++;
+    }
+    breakTries = 0;
+    while(redBlocksToBePlaced !=0 && breakTries < 100) {
+        int offsetY = rand() % h; int offsetX = rand() % w;
+        int randTile = rand() % stonesRed.size();
+        bool noAdd = false;
+        for(int i = 0; i < stonesRed[randTile].size(); ++i) {
+            if(stonesRed[randTile][i].first + offsetY >= h || stonesRed[randTile][i].second + offsetX >= w ||
+               field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] != 0) {
+                noAdd = true;
+            }
+        }
+        if(noAdd == false) {
+            for(int i = 0; i < stonesRed[randTile].size(); ++i) {
+                field[stonesRed[randTile][i].first + offsetY][stonesRed[randTile][i].second + offsetX] = 1000000+redBlocksToBePlaced;
+            }
+            redBlocksToBePlaced--;
+        }
+        breakTries++;
+    }
+    
+    for(int i = 0; i < h; ++i) {
+        field[i][w] = GRAVITYMONSTEREYEID;
+        if(h/2==i) field[i][w] = GRAVITYMONSTEREYEID;
+        else {
+            field[i][w+2] = GRAVITYMONSTERMOUTHID;
+        }
+    }
+    
+    return field;
+}
 #endif /* levelGen_h */

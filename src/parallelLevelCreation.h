@@ -15,17 +15,19 @@ for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
 
 std::recursive_mutex m_mutex;
 int globalCount = 0;
-long long threadCount = 47; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
+long long threadCount = 46; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
 
 long long globalBiggestSolved = 0;
 long long globalBiggestSolvedDepth = 0;
 
 long long sufficientDepth = 25;
-long long sufficientBreadth = 16000;
+long long sufficientBreadth = 40000;
+
+long long atleastdepth = 25;
 
 ddd improveLevel(deque<deque<int> > oldLevel, bool hasGravity, int tries, int maxBreadth);
 int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int maxComputationFields);
-void runThread(int threadID, int size, bool symmetric, int maxComputationFields) {
+void runThread(int threadID, int size, bool symmetric, bool gravitymonsterlevel, int maxComputationFields) {
     long long biggestSolved = 0;
     long long biggestSolvedDepth = 0;
     //deque<deque<int> > debugLevel = {{0,0,105,105,0,0,0,0,0,0},{0,0,0,0,0,0,0,102,0,0},{0,0,1002,1002,0,0,0,102,0,0},{0,0,0,0,0,0,101,1001,0,0},{0,0,0,0,0,0,101,0,1003,0},{0,0,0,0,0,0,0,0,1003,0},{0,0,0,0,0,0,0,0,0,0},{103,103,0,0,0,0,0,0,0,1},{1004,0,0,0,0,0,104,0,0,1},{1004,0,0,0,0,0,0,0,0,0}};
@@ -40,10 +42,12 @@ void runThread(int threadID, int size, bool symmetric, int maxComputationFields)
     for(long long i = 0; i < 10000000000000000; ++i) {
         int symFieldSize = size;
         int fieldSize = size;
-        bool hasGravity = false;
+        bool hasGravity = gravitymonsterlevel;
         deque<deque<int> > field;
-        if(!symmetric) field = initField(fieldSize, fieldSize);
-        else field = initSymmetricField(symFieldSize, symFieldSize);
+        if(!symmetric && !gravitymonsterlevel) field = initField(fieldSize, fieldSize);
+        else if(symmetric && !gravitymonsterlevel) field = initSymmetricField(symFieldSize, symFieldSize);
+        else if(!symmetric && gravitymonsterlevel) field = initGravityField(symFieldSize, symFieldSize);
+        else assert(false);
         
         vector<keyType> solution;
         int hasSolved = newSolver(field, hasGravity, solution, maxComputationFields);

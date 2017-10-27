@@ -57,9 +57,9 @@ int main() {
     cout << "Executing with: " << threadCount << " threads and one main thread for a total of "<< threadCount+1<<"." << endl;
     int size = 10; //!!!
     for(int i = 0; i < threadCount; ++i) {
-        threads[i] = thread(runThread,i,size,false,maxSize);
+        threads[i] = thread(runThread,i,size,false,true,maxSize);
     }
-    runThread(1000,size,false,maxSize); //1000=main thread
+    runThread(1000,size,false,true,maxSize); //1000=main thread
     threads[0].join(); //probs not necessairy
     return 0;
 }
