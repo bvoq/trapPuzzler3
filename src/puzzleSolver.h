@@ -20,7 +20,6 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
     set<pair<ddd,int> > computed; //<*,THIS> :=  ID of player
     //unordered_set<pair<ddd, int> > computed;
     //tsl::hopscotch_set<pair<ddd, int> > computed(true);
-    unordered_set<pair<ddd, int> > computed;
     vector<pair<int,keyType> > previousMove; //can then be used to backtrace the solution.
 
     previousMove = vector<pair<int,keyType> >(maxComputationFields);

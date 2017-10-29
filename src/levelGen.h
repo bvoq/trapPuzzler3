@@ -320,7 +320,7 @@ deque<deque<int> > initGravityField(int h, int w) {
     }
 
     for(int i = 0; i < h; ++i) {
-        if(h/3==i || 2*h/3==i) field[i][w] = GRAVITYMONSTEREYEID;
+        if(h/3==i || 2*h/3==i) field[i][w] = GRAVITYMONSTEREYEID;
         else {
             field[i][w+2] = GRAVITYMONSTERMOUTHID;
         }
