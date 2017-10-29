@@ -117,8 +117,8 @@ void loadLevelData() {
                     for(int i = 0; i < level.size(); ++i) {
                         for(int j = 0; j < level[i].size(); ++j) {
                             if(getCellType(level[i][j]) == GRAVITYMONSTERMOUTH) {
-                                gravity = true;
-                                gravityDir = RIGHT;
+                                //gravity = true;
+                                //gravityDir = RIGHT;
                             }
                         }
                     }
@@ -208,8 +208,8 @@ void loadLevelData() {
                     for(int i = 0; i < level.size(); ++i) {
                         for(int j = 0; j < level[i].size(); ++j) {
                             if(getCellType(level[i][j]) == GRAVITYMONSTERMOUTH) {
-                                gravity = true;
-                                gravityDir = RIGHT;
+                                //gravity = true;
+                                //gravityDir = RIGHT;
                             }
                         }
                     }
