@@ -7,26 +7,26 @@ void ofApp::setup(){
     ofDisableDataPath();
     //ofSetDataPathRoot(locationOfResources); //this is for future use!!
     //SEE ALSO OFAPP.CPP AT THE SETUP
-    
+
     initAudio();
-    
+
     initDefaultKeyMapping();
     ofSetEscapeQuitsApp(false); //Disable quit on escape key press.
-    
+
     createLevels();
     loadSaveData();
     //loadLevel();
-    
+
     //Will change when accessing the menu.
     if(!beautifulGraphics) switchRenderMode(PARTIAL);
     else switchRenderMode(FULL);
     //initMenu();
     initMainMenu();
-    
+
     //generateFancyMeshes();
     //initLevelEditor(currentLevel);
     //generateSomeCoolLevels();
-        
+
     playAudio(0);
 }
 
@@ -86,7 +86,7 @@ void testForRekeyPress() {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -106,12 +106,12 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -121,12 +121,12 @@ void ofApp::windowResized(int w, int h) {
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-    
+
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-    
+
 }
 
 /*

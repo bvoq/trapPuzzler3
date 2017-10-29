@@ -24,19 +24,19 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
 
     previousMove = vector<pair<int,keyType> >(maxComputationFields);
     queue<pair<ddd,int> > q;
-    
+
     {   // MOVE PLAYER
         int firstPlayer = changePlayerIdDeterministic(gridtosolve, -1,true);
         if(firstPlayer == -1) {
             cout << "No player in the grid: " << firstPlayer << endl;
             return -3;
         }
-        
-        
+
+
         q.push({gridtosolve,firstPlayer});
         computed.insert({gridtosolve,firstPlayer});
     }
-    
+
     int currentPosition = -1, newMovePosition = -1;
     ddd tempEyeGrid = {{0}}; //temporarily used eye grid
     while(q.size() != 0 && newMovePosition < maxComputationFields) {
@@ -113,14 +113,14 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
                 q.push(down);
             }
         }
-        
+
         {
             changeplayer.second = changePlayerIdDeterministic(changeplayer.first,changeplayer.second,true);
             if(computed.count(changeplayer) == 0 && newMovePosition + 1 < maxComputationFields) {
                 computed.insert(changeplayer);
                 newMovePosition++;
                 previousMove[newMovePosition] = {currentPosition, PLAYER_CHANGE};
-                
+
                 //should not make a win state
                 q.push(changeplayer);
             }
@@ -171,14 +171,14 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 			if(b < 3000000) MAXBLACK = MAX(MAXBLACK, b);
 		}
 	}
-	
+
 	for(int i = 0; i < tries; ++i){
 		auto tempImprovedLevel = oldLevel;
 		vector< vector<pair<int, int> > > stonesBlack = {
 			{{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
 		};
 		vector< vector<pair<int,int> > > stonesRed = stonesBlack;
-		
+
 		int darkBlocksToBePlaced = 1;
 		int redBlocksToBePlaced = 1;
 		int breakTries = 0;
@@ -222,10 +222,10 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 			}
 			breakTries++;
 		}
-    
-    
-    
-    
+
+
+
+
 		if(newSolver(tempImprovedLevel, hasGravity, sol, maxBreadth) < 0) continue;
 		if(sol.size() >= bestSol.size()){
 			bestSol = sol;
