@@ -183,6 +183,7 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 		int breakTries = 0;
 		int h = oldLevel.size();
 		int w = oldLevel[0].size();
+        if(hasGravity) w -= 2;
 		while(darkBlocksToBePlaced != 0 && breakTries < 100) {
 			int offsetY = rand() % h; int offsetX = rand() % w;
 			int randTile = rand() % stonesBlack.size();
