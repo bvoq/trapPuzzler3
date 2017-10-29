@@ -234,7 +234,7 @@ deque<deque<int> > initGravityField(int h, int w) {
     vector< vector<pair<int,int> > > stonesRed = stonesBlack;
     vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
     int minPlayers = 1, maxPlayers = 1;
-    int minPink = 0, maxPink = 1;
+    int minPink = 0, maxPink = 0;
     int yellowBlocksToBePlaced = minPlayers + (rand() % (maxPlayers - minPlayers + 1));
     int pinkBlocksToBePlaced = minPink + (rand() % (maxPink - minPink + 1));
     //int darkBlocksToBePlaced = 7 + (rand()%8);
@@ -320,7 +320,7 @@ deque<deque<int> > initGravityField(int h, int w) {
     }
     
     for(int i = 0; i < h; ++i) {
-        if(h/2==i) field[i][w] = GRAVITYMONSTEREYEID;
+        if(h/3==i || 2*h/3==i) field[i][w] = GRAVITYMONSTEREYEID;
         else {
             field[i][w+2] = GRAVITYMONSTERMOUTHID;
         }

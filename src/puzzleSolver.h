@@ -12,6 +12,7 @@
 #include "hopscotch_set.h"
 #include <unordered_set>
 
+
 //Set hasGravity = true, if uncertain.
 //returns -1 = UNSOLVABLE, non-negative = Number of steps used to compute the solution , -2 = UNKNOWN (not fully computed), -3 = ERROR, such as no player
 bool winState(deque<deque<int> > &,bool);
