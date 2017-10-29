@@ -55,18 +55,17 @@ void runThread(int threadID, int size, bool symmetric, bool gravitymonsterlevel,
         if(hasSolved == -1) trapCount++;
         else if(hasSolved == -2) {tooLongCount++;}
         else if(hasSolved < 0) cout << "UNKNOWN RES " << hasSolved << endl;
-        else{
-			
+        else if(depthSolved >= biggestSolvedDepth - 10){
 			int improvementTries = 5;
 			vector< ddd > improvedFields(improvementTries, ddd ());
 			for(int i = 0; i < improvementTries; ++i){
-				improvedFields[i] = improveLevel(field, false, 10, 4096*16);
+				improvedFields[i] = improveLevel(field, hasGravity, 3, 4096*16);
 			}
 			
 			vector<keyType> tempSol;
 			int best = 0;
 			for(int i = 0; i < improvementTries; ++i){
-				int depth = newSolver(improvedFields[i], false, tempSol, 4096*16);
+				int depth = newSolver(improvedFields[i], hasGravity, tempSol, 4096*16);
 				if(depth > best){
 					best = depth;
 					field = improvedFields[i];
