@@ -11,7 +11,7 @@
 
 deque<deque<int> > initField(int h, int w) {
     deque<deque<int> > field(h, deque<int> (w,0));
-    
+
     vector< vector<pair<int, int> > > stonesBlack = {
         {{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
     };
@@ -26,7 +26,7 @@ deque<deque<int> > initField(int h, int w) {
     //IDEAL FOR 10x10
     int darkBlocksToBePlaced = 16 + (rand() % 5);
     int redBlocksToBePlaced = 13 + (rand() % 5);
-    
+
     while(yellowBlocksToBePlaced != 0) {
         //offsetY = h/2; offsetX = w/2;
         int offsetY = (rand() % (h-1))+1; int offsetX = (rand() % (w-1))+1;
@@ -110,7 +110,7 @@ deque<deque<int> > initField(int h, int w) {
 deque<deque<int> > initSymmetricField(int fh, int fw) {
     assert(fh % 2 == 1 && fh == fw && fw > 2); //remove for efficiency
     deque<deque<int> > field(fh, deque<int> (fw,0));
-    
+
     vector< vector<pair<int, int> > > stonesBlack = {
         {{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
     };
@@ -120,9 +120,9 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
     int darkBlocksToBePlaced = 7 + (rand() % 11) - 4;
     int redBlocksToBePlaced = 4 + (rand()%11) - 4;
    	int totBlocks = darkBlocksToBePlaced + redBlocksToBePlaced + 20;
-    
+
     int w = fh/2, h = fw / 2;
-    
+
     field[w][h] = 1;
     ++w;++h;
     /*
@@ -143,7 +143,7 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
      yellowBlocksToBePlaced--;
      }
      } */
-    
+
     int breakTries = 0;
     while(darkBlocksToBePlaced != 0 && breakTries < 100) {
         int offsetY = rand() % h; int offsetX = rand() % w;
@@ -227,14 +227,14 @@ deque<deque<int> > initSymmetricField(int fh, int fw) {
 
 deque<deque<int> > initGravityField(int h, int w) {
     deque<deque<int> > field(h, deque<int> (w+3,0));
-    
+
     vector< vector<pair<int, int> > > stonesBlack = {
         {{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}, {{0,0},{1,0},{2,0}}
     };
     vector< vector<pair<int,int> > > stonesRed = stonesBlack;
     vector<vector<pair<int,int> > > stonesYellow = stonesBlack;
     int minPlayers = 1, maxPlayers = 1;
-    int minPink = 0, maxPink = 1;
+    int minPink = 0, maxPink = 0;
     int yellowBlocksToBePlaced = minPlayers + (rand() % (maxPlayers - minPlayers + 1));
     int pinkBlocksToBePlaced = minPink + (rand() % (maxPink - minPink + 1));
     //int darkBlocksToBePlaced = 7 + (rand()%8);
@@ -242,7 +242,7 @@ deque<deque<int> > initGravityField(int h, int w) {
     //IDEAL FOR 10x10
     int darkBlocksToBePlaced = 10 + (rand() % 5); //less dark blocks needed for gravity levels.
     int redBlocksToBePlaced = 13 + (rand() % 5);
-    
+
     while(yellowBlocksToBePlaced != 0) {
         //offsetY = h/2; offsetX = w/2;
         int offsetY = (rand() % (h-1))+1; int offsetX = (rand() % (w-1))+1;
@@ -318,14 +318,14 @@ deque<deque<int> > initGravityField(int h, int w) {
         }
         breakTries++;
     }
-    
+
     for(int i = 0; i < h; ++i) {
-        if(h/2==i) field[i][w] = GRAVITYMONSTEREYEID;
+        if(h/3==i || 2*h/3==i) field[i][w] = GRAVITYMONSTEREYEID;
         else {
             field[i][w+2] = GRAVITYMONSTERMOUTHID;
         }
     }
-    
+
     return field;
 }
 #endif /* levelGen_h */
