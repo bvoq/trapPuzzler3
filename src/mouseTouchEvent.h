@@ -20,6 +20,12 @@ struct playerTouchMovement {
 map<int, playerTouchMovement> playerTouches; //player id of touch.
 map<int,pair<int,int> > origMouseTouch;
 void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
+    if(firstMovementHCI) {
+        timeMeasuredForHCI = std::chrono::high_resolution_clock::now();
+
+        cout << "Started counter" << endl;
+        firstMovementHCI = false;
+    }
     if(origMouseTouch.count(touchid) == 0) {
         setRemapKey = !setRemapKey;
         if(!setRemapKey) remapKey = UNKNOWNKEYT;
@@ -59,8 +65,6 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
             cout << "Unknown mode " << mode << endl;
     }
     
-    
-    cout << "NO I'M PRESSING DOWN " << rand() << endl;
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
         if(mode == CREDITS || mode == CONTROL_CHANGE) {

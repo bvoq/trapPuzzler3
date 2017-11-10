@@ -102,12 +102,19 @@ bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
 }
 
 #ifndef islevelgen
+#include "globals.h"
 void winningAnimation() {
+    if(!firstMovementHCI) {
+        auto end = std::chrono::high_resolution_clock::now();
+        long long timeMeasured = std::chrono::duration_cast<std::chrono::nanoseconds>(end-timeMeasuredForHCI).count();
+        std::cout << "Measured time as: " << timeMeasured << " ns" << std::endl;
+        firstMovementHCI = true;
+    }
     blockMovementForWinning();
     switchRenderMode(FULL); //will enable cool after graphics.
     if(beautifulGraphics) scrollX = getWidth()/2;
     else scrollX = 0;
-    cout << max(grid.size(), grid[0].size()) << endl;
+    //cout << max(grid.size(), grid[0].size()) << endl;
     if(grid.size() > 100 || grid[0].size() > 100) {
         if(currentLevel >= 0 && currentLevel < beaten.size()) {
             beaten[currentLevel] = true;

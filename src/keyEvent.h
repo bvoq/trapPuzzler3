@@ -13,6 +13,7 @@
 
 
 void restart() {
+    firstMovementHCI = true;
     if(mode == PLAYING) {
         /*
          for(int i = 0; i < grid.size(); ++i) for(int j = 0; j < grid[i].size(); ++j) {
@@ -76,6 +77,7 @@ void keyEvent (keyType kt) {
                 }
                 break;
         }
+        
         if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             switch(kt) {
                 case RESTART:

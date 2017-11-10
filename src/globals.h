@@ -19,13 +19,16 @@ float MIN_CELL_SIZE = 12;
 int playerID;
 //int currentLevel; declared in levels.h
 long long timeForSlowEyeMovement = 800000;
-long long timeForSlowMovement = 160000;//160000; //is relative, also used for duration of sounds and shaking.
+long long timeForSlowMovement = 8000; //8000;//160000; //is relative, also used for duration of sounds and shaking.
 long long timeForFastMovement = 20000; //winning
 long long timeForFlickering = 640000; //time it takes to cycle a flicker (done with modulo).
 double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
 long long timeForKeypressWait = 2 * timeForSlowMovement;
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
+
+std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
+bool firstMovementHCI = false;
 
 bool levelEditorInMenu = false;
 bool isMousePressed = false;
@@ -52,6 +55,7 @@ enum RenderMode {
 enum playMode {
     PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6, ADVENTURE=7, CREDITS=8, CONTROL_CHANGE=9, UNKNOWN=100
 } mode;
+
 string strmode(playMode m) {
     return m == PLAYING ? "PLAYING" : m == LEVEL_EDITOR_PLAYING ? "LEVEL_EDITOR_PLAYING" : m == LEVEL_EDITOR ? "LEVEL_EDITOR" : m == MENU ? "MENU" : m == MENUOLD ? "MENU_OLD" : m == MAINMENU ? "MAIN_MENU" : m == ADVENTURE ? "ADVENTURE" : "UNKNOWN";
 }

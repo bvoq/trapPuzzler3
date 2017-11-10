@@ -48,8 +48,52 @@ float PI = 3.1415926;
 #include "parallelLevelCreation.h"
 #include "winningAnimation.h"
 
+deque<deque<int> > spiralGen(int n) {
+    deque<deque<int> > grid (n, deque<int>(n,0));
+    
+    int i = 0, j = 0;
+    int x = 1, y = 0;
+    int upto = n-2;
+    while(upto > 0) {
+        for(int c = 0; c < upto; ++c) {
+            grid[i][j] = 2000000;
+            i+=y;
+            j+=x;
+        }
+        if(x==1&&y==0) {
+            x=0; y=1;
+            upto-=2;
+
+        }
+        else if(x==0&&y==1) {
+            x=-1;
+            y=0;
+        }
+        else if(x==-1&&y==0) {
+            x=0;
+            y=-1;
+            upto-=2;
+        }
+        else if(y==-1&&x==0) {
+            x=1;
+            y=0;
+        }
+    }
+    return grid;
+}
 
 int main() {
+    deque<deque<int> > splevel = spiralGen(12);
+    cout << "{";
+    for(int i = 0; i < splevel.size(); ++i) {
+        cout << "{";
+        for(int j = 0; j < splevel[i].size(); ++j) {
+            cout << splevel[i][j] << (j+1 < splevel[i].size()?",":"");
+        }
+        cout << "}" << (i+1 < splevel.size()?",":"");
+    }
+    cout << "}" << endl;
+    return 0;
     int maxSize = 4096*16;
     
     //srand(time(0)); //seed only needs to be loaded once, every thread should execute something different.
