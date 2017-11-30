@@ -19,8 +19,10 @@ float MIN_CELL_SIZE = 12;
 int playerID;
 //int currentLevel; declared in levels.h
 long long timeForSlowEyeMovement = 800000;
-long long timeForSlowMovement = 8000; //8000;//160000; //is relative, also used for duration of sounds and shaking.
+long long timeForSlowMovement = 160000; //8000;//160000; //is relative, also used for duration of sounds and shaking.
+long long timeForTypedMovement = 160000;
 long long timeForFastMovement = 20000; //winning
+long long timeForDragMovement = 80000;
 long long timeForFlickering = 640000; //time it takes to cycle a flicker (done with modulo).
 double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
 long long timeForKeypressWait = 2 * timeForSlowMovement;

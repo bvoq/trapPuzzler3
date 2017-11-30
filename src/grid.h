@@ -220,7 +220,10 @@ pair<int,int> calculateInversePosition(int coordY, int coordX, int gridY, int gr
     float transX = (w - gridX * scale) / 2.;
     coordY -= transY;
     coordX -= transX;
+    
 
+    if(coordY < 0) coordY -= scale; //since it is rounded up when negative
+    if(coordX < 0) coordX -= scale;
     int posY = coordY / scale;
     int posX = coordX / scale;
     return {posY, posX};

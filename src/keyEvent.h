@@ -63,13 +63,13 @@ void keyEvent (keyType kt) {
             case DOWN:
             case RIGHT:
             case LEFT:
-                if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,moveEyeGrid,playerID,kt, timeForMovement, false, true);
+                if(!blockMovementDueToWinningAnimation && !forceUndo) move(moveGrid,moveEyeGrid,playerID,kt, timeForTypedMovement, false, true);
                 break;
             case PLAYER_CHANGE:
                 if(!blockMovementDueToWinningAnimation && !forceUndo) {
                     //only change player AFTER adding movement.
                     movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
-                                          CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
+                                          CHANGE_TO_PLAYER, {}, false, timeForTypedMovement, false, PLAYER_CHANGEMT
                                           );
                     changePlayerIdDeterministic(moveGrid,playerID,false);
                     m.newPlayerID = playerID;
@@ -84,7 +84,7 @@ void keyEvent (keyType kt) {
                     restart();
                 break;
                 case UNDO:
-                    if(!blockMovementDueToWinningAnimation) undoMovement(timeForSlowEyeMovement);
+                    if(!blockMovementDueToWinningAnimation) undoMovement(timeForTypedMovement);
                 break;
                 case SOLVE:
                     solveInGame();

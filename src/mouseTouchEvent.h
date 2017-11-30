@@ -51,7 +51,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
                         playerTouches.insert({touchid,newMovement});
                         
                         movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
-                                              CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
+                                              CHANGE_TO_PLAYER, {}, false, timeForDragMovement, false, PLAYER_CHANGEMT
                                               );
                         changePlayerId(grid[tilePos.first][tilePos.second]);
                         m.newPlayerID = playerID;
@@ -76,7 +76,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
         else if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             //UNDO
             if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
-                undoMovement(timeForSlowEyeMovement);
+                undoMovement(timeForDragMovement);
             }
             //RESTART
             if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
@@ -132,29 +132,53 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
             if(playerTouches.count(touchid) != 0) {
                 assert(grid.size() > 0);
                 pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
+                cout << "y: " << playerTouches[touchid].y << " x: " << playerTouches[touchid].x << endl;
+                cout << "ty: " << tilePos.first << " tx: " << tilePos.second << endl;
+                deque<movement> backupmovements = movements;
                 //Can click outside the box.
+                size_t oldMoveGridY = moveGrid.size();
+                size_t oldMoveGridX = moveGrid[0].size();
                 if(tilePos.first == playerTouches[touchid].y-1 && tilePos.second == playerTouches[touchid].x) {
                     if(move(moveGrid, moveEyeGrid, playerID, UP, timeForMovement, false, true)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
+                        if(moveGrid.size()>oldMoveGridY && movements.size() >= 2) {
+                            moveEyeGrid = movements.back().oldEyeGrid;
+                            moveGrid = movements.back().oldGrid;
+                            playerID = movements.back().oldPlayerID;
+                            movements.pop_back();
+                        }
+                        if(moveGrid.size()>oldMoveGridY) tilePos.first = MIN(moveGrid.size()-1,tilePos.first+1);
+                    
+                        playerTouches[touchid].y = MAX(tilePos.first,0);
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y+1 && tilePos.second == playerTouches[touchid].x) {
                     if(move(moveGrid, moveEyeGrid, playerID, DOWN, timeForMovement, false, true)) { //Move succeeded
-                        playerTouches[touchid].y = tilePos.first;
+                        if(moveGrid.size()<oldMoveGridY) tilePos.first = MAX(0,tilePos.first-1);
+                        playerTouches[touchid].y = MIN(tilePos.first,moveGrid.size()-1);
                         playerTouches[touchid].x = tilePos.second;
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x-1) {
                     if(move(moveGrid, moveEyeGrid, playerID, LEFT, timeForMovement, false, true)) { //Move succeeded
+                        if(moveGrid[0].size()>oldMoveGridX && movements.size() >= 2) {
+                            moveEyeGrid = movements.back().oldEyeGrid;
+                            moveGrid = movements.back().oldGrid;
+                            playerID = movements.back().oldPlayerID;
+                            movements.pop_back();
+                        }
+                        if(moveGrid.size()>oldMoveGridY) tilePos.first = MIN(moveGrid.size()-1,tilePos.first+1);
+                        
+                        if(moveGrid[0].size()>oldMoveGridX) tilePos.second = MIN(moveGrid[0].size()-1,tilePos.second+1);
                         playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
+                        playerTouches[touchid].x = MAX(tilePos.second,0);
                     }
                 }
                 if(tilePos.first == playerTouches[touchid].y && tilePos.second == playerTouches[touchid].x+1) {
                     if(move(moveGrid, moveEyeGrid, playerID, RIGHT, timeForMovement, false, true)) { //Move succeeded
+                        if(moveGrid[0].size()<oldMoveGridX) tilePos.second = MAX(0,tilePos.second-1);
                         playerTouches[touchid].y = tilePos.first;
-                        playerTouches[touchid].x = tilePos.second;
+                        playerTouches[touchid].x = MIN(tilePos.second,moveGrid[0].size());
                     }
                 }
                 
