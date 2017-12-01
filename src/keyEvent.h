@@ -84,7 +84,7 @@ void keyEvent (keyType kt) {
                     restart();
                 break;
                 case UNDO:
-                    if(!blockMovementDueToWinningAnimation) undoMovement(timeForTypedMovement);
+                    if(!blockMovementDueToWinningAnimation) undoMovement(maxUndoTime);
                 break;
                 case SOLVE:
                     solveInGame();

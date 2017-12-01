@@ -245,6 +245,4 @@ void levelExport(ostream & o, deque<deque<int> > copied) {
     o << "}";
 }
 
-
-
 #endif

@@ -19,8 +19,8 @@ float MIN_CELL_SIZE = 12;
 int playerID;
 //int currentLevel; declared in levels.h
 long long timeForSlowEyeMovement = 800000;
-long long timeForSlowMovement = 80000; //8000;//160000; //is relative, also used for duration of sounds and shaking.
-long long timeForTypedMovement = 80000;
+long long timeForSlowMovement = 8000;  //8000;//160000; //is relative, also used for duration of sounds and shaking.
+long long timeForTypedMovement = 160000;
 long long timeForFastMovement = 20000; //winning
 long long timeForDragMovement = 8000;
 long long timeForFlickering = 640000; //time it takes to cycle a flicker (done with modulo).
@@ -28,6 +28,7 @@ double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction =
 long long timeForKeypressWait = 2 * timeForSlowMovement;
 long long timeForSlowClickMovement = 1000;
 long long timeForMovement = timeForSlowMovement;
+long long maxUndoTime = timeForTypedMovement * 8;
 
 std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
 bool firstMovementHCI = false;

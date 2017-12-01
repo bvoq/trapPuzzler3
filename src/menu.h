@@ -223,7 +223,7 @@ void displayOldMenu() {
                 displayPencil(selectedPencil);
             }
             
-            if(isMouseReleased) {
+            if(isMouseReleased && i / levelCountPerWorld == currentWorld) {
                 if(beaten[i] && mousetouchX >  positionX + .1*w - 50.*min(getWidth(),getHeight())/750. && mousetouchX < positionX + .1*w + 10.*min(getWidth(),getHeight())/750.
                    && mousetouchY >  positionY + .1*h - 20.*min(getWidth(),getHeight())/750. && mousetouchY < positionY + .1*h + 30.*min(getWidth(),getHeight())/750.) {
                     currentLevel = i;

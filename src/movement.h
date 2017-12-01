@@ -527,7 +527,6 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                         }
                         else if(positionOfGravityMonsterX-2 >= 0 && getCellType(moveGrid[i][positionOfGravityMonsterX-2]) == GRAVITYMONSTERDEADEYE) {}
                         else {
-                            cout << "Unexpected celltype: " << getCellType(moveGrid[i][positionOfGravityMonsterX]) << " at location (" << i << "," << positionOfGravityMonsterX << ")" << endl;
                             /*for(int i = 0; i < moveGrid.size(); ++i) {
                                 for(int j = 0; j < moveGrid[i].size(); ++j) {
                                     cout << j << ":" << moveGrid[i][j] << ",";
@@ -601,8 +600,14 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             #ifndef islevelgen
             if(!solver && movements.size() - movementSizeNonGravity > 0) {
                 
-                //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " " << movements.size() << " " << movementSizeNonGravity << endl;
-                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 5,3);
+                //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " deadeye " << deadEyeCountForSlurping << endl;
+                //cout << "fac: " << (1.*timeForSlowEyeMovement/timeForFastMovement-1.) << "  together fac deadeye " <<  deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.) << endl;
+                
+                int gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 5.,3);
+                
+                if(gravityIntensity >= 2) { //the long ones aren't timed well so retiming is necessairy.
+                    gravityIntensity = MIN((movements.size() - movementSizeNonGravity + deadEyeCountForSlurping * (1.*timeForSlowEyeMovement/timeForFastMovement-1.)) / 16.,3);
+                }
                 
                 assert(gravityIntensity >= 0 && gravityIntensity <= 3);
                 if(movements[movementSizeNonGravity].hasMoved.size() != 0) {
