@@ -21,7 +21,7 @@ enum ToolbarOrientation {
 
 bool messageBlockingToolbar = false; //maybe make this messa
 
-int toolbarSize = 100; //TODO! Make this dynamic and initialize its height
+int toolbarSize = 100; //Will be dynamically overwritten, later in the code.
 int messageSize = 0;
 
 int getWidth() {
@@ -41,7 +41,7 @@ void displayToolBar() {
     if(!messageBlockingToolbar && !blockMovementDueToWinningAnimation) {
         if(toolbarOrientation != NOTOOLBAR) {
             if(dpDrawCoordinates.first != ofGetHeight() && dpDrawCoordinates.second != ofGetHeight()) {
-                toolbarSize = 0.1 * ofGetHeight();
+                toolbarSize = 0.1 * min(ofGetWidth(),ofGetHeight());
                 //Redraw all the keys
                 backgroundKey = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON_LIGHT, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON);
                 backgroundKeySelected = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED_LIGHT, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED);
