@@ -121,6 +121,7 @@ void winningAnimation() {
             saveSaveData();
         }
         blockMovementDueToWinningAnimation = false;
+        cleanupLevelPlayingData();
         mode = MENU;
     }
 }

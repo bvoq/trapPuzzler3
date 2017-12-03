@@ -10,6 +10,16 @@
 #ifndef trapPuzzler3_updateGrid_h
 #define trapPuzzler3_updateGrid_h
 
+void cleanupLevelPlayingData() {
+    movements.clear();
+    previousMovements.clear();
+    playerID = 0;
+    grid.clear();
+    moveGrid.clear();
+    eyeGrid.clear();
+    moveEyeGrid.clear();
+}
+
 void loadLevel(int level) {
     createLevels();
     if(level == -1 && editorGrid.size() > 0 && editorGrid[0].size() > 0) {
@@ -17,6 +27,7 @@ void loadLevel(int level) {
         deque<deque<int> > copyLevel = editorGrid;
         cropBordersOf(copyLevel);
         if(copyLevel.size() > 0 && copyLevel[0].size() > 0) { //Cannot load an empty level.
+            cleanupLevelPlayingData();
             mode = LEVEL_EDITOR_PLAYING;
             updateGrid(copyLevel);
         }
