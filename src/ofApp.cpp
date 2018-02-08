@@ -71,9 +71,7 @@ void ofApp::keyReleased(int key) {
 }
 
 void testForRekeyPress() {
-    
-    for(auto & a : keyPressedDown)
-    {
+    for(auto & a : keyPressedDown) {
         //Fast level scrolling can be fixed by checking
         if(timeWaitForRepress.count(a.first) == 0) timeWaitForRepress[a.first] = false;
         if(a.first == UP || a.first == DOWN || a.first == LEFT || a.first == RIGHT || a.first == PLAYER_CHANGE || a.first == UNDO) {
