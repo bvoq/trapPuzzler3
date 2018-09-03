@@ -158,6 +158,8 @@ void solveInGame() {
 #endif
 
 deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, int tries, int maxBreadth){
+    int placeBlocksRed = 1;
+    int placeBlocksDark = 1;
 	vector<keyType> bestSol;
 	newSolver(oldLevel, hasGravity, bestSol, maxBreadth);
 	//cout << "initial lvl: depth " << bestSol.size();
@@ -175,12 +177,12 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 	for(int i = 0; i < tries; ++i){
 		auto tempImprovedLevel = oldLevel;
 		vector< vector<pair<int, int> > > stonesBlack = {
-			{{0,0},{0,1}}, {{0,0}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
+			{{0,0},{0,1}}, {{0,0}}, {{0,0},{1,0}}, {{0,0},{0,1},{1,0},{1,1}}
 		};
 		vector< vector<pair<int,int> > > stonesRed = stonesBlack;
 
-		int darkBlocksToBePlaced = 1;
-		int redBlocksToBePlaced = 1;
+		int darkBlocksToBePlaced = placeBlocksDark;
+		int redBlocksToBePlaced = placeBlocksRed;
 		int breakTries = 0;
 		int h = oldLevel.size();
 		int w = oldLevel[0].size();
@@ -226,11 +228,16 @@ deque<deque<int> > improveLevel(deque<deque<int> > oldLevel, bool hasGravity, in
 
 
 
-		if(newSolver(tempImprovedLevel, hasGravity, sol, maxBreadth) < 0) continue;
-		if(sol.size() >= bestSol.size()){
+		if(newSolver(tempImprovedLevel, hasGravity, sol, maxBreadth) < 0) {
+            sol.clear();
+            continue;
+        }
+		if(sol.size() > bestSol.size()){
 			bestSol = sol;
+            //cout << "new lvl depth: " << sol.size();
 			bestLevel = tempImprovedLevel;
 		}
+        sol.clear();
 	}
 	//cout << ", now: " << bestSol.size() << endl;
 	return bestLevel;

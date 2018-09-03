@@ -87,7 +87,7 @@ void keyEvent (keyType kt) {
                     if(!blockMovementDueToWinningAnimation) undoMovement(maxUndoTime);
                 break;
                 case SOLVE:
-                    solveInGame();
+                    if(mode == LEVEL_EDITOR_PLAYING) solveInGame(); //auto solver shouldn't work during the game, but is convenient to enable.
                     //cout << "SOLVABLE: " << tryForSolution() << endl; //! mark this
                 break;
                 case EXPORT:
