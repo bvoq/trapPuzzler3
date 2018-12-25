@@ -32,19 +32,23 @@ void initDefaultKeyMapping() {
     keyMapper.insert({87, UP});
     keyMapper.insert({119, UP});
     keyMapper.insert({357, UP});
+	keyMapper.insert({57357,UP});
     
     keyMapper.insert({65, LEFT});
     keyMapper.insert({97, LEFT});
     keyMapper.insert({356, LEFT});
-    
+	keyMapper.insert({57356, LEFT});
+
     keyMapper.insert({83, DOWN});
     keyMapper.insert({115, DOWN});
     keyMapper.insert({359, DOWN});
+	keyMapper.insert({57359, DOWN });
     
     keyMapper.insert({68, RIGHT});
     keyMapper.insert({100, RIGHT});
     keyMapper.insert({358, RIGHT});
-    
+	keyMapper.insert({57358, RIGHT});
+
     keyMapper.insert({13, PLAYER_CHANGE});
     keyMapper.insert({32, PLAYER_CHANGE});
 

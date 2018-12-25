@@ -23,17 +23,16 @@ void restart() {
         if(grid == levels[currentLevel]) mode = MENU; ///!!! maybe remove
         else loadLevel(currentLevel);
     }
-    else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;    
+    else if(mode == LEVEL_EDITOR_PLAYING) mode = LEVEL_EDITOR;
 }
-
 
 void tryPlayLevel(int currentLevel, bool levelEditorInMenu) {
     bool playable = true;
-    if(currentLevel % 9 == 4) {
-        for(int i = 0; i < 9; ++i) {
-            if(i != 4 && beaten[currentLevel+i-4] == false) playable = false;
-        }
-    }
+    //if(currentLevel % 9 == 4) {
+    //    for(int i = 0; i < 9; ++i) {
+    //        if(i != 4 && beaten[currentLevel+i-4] == false) playable = false;
+    //    }
+    //}
     if(playable == true) {
         if(levelEditorInMenu == false) loadLevel(currentLevel);
         else if(beaten[currentLevel]) initLevelEditor(currentLevel,false);

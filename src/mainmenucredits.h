@@ -375,7 +375,7 @@ void displayCredits() {
     highlightedMainMenuPrintRightAligned("Developer 1", singleMenuTileWidth);
     ofTranslate(+singleMenuTileWidth*3,-singleMenuTileWidth);
     static ofImage kevinImg(locationOfResources + "imgs/kevin.jpg");
-    kevinImg.draw(0,0,singleMenuTileWidth*4,singleMenuTileWidth*4);
+    kevinImg.draw(0,0,singleMenuTileWidth*5,singleMenuTileWidth*5);
     ofTranslate(-singleMenuTileWidth*3,+singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
     unhighlightedMainMenuPrintRightAligned("Kevin Joël Philippe De Keyser (@kdkdkch)",singleMenuTileWidth);
@@ -393,13 +393,13 @@ void displayCredits() {
     ofTranslate(-singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-1*singleMenuTileWidth);
     highlightedMainMenuPrintRightAligned("BGM", singleMenuTileWidth);
     ofTranslate(+singleMenuTileWidth*3,-singleMenuTileWidth);
-    static ofImage nightdriverImg(locationOfResources + "imgs/nightdriver.jpg");
-    nightdriverImg.draw(0,0,singleMenuTileWidth*4,singleMenuTileWidth*4);
+    static ofImage nightdriverImg(locationOfResources + "imgs/dirtyuludag.png");
+    nightdriverImg.draw(0,0,singleMenuTileWidth*5,singleMenuTileWidth*5);
     ofTranslate(-singleMenuTileWidth*3,+singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
-    unhighlightedMainMenuPrintRightAligned("Night Driver",singleMenuTileWidth);
+    unhighlightedMainMenuPrintRightAligned("Dirty Uludag / Lars Faber",singleMenuTileWidth);
     ofTranslate(0,singleMenuTileWidth*1);
-    unhighlightedMainMenuPrintRightAligned("nosoapradio.us",singleMenuTileWidth);
+    unhighlightedMainMenuPrintRightAligned("soundcloud.com/dirtyuludag",singleMenuTileWidth);
     
     ofTranslate(singleMenuTileWidth*6, singleMenuTileWidth*grid.size()/4-2*singleMenuTileWidth);
     highlightedMainMenuPrintLeftAligned("Font", singleMenuTileWidth);

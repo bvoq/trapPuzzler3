@@ -239,7 +239,8 @@ void checkMovement() {
             movements.front().changeGrid();
             if(movements.front().isUndoMove == false) previousMovements.push_back(movements.front());
             movements.pop_front();
-            movements.front().timeWhenStarted = getAdjustedTime();
+			if(movements.size()>0)
+				movements.front().timeWhenStarted = getAdjustedTime();
             recheckGrid();
         }
     }

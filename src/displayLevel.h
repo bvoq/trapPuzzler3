@@ -160,7 +160,8 @@ ofMesh generateMeshTile(float w, float h, float r, ofFloatColor tlc, ofFloatColo
     ofMesh m;
     ofTessellator tess;
     tess.tessellateToMesh(poly, OF_POLY_WINDING_ODD, m, true);
-    
+
+#define nogetvertices
 #ifndef nogetvertices
     vector<ofVec3f> meshVertices = m.getVertices();
     vector<ofFloatColor> colors(meshVertices.size());
@@ -781,6 +782,7 @@ void recheckGrid() {
 
 //DO COPY THE DISPLAY MORE THAN ONCE!
 void displayLevel(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<movement> & movements) {
+	if (grid.size() == 0 || moveGrid.size() == 0) return;
     float scaleY = (getHeight() * 1.) / (MAX(grid.size() + 2, MIN_CELL_SIZE) * 1.);
     float scaleX = (getWidth() * 1.) / (MAX(grid[0].size() + 2, MIN_CELL_SIZE) * 1.);
     float scale = MIN(scaleY, scaleX);

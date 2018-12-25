@@ -1,7 +1,9 @@
 #include "ofMain.h"
 #include "ofApp.h"
 
-#ifdef _WIN32
+
+#if false
+//#ifdef _WIN32
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
     cout << "windows" << endl;
         //ofAppGlutWindow window;

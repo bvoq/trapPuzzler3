@@ -189,15 +189,20 @@ void displayOldMenu() {
                 //glLineWidth(1);
             }
             //Check for king level solvable...
-            if(i % levelCountPerWorld == 4) {
+            
+            if(i == 9 || i == 10) {
                 bool canBePlayed = true;
-                for(int j = 0; j < 9; ++j) {
+                for(int j=0;j<9;++j) if(beaten[j]==false) canBePlayed = false;
+                /*for(int j = 0; j < 9; ++j) {
                     if(j != 4 && beaten[i+j-4] == false) canBePlayed = false;
-                }
+                }*/
                 if(canBePlayed) displayLevelInMenu(levels[i], i == currentLevel, sizeOfMap, false);
                 else displayLevelInMenu(questionMarkLevel, i == currentLevel, sizeOfMap, false);
             }
-            else displayLevelInMenu(levels[i], i == currentLevel, sizeOfMap, false);
+            else {
+             displayLevelInMenu(levels[i], i == currentLevel, sizeOfMap, false);
+            }
+            
             glLineWidth(5);
             ofSetColor(0, 255, 0);
             float miniScale = min((h * 1.) / 12.,  (w * 1.) / 12.);
