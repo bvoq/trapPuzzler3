@@ -3,7 +3,7 @@
 //  colorScheme.h
 //  trapStory
 //
-//  Created by Kivifreak on 28/12/15.
+//  Created by kdkdk on 28/12/15.
 //
 //
 

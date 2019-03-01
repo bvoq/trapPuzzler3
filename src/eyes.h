@@ -2,7 +2,7 @@
 //  eyes.h
 //  trapPuzzler3
 //
-//  Created by Kivifreak on 04/02/16.
+//  Created by kdkdk on 04/02/16.
 //
 //
 

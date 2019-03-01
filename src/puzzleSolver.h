@@ -2,7 +2,7 @@
 //  puzzleSolver.h
 //  trapStory2
 //
-//  Created by Kivifreak on 01/01/16.
+//  Created by kdkdk on 01/01/16.
 //
 //
 

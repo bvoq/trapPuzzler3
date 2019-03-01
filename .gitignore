@@ -1,8 +1,16 @@
+# Remove large files with
+# find ./* -size +20M | cat >> .gitignore
+
+
 *.project
-src/.vs/
 obj/
+
+
 
 *vcxproj*
 addons.make
 .compile and run.bat
 *.cproject
+
+./trappuzzlervs/trappuzzlervs/bin/trappuzzlerwin.zip
+trappuzzlervs/.vs/trappuzzlervs/v15/
