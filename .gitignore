@@ -1,5 +1,7 @@
 # Remove large files with
-# find ./* -size +20M | cat >> .gitignore
+# find ./* -size +45M | cat >> .gitignore
+# git reset --soft origin/master
+# git add .
 
 
 *.project
@@ -12,5 +14,5 @@ addons.make
 .compile and run.bat
 *.cproject
 
-./trappuzzlervs/trappuzzlervs/bin/trappuzzlerwin.zip
 trappuzzlervs/.vs/trappuzzlervs/v15/
+trappuzzlervs/trappuzzlervs/bin/trappuzzlerwin.zip

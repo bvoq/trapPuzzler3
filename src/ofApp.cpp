@@ -46,21 +46,29 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 
+bool isSuperKey = false;
 void ofApp::keyPressed(int key){
-    if(keyMapper.count(key) != 0) {
-        if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ].second == false) {
-            keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
-            keyEvent(keyMapper[key]);
-        }
+    if(key == OF_KEY_SUPER) isSuperKey = true;
+    if(activeIDE) {
+        ideKeyPressed(key, isSuperKey);
     }
-    if(mode == CONTROL_CHANGE && setRemapKey) {
-        if(keyMapper.count(key) == 0 || keyMapper[key] != remapKey) keyMapper[key] = remapKey;
-        else keyMapper[key] = UNKNOWNKEYT;
+    else {
+        if(keyMapper.count(key) != 0) {
+            if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ].second == false) {
+                keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
+                keyEvent(keyMapper[key]);
+            }
+        }
+        if(mode == CONTROL_CHANGE && setRemapKey) {
+            if(keyMapper.count(key) == 0 || keyMapper[key] != remapKey) keyMapper[key] = remapKey;
+            else keyMapper[key] = UNKNOWNKEYT;
+        }
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
+    if(key == OF_KEY_SUPER) isSuperKey = false;
     if(keyMapper.count(key) != 0) {
         if(keyPressedDown.count(keyMapper[key]) != 0) {
             keyPressedDown[keyMapper[key]] = {LLONG_MAX,false};

@@ -68,49 +68,49 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     
     if(toolbarOrientation == BOTTOMTOOLBAR) {
         if(mode == CREDITS || mode == CONTROL_CHANGE) {
-            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < getToolbarWidth() - toolbarSize * .05) {
                 setRemapKey = false;
                 keyEvent(RESTART);
             }
         }
         else if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
             //UNDO
-            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < getToolbarWidth() - toolbarSize * .05) {
                 undoMovement(maxUndoTime);
             }
             //RESTART
-            if(mouseTouchX > (ofGetWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < getToolbarWidth() - toolbarSize * .05) {
                 restart();
             }
         }
         else if(mode == LEVEL_EDITOR) {
-            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 && mouseTouchX < toolbarSize * 0.9 && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 undoLevelEditorMove();
             }
-            if(mouseTouchX > toolbarSize * 0.05 + 1*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 1*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 + 1*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 1*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(PLAYER);
             }
-            if(mouseTouchX > toolbarSize * 0.05 + 2*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 2*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 + 2*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 2*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(ENEMY);
             }
-            if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 + 3*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 3*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(UNMOVABLE_ENEMY);
             }
-            if(mouseTouchX > toolbarSize * 0.05 + 4*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 4*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > toolbarSize * 0.05 + 4*toolbarSize && mouseTouchX < toolbarSize * 0.9 + 4*toolbarSize && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(LOVE);
             }
-            if(mouseTouchX > (ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 3*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - 4*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05 - 3*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(SUPERAIR);
             }
-            if(mouseTouchX > (ofGetWidth() - 3*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 2*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - 3*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05 - 2*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 changeBrush(AIR);
             }
-            if(mouseTouchX > (ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - 2*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05 - toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 tilesToBePlaced.clear();
                 loadLevel(-1);
             }
             
-            if(mouseTouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (ofGetWidth() - toolbarSize * 0.05 - 0*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetWidth() - toolbarSize * .05) {
+            if(mouseTouchX > (getToolbarWidth() - 1*toolbarSize + toolbarSize * 0.05) && mouseTouchX < (getToolbarWidth() - toolbarSize * 0.05 - 0*toolbarSize) && mouseTouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mouseTouchY < ofGetHeight() - toolbarSize * .05) {
                 cropBordersOf(editorGrid);
                 cout << "SAVING: " << currentLevel << " and " << levels.size() << endl;
                 levels[currentLevel] = editorGrid;
@@ -119,8 +119,6 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
             }
         }
     }
-    
-    
 }
 
 
@@ -185,6 +183,7 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
                 //playerTouches[touch.id].x;
             }
             break;
+        
         default:
             cout << "Unknown mode " << mode << endl;
     }
@@ -194,7 +193,15 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
 
 void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
     //Call as if it moved one last time.
-    if(mode == LEVEL_EDITOR) placeSelectedTiles();
+    if(mode == LEVEL_EDITOR)  {
+        if(!activeIDE)
+            placeSelectedTiles();
+        
+        if(!activeIDE && mouseTouchX > ofGetWidth()*(1.-ideFactor))
+            switchToIDE();
+        if( activeIDE && mouseTouchX < ofGetWidth()*(1.-ideFactor))
+            switchAwayFromIDE();
+    }
 
     mouseTouchMoved(mouseTouchY, mouseTouchX, touchid);
     
@@ -225,7 +232,6 @@ void mouseTouchUp(int mouseTouchY, int mouseTouchX, int touchid) {
         }
         */
     }
-    
     
     /* SILLY IDEA
     if(mode == LEVEL_EDITOR) {

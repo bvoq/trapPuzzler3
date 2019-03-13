@@ -105,7 +105,7 @@ void keyEvent (keyType kt) {
             //    DEB("Unused keyMap: " << kt << " on key " << ("Inverse of keyMap[key], so key") << " in mode " << mode);
         
     }
-    else if(mode == LEVEL_EDITOR) {
+    else if(mode == LEVEL_EDITOR && !activeIDE) {
         switch(kt) {
             case EXPORT:
                 levelExport(cout, editorGrid);

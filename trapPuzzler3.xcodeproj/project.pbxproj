@@ -73,6 +73,8 @@
 		63A5DB141F6ADDED00E5FDAD /* timeTaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timeTaker.h; sourceTree = "<group>"; };
 		63A725341D69DBC200F8BC0A /* messages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		63CDFA5C1DAA539E00454DE3 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
+		63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelEditorIDE.h; sourceTree = "<group>"; };
+		63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = puzzleScriptToBlock.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* trapPuzzler3Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trapPuzzler3Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
@@ -147,12 +149,14 @@
 				635462FC1EA425B900B973D0 /* keyEvent.h */,
 				22CAB9B71C3E73DD00724B49 /* keyMap.h */,
 				22CAB9B81C3E73DD00724B49 /* levelEditor.h */,
+				63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */,
 				22CAB9B91C3E73DD00724B49 /* levels.h */,
 				634057331F6EE2B600B736BC /* mainmenucredits.h */,
 				228A4F5C1C48380100D11AB9 /* menu.h */,
 				63A725341D69DBC200F8BC0A /* messages.h */,
 				6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */,
 				22CAB9BA1C3E73DD00724B49 /* movement.h */,
+				63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */,
 				22A39D901C5387FA0007A506 /* saves.h */,
 				63807F7C1F6C51F500BFBBFE /* screenShake.h */,
 				635462FD1EA4285100B973D0 /* setupDrawEvent.h */,

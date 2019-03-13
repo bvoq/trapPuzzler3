@@ -18,6 +18,9 @@
 //#define switchRenderMode printf("Calling switchRenderMode from %s at line %d in file %s.\n",__FUNCTION__,__LINE__,__FILE__);DEBUGswitchRenderModeDEBUG
 //needs to overwrite the function and forward declarations using this method.
 
+
+#include <algorithm>
+
 #include "globals.h"
 
 #include "timeTaker.h"
@@ -30,6 +33,7 @@
 #include "levels.h"
 #include "movement.h"
 #include "displayLevel.h"
+#include "levelEditorIDE.h"
 #include "levelEditor.h"
 #include "toolbar.h"
 #include "messages.h"

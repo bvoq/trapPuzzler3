@@ -16,7 +16,7 @@
 
 int toolbarX = 0, toolbarY = 0;
 enum ToolbarOrientation {
-    NOTOOLBAR=0, BOTTOMTOOLBAR=1, RIGHTTOOLBAR=2 //, BOTTOMTOOLBAR=3, LEFTTOOLBAR=4
+    NOTOOLBAR=0, BOTTOMTOOLBAR=1
 } toolbarOrientation = BOTTOMTOOLBAR;
 
 bool messageBlockingToolbar = false; //maybe make this messa
@@ -25,13 +25,17 @@ int toolbarSize = 100; //Will be dynamically overwritten, later in the code.
 int messageSize = 0;
 
 int getWidth() {
-    if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR || mode == CREDITS || mode == CONTROL_CHANGE) && toolbarOrientation == RIGHTTOOLBAR) return ofGetWidth() - toolbarSize;
-    else return ofGetWidth();
+    if(mode == LEVEL_EDITOR) return ofGetWidth() * (1.-ideFactor);
+    return ofGetWidth();
 }
 int getHeight() {
     if(messageBlockingToolbar) return ofGetHeight() - max(messageSize,toolbarSize); //might look nicer during transition of messages.
     if((mode == LEVEL_EDITOR_PLAYING || mode == PLAYING || mode == LEVEL_EDITOR || mode == CREDITS || mode == CONTROL_CHANGE) && toolbarOrientation == BOTTOMTOOLBAR) return ofGetHeight() - toolbarSize;
     return ofGetHeight();
+}
+
+int getToolbarWidth() {
+    return getWidth();
 }
 
 pair<int,int> dpDrawCoordinates = {-1,-1};
@@ -41,7 +45,7 @@ void displayToolBar() {
     if(!messageBlockingToolbar && !blockMovementDueToWinningAnimation) {
         if(toolbarOrientation != NOTOOLBAR) {
             if(dpDrawCoordinates.first != ofGetHeight() && dpDrawCoordinates.second != ofGetHeight()) {
-                toolbarSize = 0.1 * min(ofGetWidth(),ofGetHeight());
+                toolbarSize = 0.1 * min(getToolbarWidth(),ofGetHeight());
                 //Redraw all the keys
                 backgroundKey = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON_LIGHT, scheme.colorTOOLBARBUTTON, scheme.colorTOOLBARBUTTON);
                 backgroundKeySelected = generateMeshTile(toolbarSize * .9, toolbarSize * .9, toolbarSize * .05, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED_LIGHT, scheme.colorTOOLBARBUTTON_SELECTED, scheme.colorTOOLBARBUTTON_SELECTED);
@@ -54,15 +58,15 @@ void displayToolBar() {
                 if(mode == CREDITS || mode == CONTROL_CHANGE) {
                     //MAIN MENU
                     ofPushMatrix();
-                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getToolbarWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     backgroundKey.draw();
                     deque<deque<int> > blackOnly = {{1000}};
                     ofSetColor(255);
                     ofFill();
                     // ...
                     // :::
-                    if(mousetouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     }
@@ -84,7 +88,7 @@ void displayToolBar() {
                 
                 if(mode == PLAYING || mode == LEVEL_EDITOR_PLAYING) {
                     //ofSetColor(scheme.colorTOOLBAR);
-                    //ofDrawRectangle(0,ofGetHeight()-toolbarSize,ofGetWidth(),toolbarSize); //toolbar bar.
+                    //ofDrawRectangle(0,ofGetHeight()-toolbarSize,getToolbarWidth(),toolbarSize); //toolbar bar.
                     
                     //UNDO
                     ofPushMatrix();
@@ -95,7 +99,7 @@ void displayToolBar() {
                     ofSetColor(255);
                     ofSetLineWidth(5);
                     if(mousetouchX > toolbarSize * 0.05 && mousetouchX < toolbarSize * 0.9
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -111,7 +115,7 @@ void displayToolBar() {
                     
                     //MAIN MENU
                     ofPushMatrix();
-                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     backgroundKey.draw();
                     deque<deque<int> > blackOnly = {{1000}};
                     ofSetColor(255);
@@ -119,8 +123,8 @@ void displayToolBar() {
                     // ...
                     // :::
                     bool pencilselected = false;
-                    if(mousetouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         if(mode == PLAYING) {
                             ofScale(1.05,1.05);
                             ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -180,7 +184,7 @@ void displayToolBar() {
                     ofSetColor(255);
                     ofSetLineWidth(5);
                     if(mousetouchX > toolbarSize * 0.05 && mousetouchX < toolbarSize * 0.9
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -201,7 +205,7 @@ void displayToolBar() {
                     if(placeType == PLAYER) backgroundKeySelected.draw();
                     else backgroundKey.draw();
                     if(mousetouchX > toolbarSize * 0.05 + toolbarSize && mousetouchX < toolbarSize * 0.9 + toolbarSize
-                        && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                        && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -219,7 +223,7 @@ void displayToolBar() {
                     if(placeType == ENEMY) backgroundKeySelected.draw();
                     else backgroundKey.draw();
                     if(mousetouchX > toolbarSize * 0.05 + toolbarSize*2 && mousetouchX < toolbarSize * 0.9 + toolbarSize*2
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -238,7 +242,7 @@ void displayToolBar() {
                     if(placeType == UNMOVABLE_ENEMY) backgroundKeySelected.draw();
                     else backgroundKey.draw();
                     if(mousetouchX > toolbarSize * 0.05 + toolbarSize*3 && mousetouchX < toolbarSize * 0.9 + toolbarSize*3
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -259,7 +263,7 @@ void displayToolBar() {
                     if(placeType == LOVE) backgroundKeySelected.draw();
                     else backgroundKey.draw();
                     if(mousetouchX > toolbarSize * 0.05 + toolbarSize*4 && mousetouchX < toolbarSize * 0.9 + toolbarSize*4
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -274,10 +278,10 @@ void displayToolBar() {
                     //START PLAYING LEVEL
                     ofPushMatrix();
                     
-                    ofTranslate(ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getToolbarWidth() - 2*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     backgroundKey.draw();
-                    if(mousetouchX > (ofGetWidth() - 2*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05 - toolbarSize)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 2*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05 - toolbarSize)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     }
@@ -285,7 +289,7 @@ void displayToolBar() {
                     ofSetColor(255);
                     ofSetLineWidth(5);
                     if(mousetouchX > toolbarSize * 0.05 && mousetouchX < toolbarSize * 0.9
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         //ofTranslate(-toolbarSize*.9/5.,-toolbarSize*.9/5.);
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
@@ -302,13 +306,13 @@ void displayToolBar() {
                     
                     //MAIN MENU
                     ofPushMatrix();
-                    ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getToolbarWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     backgroundKey.draw();
                     deque<deque<int> > blackOnly = {{1000}};
                     ofSetColor(255);
                     ofFill();
-                    if(mousetouchX > (ofGetWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 1*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                             ofScale(1.05,1.05);
                             ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     }
@@ -329,11 +333,11 @@ void displayToolBar() {
                     //AIR
                     ofPushMatrix();
 
-                    ofTranslate(ofGetWidth() - 3*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getToolbarWidth() - 3*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == AIR) backgroundKeySelected.draw();
                     else backgroundKey.draw();
-                    if(mousetouchX > (ofGetWidth() - 3*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05 - 2*toolbarSize)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 3*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05 - 2*toolbarSize)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     }
@@ -352,12 +356,12 @@ void displayToolBar() {
                     //SUPERAIR
                     ofPushMatrix();
                     deque<deque<int> > redRow = {{100,100,100}};
-                    ofTranslate(ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                    ofTranslate(getToolbarWidth() - 4*toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                     if(placeType == SUPERAIR) backgroundKeySelected.draw();
                     else backgroundKey.draw();
 
-                    if(mousetouchX > (ofGetWidth() - 4*toolbarSize + toolbarSize * 0.05) && mousetouchX < (ofGetWidth() - toolbarSize * 0.05 - 3*toolbarSize)
-                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < ofGetWidth() - toolbarSize * .05) {
+                    if(mousetouchX > (getToolbarWidth() - 4*toolbarSize + toolbarSize * 0.05) && mousetouchX < (getToolbarWidth() - toolbarSize * 0.05 - 3*toolbarSize)
+                       && mousetouchY > ofGetHeight() - toolbarSize + toolbarSize * 0.05 && mousetouchY < getToolbarWidth() - toolbarSize * .05) {
                         ofScale(1.05,1.05);
                         ofTranslate(-toolbarSize*.025,-toolbarSize*.025);
                     }
@@ -384,7 +388,7 @@ void displayToolBar() {
                 //EXIT
                 /*
                  ofPushMatrix();
-                 ofTranslate(ofGetWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
+                 ofTranslate(getToolbarWidth() - toolbarSize + toolbarSize * 0.05, ofGetHeight() - toolbarSize + toolbarSize * 0.05);
                  backgroundKey.draw();
                  
                  deque<deque<int> > redOnly = {{100}};

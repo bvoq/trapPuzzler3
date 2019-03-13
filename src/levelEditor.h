@@ -19,8 +19,52 @@ void changeBrush (cellType newPlaceType) {
     placeType = newPlaceType;
 }
 
+
 set<pair<int, int> > tilesToBePlaced;
 vector<deque<deque<int> > > levelEditorSaves;
+
+void initLevelEditor(int loadFromLevel, bool empty) {
+    mode = LEVEL_EDITOR;
+    
+    //initialise IDE
+    initLevelEditorIDE();
+    
+    //initialise REST
+    
+    editorGrid.clear();
+    playerCount = 1;
+    enemyCount = 1000000;
+    unmovableEnemyCount = 2000000;
+    loveCount = 3000000;
+    //levelEdit orSaves.clear();
+    assert(loadFromLevel >= 0);
+    if(empty) {
+        editorGrid.resize(20, deque<int>(20, 0));
+    }
+    else {
+        createLevels();
+        editorGrid = levels[loadFromLevel];
+        for(int i = 0; i < editorGrid.size(); ++i) {
+            for(int j = 0; j < editorGrid[i].size(); ++j) {
+                if(getCellType(editorGrid[i][j]) == PLAYER && playerCount < editorGrid[i][j] + 1) playerCount = editorGrid[i][j] + 1;
+                if(getCellType(editorGrid[i][j]) == ENEMY && enemyCount < editorGrid[i][j] + 1) enemyCount = editorGrid[i][j] + 1;
+                if(getCellType(editorGrid[i][j]) == LOVE && loveCount < editorGrid[i][j]+1) loveCount = editorGrid[i][j] + 1;
+                if(getCellType(editorGrid[i][j]) == UNMOVABLE_ENEMY && unmovableEnemyCount < editorGrid[i][j] + 1) unmovableEnemyCount = editorGrid[i][j] + 1;
+            }
+        }
+        
+        extendGridToFit(editorGrid, 20, 20);
+        //editorGridY = editorGrid.size();
+        //editorGridX = editorGrid[0].size();
+    }
+    tilesToBePlaced.clear();
+    placeType = ENEMY; //!START KEYTYPE
+}
+
+
+void switchAwayFromIDE() {
+    activeIDE = false;
+}
 
 deque<deque<int> > improveLevel(deque<deque<int> > lvl, bool hasGravity, int tries, int maxBreadth);
 void improveLevelEditor(){
@@ -177,7 +221,7 @@ void displayLevelEditor() {
     for(int i = 0; i < editorGrid.size(); ++i) {
         for(int j = 0; j < editorGrid[i].size(); ++j) {
             rects[i][j] = calculatePosition(i, j, editorGrid.size(), editorGrid[i].size());
-            if(isMousePressed && mousetouchX >= rects[i][j].getTopLeft().x &&
+            if(!activeIDE && isMousePressed && mousetouchX >= rects[i][j].getTopLeft().x &&
                mousetouchY >= rects[i][j].getTopLeft().y &&
                mousetouchX < rects[i][j].getBottomRight().x &&
                mousetouchY < rects[i][j].getBottomRight().y) {
@@ -231,6 +275,8 @@ void displayLevelEditor() {
             }
         }
     }
+    
+    displayLevelEditorIDE();
 }
 
 void addLayer(keyType direction) {
@@ -246,38 +292,6 @@ void addLayer(keyType direction) {
     else if(direction == RIGHT) {
         pushBackColumnOf(editorGrid);
     }
-}
-
-void initLevelEditor(int loadFromLevel, bool empty) {
-    mode = LEVEL_EDITOR;
-    editorGrid.clear();
-    playerCount = 1;
-    enemyCount = 1000000;
-    unmovableEnemyCount = 2000000;
-    loveCount = 3000000;
-    //levelEdit orSaves.clear();
-    assert(loadFromLevel >= 0);
-    if(empty) {
-        editorGrid.resize(20, deque<int>(20, 0));
-    }
-    else {
-        createLevels();
-        editorGrid = levels[loadFromLevel];
-        for(int i = 0; i < editorGrid.size(); ++i) {
-            for(int j = 0; j < editorGrid[i].size(); ++j) {
-                if(getCellType(editorGrid[i][j]) == PLAYER && playerCount < editorGrid[i][j] + 1) playerCount = editorGrid[i][j] + 1;
-                if(getCellType(editorGrid[i][j]) == ENEMY && enemyCount < editorGrid[i][j] + 1) enemyCount = editorGrid[i][j] + 1;
-                if(getCellType(editorGrid[i][j]) == LOVE && loveCount < editorGrid[i][j]+1) loveCount = editorGrid[i][j] + 1;
-                if(getCellType(editorGrid[i][j]) == UNMOVABLE_ENEMY && unmovableEnemyCount < editorGrid[i][j] + 1) unmovableEnemyCount = editorGrid[i][j] + 1;
-            }
-        }
-        
-        extendGridToFit(editorGrid, 20, 20);
-        //editorGridY = editorGrid.size();
-        //editorGridX = editorGrid[0].size();
-    }
-    tilesToBePlaced.clear();
-    placeType = ENEMY; //!START KEYTYPE
 }
 
 #endif

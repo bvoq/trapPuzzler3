@@ -11,7 +11,7 @@
 
 deque<pair<vector<string>, long long> > message;
 
-ofTrueTypeFont font; int previousWindowWidth = -1; //License see 1.4 http://theleagueof.github.io/licenses/ofl-faq.html
+ofTrueTypeFont fontMessage; int previousWindowWidth = -1; //License see 1.4 http://theleagueof.github.io/licenses/ofl-faq.html
 
 long long dynamicTime = 0;
 void gradientFilledRect(float, float, float, float, ofColor, ofColor, ofColor, ofColor);
@@ -21,7 +21,7 @@ void displayMessage() {
     if(getWidth() != previousWindowWidth) {
         //mainMenuFont.load(locationOfResources + "font/Share/Share-Italic.ttf",singleMenuTileWidth/1.75);
 
-        font.load(locationOfResources + "font/Share/Share-Regular.ttf",getWidth()/36);
+        fontMessage.load(locationOfResources + "font/Share/Share-Regular.ttf",getWidth()/36);
         previousWindowWidth = getWidth();
     }
     
@@ -38,7 +38,7 @@ void displayMessage() {
     
     
     if(message.size() > 0) {
-        messageSize = font.stringHeight("Tg") * (message.front().first.size()+1.5);
+        messageSize = fontMessage.stringHeight("Tg") * (message.front().first.size()+1.5);
         prevMessageSize = messageSize;
         messageBlockingToolbar = true;
         if(renderMode == PARTIAL && message.front().first != prevMessage) { //might be a new textbox all around
@@ -49,18 +49,18 @@ void displayMessage() {
             if(mode == MENU) ofSetColor(255,255,255);
             else ofSetColor(0);
             for(int i = message.front().first.size() - 1; i >= 0; --i) {
-                font.drawString(message.front().first[i], getWidth()/2 - font.stringWidth(message.front().first[i])/2, ofGetHeight() - font.stringHeight("Tg") * (message.front().first.size() - i));
+                fontMessage.drawString(message.front().first[i], getWidth()/2 - fontMessage.stringWidth(message.front().first[i])/2, ofGetHeight() - fontMessage.stringHeight("Tg") * (message.front().first.size() - i));
             }
         }
         else {
             if(mode == MENU) ofSetColor(255,255,255);
             else ofSetColor(0);
             for(int i = message.front().first.size() - 1; i >= 0; --i) {
-                font.drawString(message.front().first[i], getWidth()/2 - font.stringWidth(message.front().first[i])/2, ofGetHeight() - font.stringHeight("Tg") * (message.front().first.size() - i));
+                fontMessage.drawString(message.front().first[i], getWidth()/2 - fontMessage.stringWidth(message.front().first[i])/2, ofGetHeight() - fontMessage.stringHeight("Tg") * (message.front().first.size() - i));
             }
         }
         prevMessage = message.front().first;
-        messageSize = font.stringHeight("Tg") * (message.front().first.size()+1.5);
+        messageSize = fontMessage.stringHeight("Tg") * (message.front().first.size()+1.5);
     }
     
     else if(dynamicTime > getAdjustedTime() - 500000) {
