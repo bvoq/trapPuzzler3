@@ -9,76 +9,71 @@
 #ifndef globals_h
 #define globals_h
 
-#define DEB(x) cout << x << endl;
-#define printVec(x) for(int __i = 0; __i < x.size(); ++__i) for(int __j = 0; __j < x[__i].size(); ++__j) cout << x[__i][__j] << (__j==x[__i].size() - 1) ? "\n" : "";
-string locationOfResources = "data/";// basically finds in Resources/data
-//SEE ALSO http://stackoverflow.com/questions/4882572/how-to-bundle-an-openframeworks-application-in-xcode-relative-resource-linking
-//See ofApp.cpp for operating system specifics
+#include "bitsstdc.h" //same as <bits/stdc++.h>
+#include "macros.h"
 
-float MIN_CELL_SIZE = 12;
-int playerID;
+extern const std::string locationOfResources;// basically finds in Resources/data
+
+extern float MIN_CELL_SIZE;
+extern int playerID;
 //int currentLevel; declared in levels.h
-long long timeForSlowEyeMovement = 800000;
-long long timeForSlowMovement = 80000;  //8000;//160000; //is relative, also used for duration of sounds and shaking.
-long long timeForTypedMovement = 160000;
-long long timeForFastMovement = 20000; //winning
-long long timeForDragMovement = 80000;
-long long timeForFlickering = 640000; //time it takes to cycle a flicker (done with modulo).
-double gravityAcceleration = 1.2*1./160000/*160000*/, gravityQuadraticFriction = 0.1, gravityStokesFriction = 0.1;
-long long timeForKeypressWait = 1.5*timeForTypedMovement;
-long long timeForAnotherKeypressWait = 64000;
-long long timeForSlowClickMovement = 1000;
-long long timeForMovement = timeForSlowMovement;
-long long maxUndoTime = timeForTypedMovement * 8;
+extern const long long timeForSlowEyeMovement;
+extern const long long timeForSlowMovement;  //8000;//160000; //is relative, also used for duration of sounds and shaking.
+extern const long long timeForTypedMovement;
+extern const long long timeForFastMovement; //winning
+extern const long long timeForDragMovement;
+extern const long long timeForFlickering; //time it takes to cycle a flicker (done with modulo).
+extern const double gravityAcceleration, gravityQuadraticFriction, gravityStokesFriction;
+extern const long long timeForKeypressWait;
+extern const long long timeForAnotherKeypressWait;
+extern const long long timeForSlowClickMovement;
+extern const long long maxUndoTime;
 
-std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
-bool firstMovementHCI = false;
+extern long long timeForMovement;
 
-bool levelEditorInMenu = false;
-bool isMousePressed = false;
-bool isMouseReleased = false;
-int mousePressedX = -1;
-int mousePressedY = -1;
-int mouseReleasedX = -1;
-int mouseReleasedY = -1;
-int scrollX = 0;
-int scrollY = 0;
-int mousetouchX = -100, mousetouchY = -100;
+extern std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
+extern bool firstMovementHCI;
 
-float wallShakeIntensity = .25+.125;
+extern bool levelEditorInMenu;
 
-int isWindowResized = 0;
-bool blockMovementDueToWinningAnimation = false;
-bool forceUndo = false;
+extern bool isMousePressed;
+extern bool isMouseReleased;
+extern int mousePressedX;
+extern int mousePressedY;
+extern int mouseReleasedX;
+extern int mouseReleasedY;
+extern int scrollX;
+extern int scrollY;
+extern int mousetouchX, mousetouchY;
+extern int isWindowResized;
 
-bool beautifulGraphics = true; //This has to be false for iOS devices to run smooth
+extern float wallShakeIntensity;
+
+extern bool blockMovementDueToWinningAnimation;
+extern bool forceUndo;
+
+extern bool beautifulGraphics;
 enum RenderMode {
     PARTIAL, FULL
-} renderMode;
+};
+extern RenderMode renderMode;
 
 enum playMode {
     PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6, ADVENTURE=7, CREDITS=8, CONTROL_CHANGE=9, UNKNOWN=100
-} mode;
-
-string strmode(playMode m) {
-    return m == PLAYING ? "PLAYING" : m == LEVEL_EDITOR_PLAYING ? "LEVEL_EDITOR_PLAYING" : m == LEVEL_EDITOR ? "LEVEL_EDITOR" : m == MENU ? "MENU" : m == MENUOLD ? "MENU_OLD" : m == MAINMENU ? "MAIN_MENU" : m == ADVENTURE ? "ADVENTURE" : "UNKNOWN";
-}
+};
+extern playMode mode;
+extern std::string strmode(playMode m);
 
 #ifndef islevelgen
-ofColor backgroundColor;
+#include "ofMain.h"
+extern ofColor backgroundColor;
+extern void switchRenderMode(RenderMode ini);
 #endif
 
-#include <cassert>
-#include <cmath>
-#include <stdio.h>
-
+//!TODO: Delete after refactoring
 //Linked methods
-
-void updateGrid(deque<deque<int> >);
-int getWidth(); int getHeight();
-
-#ifndef islevelgen
-void switchRenderMode(RenderMode ini);
-#endif
+extern void updateGrid(deque<deque<int> >);
+extern int getWidth();
+extern int getHeight();
 
 #endif /* globals_h */

@@ -67,9 +67,9 @@
 namespace std
 {
     template <>
-    struct hash<pair<ddd, int> >
+    struct hash<pair<std::deque<std::deque<int> >, int> >
     {
-        size_t operator()(const pair<ddd, int>& k) const
+        size_t operator()(const pair<std::deque<std::deque<int> >, int>& k) const
         {
 			size_t dddhash = 3;
 			for(auto & dd : k.first){

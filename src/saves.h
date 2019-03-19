@@ -36,19 +36,19 @@ void loadSaveData() {
 	for (int i = 1; i <= lengthOfBeatenLevels; ++i) {
 		beaten.push_back(lines[i][0] == '1');
 	}
-	musicaudiolevel = stoi(lines[lengthOfBeatenLevels + 1]);
-	cout << "Loaded musicaudiolevel: " << musicaudiolevel << endl;
-	if (!(musicaudiolevel >= 0 && musicaudiolevel <= 12)) {
-		cout << "WARNING: Music audio levels should be between [0-12], but received " << musicaudiolevel << ", you probably have a corrupted savefile. Setting audio to 6." << endl;
-		musicaudiolevel = 6;
+    audio::musicaudiolevel = stoi(lines[lengthOfBeatenLevels + 1]);
+	cout << "Loaded musicaudiolevel: " << audio::musicaudiolevel << endl;
+    if (!(audio::musicaudiolevel >= 0 && audio::musicaudiolevel <= 12)) {
+		cout << "WARNING: Music audio levels should be between [0-12], but received " << audio::musicaudiolevel << ", you probably have a corrupted savefile. Setting audio to 6." << endl;
+		audio::musicaudiolevel = 6;
 	}
-	sfxaudiolevel = stoi(lines[lengthOfBeatenLevels + 2]);
-	if (!(sfxaudiolevel >= 0 && sfxaudiolevel <= 12)) {
-		cout << "WARNING: Music audio levels should be between [0-12], but received " << musicaudiolevel << ", you probably have a corrupted savefile. Setting audio to 6." << endl;
-		musicaudiolevel = 6;
+	audio::sfxaudiolevel = stoi(lines[lengthOfBeatenLevels + 2]);
+	if (!(audio::sfxaudiolevel >= 0 && audio::sfxaudiolevel <= 12)) {
+		cout << "WARNING: Music audio levels should be between [0-12], but received " << audio::musicaudiolevel << ", you probably have a corrupted savefile. Setting audio to 6." << endl;
+		audio::musicaudiolevel = 6;
 	}
 	updateVolume();
-	cout << "Loaded sfxaudiolevel: " << sfxaudiolevel << endl;
+	cout << "Loaded sfxaudiolevel: " << audio::sfxaudiolevel << endl;
     while(beaten.size() < levels.size()) beaten.push_back(false);
 }
 
@@ -60,10 +60,10 @@ void saveSaveData() {
     for(int i = 0; i < beaten.size(); ++i) {
         ofstr << beaten[i] << endl;
     }
-    ofstr << musicaudiolevel << endl;
-    cout << "Loaded musicaudiolevel: " << musicaudiolevel << endl;
-    ofstr << sfxaudiolevel << endl;
-    cout << "Loaded sfxaudiolevel: " << sfxaudiolevel << endl;
+    ofstr << audio::musicaudiolevel << endl;
+    cout << "Loaded musicaudiolevel: " << audio::musicaudiolevel << endl;
+    ofstr << audio::sfxaudiolevel << endl;
+    cout << "Loaded sfxaudiolevel: " << audio::sfxaudiolevel << endl;
     ofstr.close();
 }
 

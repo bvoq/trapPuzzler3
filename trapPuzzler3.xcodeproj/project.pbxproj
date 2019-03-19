@@ -7,8 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630A0AB022417DA900A22C60 /* levelEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AAF22417DA900A22C60 /* levelEditor.cpp */; };
+		630A0AB222417FAE00A22C60 /* updateGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB122417FAE00A22C60 /* updateGrid.cpp */; };
+		630A0AB4224181BA00A22C60 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB3224181BA00A22C60 /* messages.cpp */; };
+		630A0AB62241845300A22C60 /* puzzleSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB52241845300A22C60 /* puzzleSolver.cpp */; };
+		630A0AB8224185D000A22C60 /* keyEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB7224185D000A22C60 /* keyEvent.cpp */; };
 		63CA016F1FB31C79007C25F1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
+		63D37F162239ADE50067F730 /* audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F152239ADE50067F730 /* audio.cpp */; };
+		63D37F182239B4DD0067F730 /* globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F172239B4DD0067F730 /* globals.cpp */; };
+		63D37F1B2239CEDA0067F730 /* eyes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F1A2239CEDA0067F730 /* eyes.cpp */; };
+		63D37F1D2239CFF40067F730 /* grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F1C2239CFF40067F730 /* grid.cpp */; };
+		63D37F1F2239D4B50067F730 /* colorScheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F1E2239D4B50067F730 /* colorScheme.cpp */; };
+		63D37F212239D68B0067F730 /* toolbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F202239D68B0067F730 /* toolbar.cpp */; };
+		63D37F252239D7DD0067F730 /* levelEditorIDE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F242239D7DD0067F730 /* levelEditorIDE.cpp */; };
+		63D37F272239DA310067F730 /* levels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F262239DA310067F730 /* levels.cpp */; };
+		63D37F292239EAB30067F730 /* displayLevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F282239EAB30067F730 /* displayLevel.cpp */; };
+		63D37F2C223EE3CA0067F730 /* keyMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F2B223EE3CA0067F730 /* keyMap.cpp */; };
+		63D37F2E223EEDCF0067F730 /* movement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F2D223EEDCF0067F730 /* movement.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +71,11 @@
 		22CAB9BA1C3E73DD00724B49 /* movement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movement.h; sourceTree = "<group>"; };
 		22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = puzzleSolver.h; sourceTree = "<group>"; };
 		22CAB9BC1C3E73DD00724B49 /* updateGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updateGrid.h; sourceTree = "<group>"; };
+		630A0AAF22417DA900A22C60 /* levelEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = levelEditor.cpp; sourceTree = "<group>"; };
+		630A0AB122417FAE00A22C60 /* updateGrid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = updateGrid.cpp; sourceTree = "<group>"; };
+		630A0AB3224181BA00A22C60 /* messages.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = messages.cpp; sourceTree = "<group>"; };
+		630A0AB52241845300A22C60 /* puzzleSolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = puzzleSolver.cpp; sourceTree = "<group>"; };
+		630A0AB7224185D000A22C60 /* keyEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyEvent.cpp; sourceTree = "<group>"; };
 		631249761F86206A00BBA1A9 /* hopscotch_set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_set.h; sourceTree = "<group>"; };
 		631249771F86206A00BBA1A9 /* hopscotch_hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_hash.h; sourceTree = "<group>"; };
 		63308D601F667BE0007D3C5C /* levelGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelGen.h; sourceTree = "<group>"; };
@@ -70,11 +91,24 @@
 		6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouseTouchEvent.h; sourceTree = "<group>"; };
 		6380CB8C1EAACA0900C8C260 /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		6380CB8D1EAACF6F00C8C260 /* toolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = toolbar.h; sourceTree = "<group>"; };
-		63A5DB141F6ADDED00E5FDAD /* timeTaker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timeTaker.h; sourceTree = "<group>"; };
 		63A725341D69DBC200F8BC0A /* messages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		63CDFA5C1DAA539E00454DE3 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
 		63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelEditorIDE.h; sourceTree = "<group>"; };
 		63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = puzzleScriptToBlock.h; sourceTree = "<group>"; };
+		63D37EF92239A4740067F730 /* idMapTo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = idMapTo.h; sourceTree = "<group>"; };
+		63D37F152239ADE50067F730 /* audio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio.cpp; sourceTree = "<group>"; };
+		63D37F172239B4DD0067F730 /* globals.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = globals.cpp; sourceTree = "<group>"; };
+		63D37F192239C16E0067F730 /* bitsstdc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitsstdc.h; sourceTree = "<group>"; };
+		63D37F1A2239CEDA0067F730 /* eyes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = eyes.cpp; sourceTree = "<group>"; };
+		63D37F1C2239CFF40067F730 /* grid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = grid.cpp; sourceTree = "<group>"; };
+		63D37F1E2239D4B50067F730 /* colorScheme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = colorScheme.cpp; sourceTree = "<group>"; };
+		63D37F202239D68B0067F730 /* toolbar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = toolbar.cpp; sourceTree = "<group>"; };
+		63D37F242239D7DD0067F730 /* levelEditorIDE.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = levelEditorIDE.cpp; sourceTree = "<group>"; };
+		63D37F262239DA310067F730 /* levels.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = levels.cpp; sourceTree = "<group>"; };
+		63D37F282239EAB30067F730 /* displayLevel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = displayLevel.cpp; sourceTree = "<group>"; };
+		63D37F2A2239ECF90067F730 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		63D37F2B223EE3CA0067F730 /* keyMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyMap.cpp; sourceTree = "<group>"; };
+		63D37F2D223EEDCF0067F730 /* movement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = movement.cpp; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* trapPuzzler3Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trapPuzzler3Debug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
@@ -139,33 +173,51 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				63D37F192239C16E0067F730 /* bitsstdc.h */,
+				63D37F2A2239ECF90067F730 /* macros.h */,
 				63CDFA5C1DAA539E00454DE3 /* audio.h */,
+				63D37F152239ADE50067F730 /* audio.cpp */,
 				22CAB9B31C3E73DD00724B49 /* colorScheme.h */,
+				63D37F1E2239D4B50067F730 /* colorScheme.cpp */,
 				22CAB9B41C3E73DD00724B49 /* displayLevel.h */,
+				63D37F282239EAB30067F730 /* displayLevel.cpp */,
 				226889FD1C635F8A00BA5D43 /* eyes.h */,
+				63D37F1A2239CEDA0067F730 /* eyes.cpp */,
 				63308D681F66F289007D3C5C /* globals.h */,
+				63D37F172239B4DD0067F730 /* globals.cpp */,
 				22CAB9B51C3E73DD00724B49 /* grid.h */,
+				63D37F1C2239CFF40067F730 /* grid.cpp */,
 				22CAB9B61C3E73DD00724B49 /* includes.h */,
+				63D37EF92239A4740067F730 /* idMapTo.h */,
 				635462FC1EA425B900B973D0 /* keyEvent.h */,
+				630A0AB7224185D000A22C60 /* keyEvent.cpp */,
 				22CAB9B71C3E73DD00724B49 /* keyMap.h */,
+				63D37F2B223EE3CA0067F730 /* keyMap.cpp */,
 				22CAB9B81C3E73DD00724B49 /* levelEditor.h */,
+				630A0AAF22417DA900A22C60 /* levelEditor.cpp */,
 				63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */,
+				63D37F242239D7DD0067F730 /* levelEditorIDE.cpp */,
 				22CAB9B91C3E73DD00724B49 /* levels.h */,
+				63D37F262239DA310067F730 /* levels.cpp */,
 				634057331F6EE2B600B736BC /* mainmenucredits.h */,
 				228A4F5C1C48380100D11AB9 /* menu.h */,
 				63A725341D69DBC200F8BC0A /* messages.h */,
+				630A0AB3224181BA00A22C60 /* messages.cpp */,
 				6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */,
 				22CAB9BA1C3E73DD00724B49 /* movement.h */,
+				63D37F2D223EEDCF0067F730 /* movement.cpp */,
 				63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */,
 				22A39D901C5387FA0007A506 /* saves.h */,
 				63807F7C1F6C51F500BFBBFE /* screenShake.h */,
 				635462FD1EA4285100B973D0 /* setupDrawEvent.h */,
-				63A5DB141F6ADDED00E5FDAD /* timeTaker.h */,
 				6380CB8D1EAACF6F00C8C260 /* toolbar.h */,
+				63D37F202239D68B0067F730 /* toolbar.cpp */,
 				22CAB9BC1C3E73DD00724B49 /* updateGrid.h */,
+				630A0AB122417FAE00A22C60 /* updateGrid.cpp */,
 				6380CB8A1EAAC73500C8C260 /* winningAnimation.h */,
 				63308D661F66EFFD007D3C5C /* main2.cpp */,
 				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
+				630A0AB52241845300A22C60 /* puzzleSolver.cpp */,
 				63308D601F667BE0007D3C5C /* levelGen.h */,
 				63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */,
 				631249771F86206A00BBA1A9 /* hopscotch_hash.h */,
@@ -271,8 +323,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63D37F272239DA310067F730 /* levels.cpp in Sources */,
+				630A0AB62241845300A22C60 /* puzzleSolver.cpp in Sources */,
+				63D37F182239B4DD0067F730 /* globals.cpp in Sources */,
 				63CA016F1FB31C79007C25F1 /* main.cpp in Sources */,
+				63D37F252239D7DD0067F730 /* levelEditorIDE.cpp in Sources */,
+				63D37F1F2239D4B50067F730 /* colorScheme.cpp in Sources */,
+				630A0AB8224185D000A22C60 /* keyEvent.cpp in Sources */,
+				630A0AB4224181BA00A22C60 /* messages.cpp in Sources */,
+				630A0AB022417DA900A22C60 /* levelEditor.cpp in Sources */,
+				63D37F292239EAB30067F730 /* displayLevel.cpp in Sources */,
+				63D37F162239ADE50067F730 /* audio.cpp in Sources */,
+				63D37F1B2239CEDA0067F730 /* eyes.cpp in Sources */,
 				63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */,
+				63D37F1D2239CFF40067F730 /* grid.cpp in Sources */,
+				63D37F2E223EEDCF0067F730 /* movement.cpp in Sources */,
+				63D37F2C223EE3CA0067F730 /* keyMap.cpp in Sources */,
+				63D37F212239D68B0067F730 /* toolbar.cpp in Sources */,
+				630A0AB222417FAE00A22C60 /* updateGrid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

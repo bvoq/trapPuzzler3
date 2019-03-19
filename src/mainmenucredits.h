@@ -102,8 +102,8 @@ deque<deque<int> > cellularAutomata () {
     cellLevel[cellLevel.size()-2][cellLevel[0].size()-sfxwidth]=2000001;
     cellLevel[cellLevel.size()-2][cellLevel[0].size()-1]=2000001;
     
-    cellLevel[cellLevel.size()-2][1+musicaudiolevel] = 2;
-    cellLevel[cellLevel.size()-2][cellLevel[0].size()-sfxwidth+1+sfxaudiolevel] = 3;
+    cellLevel[cellLevel.size()-2][1+audio::musicaudiolevel] = 2;
+    cellLevel[cellLevel.size()-2][cellLevel[0].size()-sfxwidth+1+audio::sfxaudiolevel] = 3;
     return cellLevel;
 }
 
@@ -338,14 +338,15 @@ void displayMainMenu() {
      */
     
     for(int i = 0; i < sfxwidth-2; ++i) {
-        if(getCellType(grid[grid.size()-2][1+i]) == PLAYER && musicaudiolevel != i) {
-            musicaudiolevel = i;
+        if(getCellType(grid[grid.size()-2][1+i]) == PLAYER && audio::musicaudiolevel != i) {
+            audio::musicaudiolevel = i;
             cout << "SET MUSIC AUDIO LEVEL TO " << i << endl;
+            
             saveSaveData();
             updateVolume();
         }
-        if(getCellType(grid[grid.size()-2][grid[0].size()+1-sfxwidth+i]) == PLAYER && sfxaudiolevel != i) {
-            sfxaudiolevel = i;
+        if(getCellType(grid[grid.size()-2][grid[0].size()+1-sfxwidth+i]) == PLAYER && audio::sfxaudiolevel != i) {
+            audio::sfxaudiolevel = i;
             cout << "SET AUDIO LEVEL TO " << i << endl;
             saveSaveData();
             updateVolume();

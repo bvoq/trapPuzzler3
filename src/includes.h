@@ -22,12 +22,12 @@
 #include <algorithm>
 
 #include "globals.h"
-
-#include "timeTaker.h"
+#include "macros.h"
 
 #include "audio.h"
 #include "keyMap.h"
 #include "colorScheme.h"
+#include "idMapTo.h"
 #include "grid.h"
 #include "eyes.h"
 #include "levels.h"
