@@ -1224,7 +1224,7 @@ void displayPencil(bool selected) {
     
     ofPushMatrix();
     ofTranslate(-20,5); //do center rotation
-    ofRotate(-45);
+    ofRotateDeg(-45);
     ofTranslate(20,-5); //undo center rotation
     
     ofSetColor(scheme.colorPENCILCOLOR_BASE);

@@ -1,5 +1,13 @@
 #include "ofApp.h"
-#include "includes.h"
+
+#include "audio.h"
+#include "displayLevel.h"
+#include "keyEvent.h"
+#include "levels.h"
+#include "levelEditorIDE.h"
+#include "mouseTouchEvent.h"
+#include "saves.h"
+#include "setupDrawEvent.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){

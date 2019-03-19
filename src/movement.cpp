@@ -104,6 +104,22 @@ float easeInOutSine(float t,float b , float c, float d) {
 
 void screenShake(long long, keyType, float);
 
+movement::movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
+           keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove, MusicType _audioOnMove) {
+    newGrid = _nG;
+    oldGrid = _oG;
+    newEyeGrid = _nEG;
+    oldEyeGrid = _oEG;
+    movementDirection = _mD;
+    hasMoved = _hM;
+    timeWhenStarted = getAdjustedTime();
+    isUndoMove = _isUndoMove;
+    movementTime = _movementTime;
+    oldPlayerID = playerID;
+    newPlayerID = playerID; //can be overwritten.
+    gravityMove = _gravityMove;
+    audioOnMove = _audioOnMove;
+}
 
 void movement::changeGrid() {
    grid = newGrid;

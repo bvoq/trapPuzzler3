@@ -1,4 +1,5 @@
-#pragma once
+#ifndef trapPuzzler3_audio_h
+#define trapPuzzler3_audio_h
 
 namespace audio {
     extern vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx, reversegravitysucksfx, reversegravityslurpsfx;
@@ -19,3 +20,4 @@ extern void playGravitySlurp(int gravityIntensity);
 extern void playReverseGravitySuck(int gravityIntensity);
 extern void playReverseGravitySlurp(int gravityIntensity);
 
+#endif

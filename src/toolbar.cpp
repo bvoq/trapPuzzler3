@@ -137,7 +137,7 @@ void displayToolBar() {
                             path.draw();
                             
                             ofTranslate(toolbarSize*.9/2.,toolbarSize*.9/2.);
-                            ofRotate(1);
+                            ofRotateDeg(1);
                             ofTranslate(-toolbarSize*.9/2.,-toolbarSize*.9/2.);
                             path.draw();
                             

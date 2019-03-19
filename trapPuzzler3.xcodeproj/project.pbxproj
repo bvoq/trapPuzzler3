@@ -12,6 +12,13 @@
 		630A0AB4224181BA00A22C60 /* messages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB3224181BA00A22C60 /* messages.cpp */; };
 		630A0AB62241845300A22C60 /* puzzleSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB52241845300A22C60 /* puzzleSolver.cpp */; };
 		630A0AB8224185D000A22C60 /* keyEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB7224185D000A22C60 /* keyEvent.cpp */; };
+		630A0ABA2241981F00A22C60 /* setupDrawEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AB92241981F00A22C60 /* setupDrawEvent.cpp */; };
+		630A0ABC2241992C00A22C60 /* winningAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0ABB2241992C00A22C60 /* winningAnimation.cpp */; };
+		630A0ABE224199F400A22C60 /* mouseTouchEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0ABD224199F400A22C60 /* mouseTouchEvent.cpp */; };
+		630A0AC022419C6300A22C60 /* saves.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0ABF22419C6300A22C60 /* saves.cpp */; };
+		630A0AC222419DCD00A22C60 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC122419DCD00A22C60 /* menu.cpp */; };
+		630A0AC422419F7C00A22C60 /* mainmenucredits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC322419F7C00A22C60 /* mainmenucredits.cpp */; };
+		630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC52241A19300A22C60 /* screenShake.cpp */; };
 		63CA016F1FB31C79007C25F1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 		63D37F162239ADE50067F730 /* audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F152239ADE50067F730 /* audio.cpp */; };
@@ -64,7 +71,6 @@
 		22CAB9B31C3E73DD00724B49 /* colorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorScheme.h; sourceTree = "<group>"; };
 		22CAB9B41C3E73DD00724B49 /* displayLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = displayLevel.h; sourceTree = "<group>"; };
 		22CAB9B51C3E73DD00724B49 /* grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = grid.h; sourceTree = "<group>"; };
-		22CAB9B61C3E73DD00724B49 /* includes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = includes.h; sourceTree = "<group>"; };
 		22CAB9B71C3E73DD00724B49 /* keyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyMap.h; sourceTree = "<group>"; };
 		22CAB9B81C3E73DD00724B49 /* levelEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levelEditor.h; sourceTree = "<group>"; };
 		22CAB9B91C3E73DD00724B49 /* levels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levels.h; sourceTree = "<group>"; };
@@ -76,6 +82,13 @@
 		630A0AB3224181BA00A22C60 /* messages.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = messages.cpp; sourceTree = "<group>"; };
 		630A0AB52241845300A22C60 /* puzzleSolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = puzzleSolver.cpp; sourceTree = "<group>"; };
 		630A0AB7224185D000A22C60 /* keyEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyEvent.cpp; sourceTree = "<group>"; };
+		630A0AB92241981F00A22C60 /* setupDrawEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = setupDrawEvent.cpp; sourceTree = "<group>"; };
+		630A0ABB2241992C00A22C60 /* winningAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = winningAnimation.cpp; sourceTree = "<group>"; };
+		630A0ABD224199F400A22C60 /* mouseTouchEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mouseTouchEvent.cpp; sourceTree = "<group>"; };
+		630A0ABF22419C6300A22C60 /* saves.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = saves.cpp; sourceTree = "<group>"; };
+		630A0AC122419DCD00A22C60 /* menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menu.cpp; sourceTree = "<group>"; };
+		630A0AC322419F7C00A22C60 /* mainmenucredits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainmenucredits.cpp; sourceTree = "<group>"; };
+		630A0AC52241A19300A22C60 /* screenShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = screenShake.cpp; sourceTree = "<group>"; };
 		631249761F86206A00BBA1A9 /* hopscotch_set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_set.h; sourceTree = "<group>"; };
 		631249771F86206A00BBA1A9 /* hopscotch_hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_hash.h; sourceTree = "<group>"; };
 		63308D601F667BE0007D3C5C /* levelGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelGen.h; sourceTree = "<group>"; };
@@ -94,8 +107,6 @@
 		63A725341D69DBC200F8BC0A /* messages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		63CDFA5C1DAA539E00454DE3 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
 		63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelEditorIDE.h; sourceTree = "<group>"; };
-		63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = puzzleScriptToBlock.h; sourceTree = "<group>"; };
-		63D37EF92239A4740067F730 /* idMapTo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = idMapTo.h; sourceTree = "<group>"; };
 		63D37F152239ADE50067F730 /* audio.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = audio.cpp; sourceTree = "<group>"; };
 		63D37F172239B4DD0067F730 /* globals.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = globals.cpp; sourceTree = "<group>"; };
 		63D37F192239C16E0067F730 /* bitsstdc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitsstdc.h; sourceTree = "<group>"; };
@@ -187,8 +198,6 @@
 				63D37F172239B4DD0067F730 /* globals.cpp */,
 				22CAB9B51C3E73DD00724B49 /* grid.h */,
 				63D37F1C2239CFF40067F730 /* grid.cpp */,
-				22CAB9B61C3E73DD00724B49 /* includes.h */,
-				63D37EF92239A4740067F730 /* idMapTo.h */,
 				635462FC1EA425B900B973D0 /* keyEvent.h */,
 				630A0AB7224185D000A22C60 /* keyEvent.cpp */,
 				22CAB9B71C3E73DD00724B49 /* keyMap.h */,
@@ -200,21 +209,27 @@
 				22CAB9B91C3E73DD00724B49 /* levels.h */,
 				63D37F262239DA310067F730 /* levels.cpp */,
 				634057331F6EE2B600B736BC /* mainmenucredits.h */,
+				630A0AC322419F7C00A22C60 /* mainmenucredits.cpp */,
 				228A4F5C1C48380100D11AB9 /* menu.h */,
+				630A0AC122419DCD00A22C60 /* menu.cpp */,
 				63A725341D69DBC200F8BC0A /* messages.h */,
 				630A0AB3224181BA00A22C60 /* messages.cpp */,
 				6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */,
+				630A0ABD224199F400A22C60 /* mouseTouchEvent.cpp */,
 				22CAB9BA1C3E73DD00724B49 /* movement.h */,
 				63D37F2D223EEDCF0067F730 /* movement.cpp */,
-				63D37EF82239A3520067F730 /* puzzleScriptToBlock.h */,
 				22A39D901C5387FA0007A506 /* saves.h */,
+				630A0ABF22419C6300A22C60 /* saves.cpp */,
 				63807F7C1F6C51F500BFBBFE /* screenShake.h */,
+				630A0AC52241A19300A22C60 /* screenShake.cpp */,
 				635462FD1EA4285100B973D0 /* setupDrawEvent.h */,
+				630A0AB92241981F00A22C60 /* setupDrawEvent.cpp */,
 				6380CB8D1EAACF6F00C8C260 /* toolbar.h */,
 				63D37F202239D68B0067F730 /* toolbar.cpp */,
 				22CAB9BC1C3E73DD00724B49 /* updateGrid.h */,
 				630A0AB122417FAE00A22C60 /* updateGrid.cpp */,
 				6380CB8A1EAAC73500C8C260 /* winningAnimation.h */,
+				630A0ABB2241992C00A22C60 /* winningAnimation.cpp */,
 				63308D661F66EFFD007D3C5C /* main2.cpp */,
 				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
 				630A0AB52241845300A22C60 /* puzzleSolver.cpp */,
@@ -324,8 +339,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D37F272239DA310067F730 /* levels.cpp in Sources */,
+				630A0ABE224199F400A22C60 /* mouseTouchEvent.cpp in Sources */,
 				630A0AB62241845300A22C60 /* puzzleSolver.cpp in Sources */,
 				63D37F182239B4DD0067F730 /* globals.cpp in Sources */,
+				630A0AC022419C6300A22C60 /* saves.cpp in Sources */,
+				630A0ABC2241992C00A22C60 /* winningAnimation.cpp in Sources */,
 				63CA016F1FB31C79007C25F1 /* main.cpp in Sources */,
 				63D37F252239D7DD0067F730 /* levelEditorIDE.cpp in Sources */,
 				63D37F1F2239D4B50067F730 /* colorScheme.cpp in Sources */,
@@ -336,9 +354,13 @@
 				63D37F162239ADE50067F730 /* audio.cpp in Sources */,
 				63D37F1B2239CEDA0067F730 /* eyes.cpp in Sources */,
 				63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */,
+				630A0ABA2241981F00A22C60 /* setupDrawEvent.cpp in Sources */,
+				630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */,
 				63D37F1D2239CFF40067F730 /* grid.cpp in Sources */,
 				63D37F2E223EEDCF0067F730 /* movement.cpp in Sources */,
 				63D37F2C223EE3CA0067F730 /* keyMap.cpp in Sources */,
+				630A0AC422419F7C00A22C60 /* mainmenucredits.cpp in Sources */,
+				630A0AC222419DCD00A22C60 /* menu.cpp in Sources */,
 				63D37F212239D68B0067F730 /* toolbar.cpp in Sources */,
 				630A0AB222417FAE00A22C60 /* updateGrid.cpp in Sources */,
 			);
