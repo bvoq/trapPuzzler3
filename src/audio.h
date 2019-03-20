@@ -1,3 +1,4 @@
+#ifndef compiledWithoutOpenframeworks
 #ifndef audio_h
 #define audio_h
 
@@ -22,4 +23,5 @@ extern void playGravitySlurp(int gravityIntensity);
 extern void playReverseGravitySuck(int gravityIntensity);
 extern void playReverseGravitySlurp(int gravityIntensity);
 
+#endif
 #endif

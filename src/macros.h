@@ -24,7 +24,8 @@ using namespace std; //For every source file, namespace std is required!
 // DEBUG MACRO, can remove all debug statements by commenting out the other line:
 #define DEB(x) cerr << x << endl;
 //#define DEB(x) while(0) cerr << x << endl;
-
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
 //ENUM Declarations
 

@@ -19,6 +19,8 @@
 		630A0AC222419DCD00A22C60 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC122419DCD00A22C60 /* menu.cpp */; };
 		630A0AC422419F7C00A22C60 /* mainmenucredits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC322419F7C00A22C60 /* mainmenucredits.cpp */; };
 		630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC52241A19300A22C60 /* screenShake.cpp */; };
+		630A0AC82242A39100A22C60 /* levelGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC72242A39100A22C60 /* levelGen.cpp */; };
+		630A0ACA2242A47900A22C60 /* parallelLevelCreation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC92242A47900A22C60 /* parallelLevelCreation.cpp */; };
 		63CA016F1FB31C79007C25F1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 		63D37F162239ADE50067F730 /* audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F152239ADE50067F730 /* audio.cpp */; };
@@ -89,6 +91,8 @@
 		630A0AC122419DCD00A22C60 /* menu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = menu.cpp; sourceTree = "<group>"; };
 		630A0AC322419F7C00A22C60 /* mainmenucredits.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mainmenucredits.cpp; sourceTree = "<group>"; };
 		630A0AC52241A19300A22C60 /* screenShake.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = screenShake.cpp; sourceTree = "<group>"; };
+		630A0AC72242A39100A22C60 /* levelGen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = levelGen.cpp; sourceTree = "<group>"; };
+		630A0AC92242A47900A22C60 /* parallelLevelCreation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = parallelLevelCreation.cpp; sourceTree = "<group>"; };
 		631249761F86206A00BBA1A9 /* hopscotch_set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_set.h; sourceTree = "<group>"; };
 		631249771F86206A00BBA1A9 /* hopscotch_hash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopscotch_hash.h; sourceTree = "<group>"; };
 		63308D601F667BE0007D3C5C /* levelGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelGen.h; sourceTree = "<group>"; };
@@ -234,7 +238,9 @@
 				22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */,
 				630A0AB52241845300A22C60 /* puzzleSolver.cpp */,
 				63308D601F667BE0007D3C5C /* levelGen.h */,
+				630A0AC72242A39100A22C60 /* levelGen.cpp */,
 				63308D611F66E8DC007D3C5C /* parallelLevelCreation.h */,
+				630A0AC92242A47900A22C60 /* parallelLevelCreation.cpp */,
 				631249771F86206A00BBA1A9 /* hopscotch_hash.h */,
 				631249761F86206A00BBA1A9 /* hopscotch_set.h */,
 				6380CB8C1EAACA0900C8C260 /* TODO.rtf */,
@@ -357,6 +363,8 @@
 				630A0ABA2241981F00A22C60 /* setupDrawEvent.cpp in Sources */,
 				630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */,
 				63D37F1D2239CFF40067F730 /* grid.cpp in Sources */,
+				630A0ACA2242A47900A22C60 /* parallelLevelCreation.cpp in Sources */,
+				630A0AC82242A39100A22C60 /* levelGen.cpp in Sources */,
 				63D37F2E223EEDCF0067F730 /* movement.cpp in Sources */,
 				63D37F2C223EE3CA0067F730 /* keyMap.cpp in Sources */,
 				630A0AC422419F7C00A22C60 /* mainmenucredits.cpp in Sources */,

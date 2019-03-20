@@ -12,27 +12,21 @@
 //
 
 #define compiledWithoutOpenframeworks //THIS CAN BE COMPILED WITHOUT OPENFRAMEWORKS!
+#define nogetvertices
 
 #include "macros.h" // include all preprocessor libraries, etc.
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
-float PI = 3.1415926;
-
-#define compiledWithoutOpenframeworks
-#define nogetvertices
-////#include "ofMain.h"
-#define ddd deque<deque<int> >
-#include "globals.h"
-#include "keyMap.h"
-#include "grid.h"
-#include "eyes.h"
-#include "movement.h"
-#include "levelGen.h"
-#include "puzzleSolver.h"
-//#include "keyEvent.h"
 #include "parallelLevelCreation.h"
-#include "winningAnimation.h"
+
+//#include "globals.h"
+//#include "keyMap.h"
+//#include "grid.h"
+//#include "eyes.h"
+//#include "movement.h"
+//#include "levelGen.h"
+//#include "puzzleSolver.h"
+//#include "parallelLevelCreation.h"
+//#include "winningAnimation.h"
 
 deque<deque<int> > spiralGen(int n) {
     deque<deque<int> > grid (n, deque<int>(n,0));
@@ -69,6 +63,7 @@ deque<deque<int> > spiralGen(int n) {
 }
 
 int main() {
+    /*
     deque<deque<int> > splevel = spiralGen(12);
     cout << "{";
     for(int i = 0; i < splevel.size(); ++i) {
@@ -80,6 +75,9 @@ int main() {
     }
     cout << "}" << endl;
     return 0;
+    */
+    
+    
     int maxSize = 4096*16;
     
     //srand(time(0)); //seed only needs to be loaded once, every thread should execute something different.

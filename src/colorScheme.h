@@ -7,6 +7,7 @@
 //
 //
 
+#ifndef compiledWithoutOpenframeworks
 #ifndef colorScheme_h
 #define colorScheme_h
 
@@ -58,4 +59,5 @@ extern colorScheme scheme;
 extern colorScheme scheme0;
 extern colorScheme scheme1;
 
+#endif
 #endif
