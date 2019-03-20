@@ -11,13 +11,13 @@
 
 #include "macros.h"
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 extern void blockMovementForWinning();
 #endif
 
 extern bool winState(ddd & moveGrid, bool winningAnimationAction);
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 extern void winningAnimation();
 #endif
 

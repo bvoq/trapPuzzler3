@@ -9,10 +9,9 @@
 #ifndef globals_h
 #define globals_h
 
-#include "bitsstdc.h" //same as <bits/stdc++.h>
 #include "macros.h"
 
-extern const std::string locationOfResources;// basically finds in Resources/data
+extern const string locationOfResources;// basically finds in Resources/data
 
 extern float MIN_CELL_SIZE;
 extern int playerID;
@@ -31,7 +30,7 @@ extern const long long maxUndoTime;
 
 extern long long timeForMovement;
 
-extern std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
+extern chrono::time_point<chrono::high_resolution_clock> timeMeasuredForHCI;
 extern bool firstMovementHCI;
 
 extern bool levelEditorInMenu;
@@ -53,19 +52,16 @@ extern bool blockMovementDueToWinningAnimation;
 extern bool forceUndo;
 
 extern bool beautifulGraphics;
-enum RenderMode {
-    PARTIAL, FULL
-};
+
 extern RenderMode renderMode;
 
 enum playMode {
     PLAYING=0, LEVEL_EDITOR_PLAYING=1, LEVEL_EDITOR=2, MENU=3, PAUSE=4, MENUOLD=5, MAINMENU=6, ADVENTURE=7, CREDITS=8, CONTROL_CHANGE=9, UNKNOWN=100
 };
 extern playMode mode;
-extern std::string strmode(playMode m);
+extern string strmode(playMode m);
 
-#ifndef islevelgen
-#include "ofMain.h"
+#ifndef compiledWithoutOpenframeworks
 extern ofColor backgroundColor;
 extern void switchRenderMode(RenderMode ini);
 #endif

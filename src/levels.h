@@ -7,13 +7,10 @@
 //
 //
 
-#ifndef trapPuzzler3_levels_h
-#define trapPuzzler3_levels_h
+#ifndef levels_h
+#define levels_h
 
-#include "bitsstdc.h"
-
-#define ddd std::deque<std::deque<int> >
-
+#include "macros.h"
 
 extern int currentLevel;
 
@@ -21,11 +18,11 @@ struct LevelInfo {
     LevelInfo() {}
 };
 
-extern std::vector<ddd > levels;
-extern std::vector<ddd > defaultlevels;
-extern std::vector<LevelInfo> levelsInfo;
-extern std::vector<LevelInfo> defaultlevelsInfo;
-extern std::vector<bool> beaten;
+extern vector<ddd > levels;
+extern vector<ddd > defaultlevels;
+extern vector<LevelInfo> levelsInfo;
+extern vector<LevelInfo> defaultlevelsInfo;
+extern vector<bool> beaten;
 
 
 extern bool validateLevel(ddd & level, LevelInfo levelInfo);

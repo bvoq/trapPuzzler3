@@ -10,7 +10,7 @@
 #include "saves.h"
 #include "updateGrid.h"
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 void blockMovementForWinning() {
     blockMovementDueToWinningAnimation = true;
     playerTouches.clear();
@@ -102,13 +102,13 @@ bool winState(deque<deque<int> > & moveGrid, bool winningAnimationAction) {
     return false;
 }
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 #include "globals.h"
 void winningAnimation() {
     if(!firstMovementHCI) {
-        auto end = std::chrono::high_resolution_clock::now();
-        long long timeMeasured = std::chrono::duration_cast<std::chrono::nanoseconds>(end-timeMeasuredForHCI).count();
-        std::cout << "Measured time as: " << timeMeasured << " ns" << std::endl;
+        auto end = chrono::high_resolution_clock::now();
+        long long timeMeasured = chrono::duration_cast<chrono::nanoseconds>(end-timeMeasuredForHCI).count();
+        cout << "Measured time as: " << timeMeasured << " ns" << endl;
         firstMovementHCI = true;
     }
     blockMovementForWinning();

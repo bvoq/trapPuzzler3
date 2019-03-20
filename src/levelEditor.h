@@ -6,14 +6,10 @@
 //
 //
 
-#ifndef trapPuzzler3_levelEditor_h
-#define trapPuzzler3_levelEditor_h
+#ifndef levelEditor_h
+#define levelEditor_h
 
-#include "bitsstdc.h"
 #include "macros.h"
-
-#include "grid.h"
-#include "keyMap.h"
 
 extern ddd editorGrid;
 //int editorGridY, editorGridX;
@@ -23,8 +19,8 @@ extern cellType placeType;
 
 extern void changeBrush (cellType newPlaceType);
 
-extern std::set<std::pair<int, int> > tilesToBePlaced;
-extern std::vector<ddd > levelEditorSaves;
+extern set<pair<int, int> > tilesToBePlaced;
+extern vector<ddd > levelEditorSaves;
 
 extern void initLevelEditor(int loadFromLevel, bool empty);
 
@@ -36,7 +32,7 @@ extern void placeSelectedTiles();
 
 extern void undoLevelEditorMove();
 
-extern void levelFormattedExportWithoutCropping(std::ostream & o, ddd copied);
+extern void levelFormattedExportWithoutCropping(ostream & o, ddd copied);
 
 extern void displayLevelEditor();
 

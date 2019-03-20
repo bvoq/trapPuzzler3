@@ -6,6 +6,7 @@
 #include "globals.h"
 #include "grid.h"
 #include "keyEvent.h"
+#include "keyMap.h"
 #include "levels.h"
 
 //int MENUlevelWidth;

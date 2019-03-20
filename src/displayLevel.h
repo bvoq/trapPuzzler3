@@ -7,15 +7,10 @@
 //
 //
 
-#ifndef trapPuzzler3_displayLevel_h
-#define trapPuzzler3_displayLevel_h
+#ifndef displayLevel_h
+#define displayLevel_h
 
-#include "bitsstdc.h"
 #include "macros.h"
-#include "ofMain.h"
-
-#include "keyMap.h"
-#include "movement.h"
 
 extern int LINE_WIDTH;
 
@@ -47,11 +42,11 @@ extern void drawCellStroke(int o, int p, float scale, float tScale, ddd & grid);
 
 extern void recheckGrid();
 
-extern void displayLevel(ddd & grid, ddd & moveGrid, std::deque<movement> & movements);
+extern void displayLevel(ddd & grid, ddd & moveGrid, deque<movement> & movements);
 
 extern void switchRenderMode(RenderMode in);
 
-extern void displayLevelWORefresh(ddd & grid, ddd & moveGrid, std::deque<movement> & movements);
+extern void displayLevelWORefresh(ddd & grid, ddd & moveGrid, deque<movement> & movements);
 
 extern void displayPencil(bool selected);
 

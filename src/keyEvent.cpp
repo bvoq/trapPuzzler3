@@ -3,6 +3,7 @@
 #include "eyes.h"
 #include "globals.h"
 #include "grid.h"
+#include "keyMap.h"
 #include "levels.h"
 #include "levelEditor.h"
 #include "levelEditorIDE.h"

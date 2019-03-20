@@ -11,29 +11,15 @@
 //
 //
 
-#include <algorithm>
-#include <deque>
-#include <iostream>
-#include <queue>
-#include <random>
-#include <set>
-#include <vector>
-#include <ctime>
-#include <cassert>
-#include <mutex>
-#include <thread>
-#include <climits>
-#include <map>
-#include <unordered_set>
-#include <string>
-#include <map>
-using namespace std;
+#define compiledWithoutOpenframeworks //THIS CAN BE COMPILED WITHOUT OPENFRAMEWORKS!
+
+#include "macros.h" // include all preprocessor libraries, etc.
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 float PI = 3.1415926;
 
-#define islevelgen
+#define compiledWithoutOpenframeworks
 #define nogetvertices
 ////#include "ofMain.h"
 #define ddd deque<deque<int> >

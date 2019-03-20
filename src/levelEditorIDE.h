@@ -8,13 +8,12 @@
 #ifndef levelEditorIDE_h
 #define levelEditorIDE_h
 
-#include "bitsstdc.h"
-
+#include "macros.h"
 
 extern bool activeIDE;
 extern float ideFactor; //how much of the screen should be IDE
 
-extern std::vector<std::string> ideString;
+extern vector<string> ideString;
 
 extern void initLevelEditorIDE();
 extern void switchToIDE();

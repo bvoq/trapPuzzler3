@@ -7,6 +7,7 @@
 #include "globals.h"
 #include "grid.h"
 #include "keyEvent.h"
+#include "keyMap.h"
 #include "menu.h"
 #include "movement.h"
 #include "saves.h"

@@ -1,9 +1,6 @@
-
-
-#include "globals.h"
 #include "audio.h"
 
-#include "ofMain.h"
+#include "globals.h"
 
 namespace audio {
     vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx, reversegravitysucksfx, reversegravityslurpsfx;

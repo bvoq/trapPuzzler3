@@ -25,7 +25,7 @@ const long long timeForSlowClickMovement = 1000;
 const long long maxUndoTime = timeForTypedMovement * 8;
 long long timeForMovement = timeForSlowMovement;
 
-std::chrono::time_point<std::chrono::high_resolution_clock> timeMeasuredForHCI;
+chrono::time_point<chrono::high_resolution_clock> timeMeasuredForHCI;
 bool firstMovementHCI = false;
 
 bool levelEditorInMenu = false;
@@ -55,7 +55,7 @@ string strmode(playMode m) {
 }
 
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 ofColor backgroundColor;
 void switchRenderMode(RenderMode ini);
 #endif

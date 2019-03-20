@@ -1,8 +1,12 @@
 #include "puzzleSolver.h"
 
+
+#include "globals.h"
 #include "grid.h"
+#include "keyMap.h"
 #include "movement.h"
 
+//#include "hopscotch_set.h"
 
 //Set hasGravity = true, if uncertain.
 //returns -1 = UNSOLVABLE, non-negative = Number of steps used to compute the solution , -2 = UNKNOWN (not fully computed), -3 = ERROR, such as no player
@@ -122,7 +126,7 @@ int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int 
     else return -1; //DEFINETELY UNSOLVABLE
 }
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 void keyEvent(keyType);
 void solveInGame() {
     bool hasGravity = false;

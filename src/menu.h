@@ -6,10 +6,9 @@
 //
 //
 
-#ifndef trapPuzzler3_menu_h
-#define trapPuzzler3_menu_h
+#ifndef menu_h
+#define menu_h
 
-#include "bitsstdc.h"
 #include "macros.h"
 
 extern void initMenu();

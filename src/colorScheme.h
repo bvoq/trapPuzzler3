@@ -7,11 +7,10 @@
 //
 //
 
-#ifndef trapPuzzler3_colorScheme_h
-#define trapPuzzler3_colorScheme_h
+#ifndef colorScheme_h
+#define colorScheme_h
 
-#include "bitsstdc.h"
-#include "ofMain.h"
+#include "macros.h"
 
 struct colorScheme {
     ofColor colorPLAYERSELECTED, colorPLAYERUNSELECTED, colorENEMY, colorENEMYSTROKE, colorUNMOVABLE_ENEMY, colorUNMOVABLE_ENEMYSTROKE, colorLOVE, colorLOVESTROKE, colorGRAVITYMONSTER, colorGRAVITYMONSTERSTROKE, colorBACKGROUND, colorBACKGROUND_LIGHT, colorBACKGROUND_SHADED, colorBACKGROUND_VOID, colorLEVELSELECT, colorLEVELSELECT_LIGHT, colorMESSAGE, colorMESSAGE_SHADED, colorTOOLBAR, colorTOOLBARBUTTON, colorTOOLBARBUTTON_LIGHT, colorTOOLBARBUTTON_SELECTED, colorTOOLBARBUTTON_SELECTED_LIGHT, colorIDE_BACKGROUND, colorIDE_TEXT, colorIDE_CURSOR, colorPENCILCOLOR_LOWERBASE, colorPENCILCOLOR_BASE, colorPENCILCOLOR_BODY, colorPENCILCOLOR_HEAD, colorPENCILCOLOR_FRAME;

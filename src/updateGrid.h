@@ -8,10 +8,9 @@
 //
 //
 
-#ifndef trapPuzzler3_updateGrid_h
-#define trapPuzzler3_updateGrid_h
+#ifndef updateGrid_h
+#define updateGrid_h
 
-#include "bitsstdc.h"
 #include "macros.h"
 
 extern void cleanupLevelPlayingData();

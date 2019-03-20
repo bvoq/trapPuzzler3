@@ -1,5 +1,7 @@
-#ifndef trapPuzzler3_audio_h
-#define trapPuzzler3_audio_h
+#ifndef audio_h
+#define audio_h
+
+#include "macros.h"
 
 namespace audio {
     extern vector<ofSoundPlayer> titles, walksfx, undosfx, blockingsfx, gravitysucksfx, gravityslurpsfx, reversegravitysucksfx, reversegravityslurpsfx;

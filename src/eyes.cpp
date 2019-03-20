@@ -9,7 +9,7 @@ using namespace std;
 deque<deque<int> > eyeGrid, moveEyeGrid;
 int currentWatchY = 0, currentWatchX = 0;
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 void generateLookAt(deque<deque<int> > & eGrid) {
     currentWatchY = 0; currentWatchY = 0;
     for(int i = 0; i < grid.size(); ++i) {

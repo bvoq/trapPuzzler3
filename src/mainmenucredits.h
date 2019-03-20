@@ -9,10 +9,7 @@
 #ifndef mainmenu_h
 #define mainmenu_h
 
-#include "bitsstdc.h"
 #include "macros.h"
-
-#include "keyMap.h"
 
 extern void updateCellularAutomaton(ddd & cellLevel, int & cellularAutomatonLevel, int seed);
 extern ddd cellularAutomata ();

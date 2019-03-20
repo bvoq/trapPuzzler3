@@ -11,9 +11,9 @@
 
 #include <thread>
 #define synchronized(m) \
-for(std::unique_lock<std::recursive_mutex> lk(m); lk; lk.unlock())
+for(unique_lock<recursive_mutex> lk(m); lk; lk.unlock())
 
-std::recursive_mutex m_mutex;
+recursive_mutex m_mutex;
 int globalCount = 0;
 long long threadCount = 46; //48 is max core count i think, so utilising 47 with threadCount = 46 makes sense.
 

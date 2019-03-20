@@ -6,23 +6,23 @@
 //
 //
 
-#ifndef trapPuzzler3_eyes_h
-#define trapPuzzler3_eyes_h
+#ifndef eyes_h
+#define eyes_h
 
-#include "bitsstdc.h"
+#include "macros.h"
 
-extern std::deque<std::deque<int> > eyeGrid, moveEyeGrid;
+extern deque<deque<int> > eyeGrid, moveEyeGrid;
 extern int currentWatchY, currentWatchX;
 
-#ifndef islevelgen
-extern void generateLookAt(std::deque<std::deque<int> > & eGrid);
+#ifndef compiledWithoutOpenframeworks
+extern void generateLookAt(deque<deque<int> > & eGrid);
 
 extern void generateEyeGrid();
 extern void drawEnemyEye(bool direction, int i , int j, float scale, int gridY, int gridX, bool surpriseOrAnger, float incr);
 
 extern void drawLoveEye(float scale);
 extern void drawPlayerEye(float scale, float incr);
-extern void drawEyes(int i, int j, float scale, float tScale, std::deque<std::deque<int> > & eGrid, std::deque<std::deque<int> > & grid, float incr);
+extern void drawEyes(int i, int j, float scale, float tScale, deque<deque<int> > & eGrid, deque<deque<int> > & grid, float incr);
 #endif
 
 #endif

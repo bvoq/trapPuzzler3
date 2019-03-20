@@ -6,47 +6,41 @@
 //
 //
 
-#ifndef trapPuzzler3_grid_h
-#define trapPuzzler3_grid_h
+#ifndef grid_h
+#define grid_h
 
-#include "bitsstdc.h"
+#include "macros.h"
 
 extern const int GRAVITYMONSTERMOUTHID, GRAVITYMONSTEREYEID, GRAVITYMONSTERDEADEYEID;
-enum cellType {
-    AIR=0, PLAYER=1, ENEMY=2, UNMOVABLE_ENEMY=3, LOVE=4, SUPERAIR=9, GRAVITYMONSTERMOUTH=10101010, GRAVITYMONSTEREYE=10101011, GRAVITYMONSTERDEADEYE = 10101012
-};
 
-extern std::string strcelltype(cellType cT);
+extern string strcelltype(cellType cT);
 extern cellType getCellType(int ID);
 
-extern std::deque<std::deque<int> > grid, moveGrid;
+extern deque<deque<int> > grid, moveGrid;
 //int gridX, gridY, moveGridX, moveGridY;
 
-extern void pushBackRowOf(std::deque<std::deque<int> > &input);
-extern void pushFrontRowOf(std::deque<std::deque<int> > &input);
-extern void pushBackColumnOf(std::deque<std::deque<int> > &input);
-extern void pushFrontColumnOf(std::deque<std::deque<int> > &input);
+extern void pushBackRowOf(deque<deque<int> > &input);
+extern void pushFrontRowOf(deque<deque<int> > &input);
+extern void pushBackColumnOf(deque<deque<int> > &input);
+extern void pushFrontColumnOf(deque<deque<int> > &input);
 
-extern void popBackRowOf(std::deque<std::deque<int> > &input);
-extern void popFrontRowOf(std::deque<std::deque<int> > &input);
-extern void popBackColumnOf(std::deque<std::deque<int> > &input);
-extern void popFrontColumnOf(std::deque<std::deque<int> > &input);
+extern void popBackRowOf(deque<deque<int> > &input);
+extern void popFrontRowOf(deque<deque<int> > &input);
+extern void popBackColumnOf(deque<deque<int> > &input);
+extern void popFrontColumnOf(deque<deque<int> > &input);
 
-extern void cropBordersOf(std::deque<std::deque<int> > &tempGrid);
-extern void cropBordersOfBoth(std::deque<std::deque<int> > &tempGrid, std::deque<std::deque<int> > &cropSameWay);
+extern void cropBordersOf(deque<deque<int> > &tempGrid);
+extern void cropBordersOfBoth(deque<deque<int> > &tempGrid, deque<deque<int> > &cropSameWay);
 
 //MAKE SURE TO CHANGE GRID COORDS ASWELL!!
-extern void extendGridToFit(std::deque<std::deque<int> > & tempGrid, int sizeY, int sizeX);
+extern void extendGridToFit(deque<deque<int> > & tempGrid, int sizeY, int sizeX);
 
 
-#ifndef islevelgen
-
-#include "ofMain.h"
+#ifndef compiledWithoutOpenframeworks
 extern ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX);
 extern pair<int,int> calculateInversePosition(int coordY, int coordX, int gridY, int gridX);
-
 #endif
 
-extern void levelExport(ostream & o, std::deque<std::deque<int> > copied);
+extern void levelExport(ostream & o, deque<deque<int> > copied);
 
 #endif

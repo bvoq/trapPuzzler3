@@ -2,9 +2,12 @@
 
 #include "audio.h"
 #include "displayLevel.h"
+#include "globals.h"
 #include "keyEvent.h"
+#include "keyMap.h"
 #include "levels.h"
 #include "levelEditorIDE.h"
+#include "movement.h"
 #include "mouseTouchEvent.h"
 #include "saves.h"
 #include "setupDrawEvent.h"

@@ -18,7 +18,7 @@ map<int, playerTouchMovement> playerTouches; //player id of touch.
 map<int,pair<int,int> > origMouseTouch;
 void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
     if(firstMovementHCI) {
-        timeMeasuredForHCI = std::chrono::high_resolution_clock::now();
+        timeMeasuredForHCI = chrono::high_resolution_clock::now();
         
         cout << "Started counter" << endl;
         firstMovementHCI = false;

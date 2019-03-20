@@ -9,6 +9,8 @@
 #ifndef toolbar_h
 #define toolbar_h
 
+#include "macros.h"
+
 extern int toolbarX, toolbarY;
 
 enum ToolbarOrientation {

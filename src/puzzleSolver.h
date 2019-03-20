@@ -6,12 +6,9 @@
 //
 //
 
-#ifndef trapPuzzler3_puzzleSolver_h
-#define trapPuzzler3_puzzleSolver_h
+#ifndef puzzleSolver_h
+#define puzzleSolver_h
 
-#include "bitsstdc.h"
-#include "hopscotch_set.h"
-#include "keyMap.h"
 #include "macros.h"
 
 //Set hasGravity = true, if uncertain.
@@ -19,7 +16,7 @@
 extern bool winState(ddd &,bool);
 extern int newSolver(ddd gridtosolve, bool hasGravity, vector<keyType> & solution, int maxComputationFields);
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 extern void keyEvent(keyType);
 extern void solveInGame();
 #endif

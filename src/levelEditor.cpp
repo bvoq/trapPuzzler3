@@ -2,6 +2,8 @@
 
 #include "colorScheme.h"
 #include "displayLevel.h"
+#include "globals.h"
+#include "grid.h"
 #include "levelEditorIDE.h"
 #include "levels.h"
 #include "puzzleSolver.h"

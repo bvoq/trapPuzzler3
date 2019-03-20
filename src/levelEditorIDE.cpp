@@ -154,7 +154,7 @@ void ideKeyPressed(int key, bool isSuperKey) {
                 FILE* pipe = popen(cmd.c_str(), "r");
                 if (!pipe) break;
                 char buffer[128];
-                std::string result = "";
+                string result = "";
                 while(!feof(pipe))
                 {
                     if(fgets(buffer, 128, pipe) != NULL)

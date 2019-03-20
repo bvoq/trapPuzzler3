@@ -100,7 +100,7 @@ float easeInOutSine(float t,float b , float c, float d) {
 }
 
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 
 void screenShake(long long, keyType, float);
 
@@ -357,7 +357,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     else if(input == LEFT) pushFrontColumnOf(moveGrid);
     else if(input == RIGHT) pushBackColumnOf(moveGrid);
     
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
     if(!solver) {
         if(input == UP) pushFrontRowOf(moveEyeGrid);
         else if(input == DOWN) pushBackRowOf(moveEyeGrid);
@@ -372,7 +372,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     set<pair<int, int> > eyesToChange;
     int theReturn = moveTile(moveGrid, moveEyeGrid, playerID, input, checked, tempGrid, eyesToChange, solver);
     if(theReturn == -1) {
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
         if(!solver) {
             screenShake(timeAllowed*2, input, wallShakeIntensity);
             playBlocking();
@@ -390,7 +390,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
         else if(input == LEFT) xTrans = -1;
         else if(input == RIGHT) xTrans = 1;
         
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
         if(!solver) {
             vector<int> eyeColor;
             for(auto it : eyesToChange) {
@@ -420,7 +420,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             }
         }
         checkForMerge(moveGrid,playerID);
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
         if(!solver) {
             movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false, NORMALMT);
             movements.push_back(newMovement);
@@ -438,7 +438,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 }
             }
         }
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
         size_t movementSizeNonGravity = movements.size();
         bool doesSlurping = false; int deadEyeCountForSlurping = 0;
 #endif
@@ -490,7 +490,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                                     else forceUndo = mustUndo;
                                 }
                                 moveGrid[i][positionOfGravityMonsterX-1] = 0;
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
                                 doesSlurping = true;
 #endif
                             }
@@ -501,7 +501,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                                                                     || getCellType(moveGrid[i][positionOfGravityMonsterX-3]) == LOVE)) {
                                 movementSlowDownDueToEyeKilling = true;
                                 moveGrid[i][positionOfGravityMonsterX-2] = GRAVITYMONSTERDEADEYEID;
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
                                 deadEyeCountForSlurping++;
 #endif
                             }
@@ -549,7 +549,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
                 moveGrid = tempGrid;
                 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
                 if(!solver) {
                     vector<int> eyeColor;
                     for(auto it : affectedEyes) {
@@ -568,7 +568,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
                 checkForMerge(moveGrid,playerID);
                 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
                 if(!solver && moveGrid != oldGrid) {
                     movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true, NONEMT);
                     movements.push_back(newGravityMovement);
@@ -578,7 +578,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
             } while(affectedByGravity.size() > 0 && gravityMaxCount-->0);
             if(solver && affectedByGravity.size()!=0) return false;
             
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
             if(!solver && movements.size() - movementSizeNonGravity > 0) {
                 
                 //cout << "Gravity diff " << movements.size() - movementSizeNonGravity << " deadeye " << deadEyeCountForSlurping << endl;
@@ -609,7 +609,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     }
 }
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 void changePlayerId(int i) {
     playerID = i;
     if(renderMode == PARTIAL) {switchRenderMode(PARTIAL);}
@@ -629,7 +629,7 @@ int changePlayerIdDeterministic(deque<deque<int> > & moveGrid, int playerID, boo
     
     if(playerIDs.size() == 0) return playerID;
     if(playerIDs.size() == 1) {
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
         if(!solver) changePlayerId(*playerIDs.begin());
 #endif
         return *playerIDs.begin();
@@ -637,14 +637,14 @@ int changePlayerIdDeterministic(deque<deque<int> > & moveGrid, int playerID, boo
     bool next = false;
     for(auto c : playerIDs) {
         if(next) {
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
             if(!solver) changePlayerId(c);
 #endif
             return c;
         }
         if(c == playerID) next = true;
     }
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
     if(!solver) changePlayerId(*playerIDs.begin());
 #endif
     return *playerIDs.begin();

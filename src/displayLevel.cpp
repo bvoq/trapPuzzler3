@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "grid.h"
 #include "levels.h"
+#include "movement.h"
 
 int LINE_WIDTH = 5;
 

@@ -6,10 +6,9 @@
 //
 //
 
-#ifndef trapPuzzler3_saves_h
-#define trapPuzzler3_saves_h
+#ifndef saves_h
+#define saves_h
 
-#include "bitsstdc.h"
 #include "macros.h"
 
 extern void loadSaveData();

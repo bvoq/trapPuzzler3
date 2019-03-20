@@ -6,14 +6,10 @@
 //
 //
 
-#ifndef trapPuzzler3_movement_h
-#define trapPuzzler3_movement_h
+#ifndef movement_h
+#define movement_h
 
-#include "bitsstdc.h"
 #include "macros.h"
-
-#include "globals.h"
-#include "keyMap.h"
 
 extern void checkForMerge(ddd &, int &);
 extern void recheckGrid();
@@ -33,8 +29,7 @@ extern float easeOutSine (float t, float b, float c, float d);
 extern float easeInOutSine(float t, float b, float c, float d);
 
 
-#ifndef islevelgen
-#include "ofMain.h"
+#ifndef compiledWithoutOpenframeworks
 enum MusicType {
     NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203, RSUCK0MT=300, RSUCK1MT=301, RSUCK2MT=302, RSUCK3MT=303, RSLURP0MT = 400, RSLURP1MT = 401, RSLURP2MT = 402, RSLURP3MT = 403,
 };
@@ -88,7 +83,7 @@ extern void screenShake(long long duration, keyType keytype, float intensity);
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
 extern bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity);
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 extern void changePlayerId(int i);
 #endif
 

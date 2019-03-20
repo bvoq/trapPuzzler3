@@ -188,7 +188,7 @@ void extendGridToFit(deque<deque<int> > & tempGrid, int sizeY, int sizeX) {
     }
 }
 
-#ifndef islevelgen
+#ifndef compiledWithoutOpenframeworks
 #include "toolbar.h"
 
 ofRectangle calculatePosition(float idY, float idX, int gridY, int gridX) {

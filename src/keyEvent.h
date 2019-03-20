@@ -11,10 +11,7 @@
 #ifndef keyEvent_h
 #define keyEvent_h
 
-#include "bitsstdc.h"
 #include "macros.h"
-
-#include "keyMap.h"
 
 extern void restart();
 
