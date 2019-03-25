@@ -3,7 +3,7 @@
 #include "ofMain.h"
 
 #include "grid.h"
-#include "movement.h"
+#include "tweens.h"
 
 static keyType shakeDirection = LEFT;
 static long long screenShakeStartTime=-1, screenShakeDuration=-1;

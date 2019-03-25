@@ -12,6 +12,7 @@ grid.cpp \
 levelGen.cpp \
 movement.cpp \
 parallelLevelCreation.cpp \
+puzzleScriptStringToRules.cpp \
 puzzleSolver.cpp \
 winningAnimation.cpp \
 -o generator.o

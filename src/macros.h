@@ -42,4 +42,4 @@ enum cellType {
 };
 
 //Class forward declaration
-class movement;
+class Movement;

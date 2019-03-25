@@ -42,11 +42,11 @@ extern void drawCellStroke(int o, int p, float scale, float tScale, ddd & grid);
 
 extern void recheckGrid();
 
-extern void displayLevel(ddd & grid, ddd & moveGrid, deque<movement> & movements);
+extern void displayLevel(ddd & grid, ddd & moveGrid, deque<Movement> & movements);
 
 extern void switchRenderMode(RenderMode in);
 
-extern void displayLevelWORefresh(ddd & grid, ddd & moveGrid, deque<movement> & movements);
+extern void displayLevelWORefresh(ddd & grid, ddd & moveGrid, deque<Movement> & movements);
 
 extern void displayPencil(bool selected);
 

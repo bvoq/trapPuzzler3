@@ -18,6 +18,9 @@
 
 #include "parallelLevelCreation.h"
 
+#include "puzzleScriptStringToRules.h"
+
+
 //#include "globals.h"
 //#include "keyMap.h"
 //#include "grid.h"
@@ -76,6 +79,17 @@ int main() {
     cout << "}" << endl;
     return 0;
     */
+    
+    vector<string> puzzleScriptRules =
+    {
+        "[ >  Player | Crate ] -> [  >  Player | > Crate  ]",
+        "[ >  Crate | Crate ] -> [  >  Crate | > Crate  ]"
+    };
+    
+    toRule(puzzleScriptRules, {"Player","Crate"});
+    
+    
+    return 0;
     
     
     int maxSize = 4096*16;

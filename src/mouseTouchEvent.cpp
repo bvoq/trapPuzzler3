@@ -47,7 +47,7 @@ void mouseTouchDown(int mouseTouchY, int mouseTouchX, int touchid) {
                         playerTouchMovement newMovement(tilePos.first,tilePos.second,grid[tilePos.first][tilePos.second]);
                         playerTouches.insert({touchid,newMovement});
                         
-                        movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
+                        Movement m = Movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
                                               CHANGE_TO_PLAYER, {}, false, timeForDragMovement, false, PLAYER_CHANGEMT
                                               );
                         changePlayerId(grid[tilePos.first][tilePos.second]);
@@ -129,7 +129,7 @@ void mouseTouchMoved(int mouseTouchY, int mouseTouchX, int touchid) {
                 pair<int,int> tilePos = calculateInversePosition(mouseTouchY, mouseTouchX, grid.size(), grid[0].size());
                 //cout << "y: " << playerTouches[touchid].y << " x: " << playerTouches[touchid].x << endl;
                 //cout << "ty: " << tilePos.first << " tx: " << tilePos.second << endl;
-                deque<movement> backupmovements = movements;
+                deque<Movement> backupmovements = movements;
                 //Can click outside the box.
                 size_t oldMoveGridY = moveGrid.size();
                 size_t oldMoveGridX = moveGrid[0].size();

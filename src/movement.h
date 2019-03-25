@@ -14,34 +14,19 @@
 extern void checkForMerge(ddd &, int &);
 extern void recheckGrid();
 
-extern float easeInElastic(float t, float b, float c, float d);
-extern float easeOutElastic(float t, float b, float c, float d);
-extern float easeOutBounce(float t, float b, float c, float d);
-extern float easeInBounce (float t, float b, float c, float d);
-extern float easeInQuad (float t, float b, float c, float d);
-extern float easeOutQuad(float t, float b, float c, float d);
-extern float easeInOutQuad(float t, float b, float c, float d);
-extern float easeInOutTripple(float t, float b, float c, float d);
-extern float easeInOutQuint(float t, float b, float c, float d);
-extern float easeInOutElastic(float t, float b, float c, float d);
-extern float easeInSine (float t, float b, float c, float d);
-extern float easeOutSine (float t, float b, float c, float d);
-extern float easeInOutSine(float t, float b, float c, float d);
-
-
 #ifndef compiledWithoutOpenframeworks
 enum MusicType {
     NONEMT=0, NORMALMT=1, UNDOMT=2, PLAYER_CHANGEMT = 3, SUCK0MT=100, SUCK1MT=101, SUCK2MT=102,SUCK3MT=103,SLURP0MT = 200, SLURP1MT = 201, SLURP2MT = 202, SLURP3MT = 203, RSUCK0MT=300, RSUCK1MT=301, RSUCK2MT=302, RSUCK3MT=303, RSLURP0MT = 400, RSLURP1MT = 401, RSLURP2MT = 402, RSLURP3MT = 403,
 };
 
 extern void screenShake(long long, keyType, float);
-class movement {
+class Movement {
 public:
     long long timeWhenStarted;
     deque<deque<int> > newGrid, oldGrid, newEyeGrid, oldEyeGrid;
     keyType movementDirection;
     set<int> hasMoved;
-    bool isUndoMove;
+    bool isUndoMove; //if true this is a movement where the newGrid is actually a previous grid (has different noise and speed).
     int movementTime;
     int oldPlayerID;
     int newPlayerID; //will be overwritten.
@@ -49,7 +34,7 @@ public:
     bool gravitySound;
     MusicType audioOnMove;
     
-    movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
+    Movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
              keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove, MusicType _audioOnMove);
     
     void changeGrid();
@@ -64,8 +49,8 @@ public:
     ofRectangle calculatePosition(int i, int j);
 };
 
-extern deque<movement> movements;
-extern vector<movement> previousMovements;
+extern deque<Movement> movements;
+extern vector<Movement> previousMovements;
 
 extern void checkMovement();
 

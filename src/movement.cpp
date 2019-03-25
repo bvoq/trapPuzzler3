@@ -1,110 +1,18 @@
 #include "movement.h"
 
-#include "globals.h"
-#include "macros.h"
-
 #include "audio.h"
 #include "eyes.h"
+#include "globals.h"
 #include "grid.h"
-
-using namespace std;
+#include "screenShake.h"
+#include "tweens.h"
 
 void checkForMerge(ddd &, int &);
 void recheckGrid();
 
-//from b to c, starting at time t taking d time.
-
-float easeInElastic(float t,float b , float c, float d) {
-    if (t==0) return b;  if ((t/=d)==1) return b+c;
-    float p=d*.3f;
-    float a=c;
-    float s=p/4;
-    float postFix =a*pow(2,10*(t-=1)); // this is a fix, again, with post-increment operators
-    return -(postFix * sin((t*d-s)*(2*M_PI)/p )) + b;
-}
-
-float easeOutElastic(float t,float b , float c, float d) {
-    if (t==0) return b;  if ((t/=d)==1) return b+c;
-    float p=d*.3f;
-    float a=c;
-    float s=p/4;
-    return (a*pow(2,-10*t) * sin( (t*d-s)*(2*M_PI)/p ) + c + b);
-}
-
-float easeOutBounce(float t,float b , float c, float d) {
-    if ((t/=d) < (1/2.75f)) {
-        return c*(7.5625f*t*t) + b;
-    } else if (t < (2/2.75f)) {
-        float postFix = t-=(1.5f/2.75f);
-        return c*(7.5625f*(postFix)*t + .75f) + b;
-    } else if (t < (2.5/2.75)) {
-        float postFix = t-=(2.25f/2.75f);
-        return c*(7.5625f*(postFix)*t + .9375f) + b;
-    } else {
-        float postFix = t-=(2.625f/2.75f);
-        return c*(7.5625f*(postFix)*t + .984375f) + b;
-    }
-}
-
-float easeInBounce (float t,float b , float c, float d) {
-    return c - easeOutBounce (d-t, 0, c, d) + b;
-}
-
-float easeInQuad (float t,float b , float c, float d) {
-    return c*(t/=d)*t + b;
-}
-float easeOutQuad(float t,float b , float c, float d) {
-    return -c *(t/=d)*(t-2) + b;
-}
-
-float easeInOutQuad(float t,float b , float c, float d) {
-    t /= d/2;
-    if (t < 1) return c/2*t*t + b;
-    t--;
-    return -c/2 * (t*(t-2) - 1) + b;
-}
-
-float easeInOutTripple(float t, float b, float c, float d) {
-    if ((t/=d/2) < 1) return c/2*t*t*t + b;
-    return c/2*((t-=2)*t*t + 2) + b;
-}
-
-float easeInOutQuint(float t,float b , float c, float d) {
-    if ((t/=d/2) < 1) return c/2*t*t*t*t*t + b;
-    return c/2*((t-=2)*t*t*t*t + 2) + b;
-}
-
-float easeInOutElastic(float t,float b , float c, float d) {
-    if (t==0) return b;  if ((t/=d/2)==2) return b+c;
-    float p=d*(.3f*1.5f);
-    float a=c;
-    float s=p/4;
-    
-    if (t < 1) {
-        float postFix =a*pow(2,10*(t-=1)); // postIncrement is evil
-        return -.5f*(postFix* sin( (t*d-s)*(2*M_PI)/p )) + b;
-    }
-    float postFix =  a*pow(2,-10*(t-=1)); // postIncrement is evil
-    return postFix * sin( (t*d-s)*(2*M_PI)/p )*.5f + c + b;
-}
-
-float easeInSine (float t,float b , float c, float d) {
-    return -c * cos(t/d * (M_PI/2)) + c + b;
-}
-float easeOutSine (float t,float b , float c, float d) {
-    return c * sin(t/d * (M_PI/2)) + b;
-}
-
-float easeInOutSine(float t,float b , float c, float d) {
-    return -c/2 * (cos(M_PI*t/d) - 1) + b;
-}
-
-
 #ifndef compiledWithoutOpenframeworks
 
-void screenShake(long long, keyType, float);
-
-movement::movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
+Movement::Movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<int> > _nEG, deque<deque<int> > _oEG,
            keyType _mD, set<int> _hM, bool _isUndoMove, int _movementTime, bool _gravityMove, MusicType _audioOnMove) {
     newGrid = _nG;
     oldGrid = _oG;
@@ -121,7 +29,7 @@ movement::movement(deque<deque<int> > _nG, deque<deque<int> > _oG, deque<deque<i
     audioOnMove = _audioOnMove;
 }
 
-void movement::changeGrid() {
+void Movement::changeGrid() {
    grid = newGrid;
    eyeGrid = newEyeGrid;
    recheckGrid();
@@ -129,25 +37,25 @@ void movement::changeGrid() {
    //here the movement object basically gets destroyed.
 }
     
-float movement::getDelay() {
+float Movement::getDelay() {
     return getAdjustedTime() - timeWhenStarted;
 }
 
-float movement::linearIncr() {
+float Movement::linearIncr() {
     return getDelay() / movementTime;
 }
 
-float movement::quadInOutIncr() {
+float Movement::quadInOutIncr() {
     return easeInOutQuad(linearIncr(), 0., 1., 1.);
 }
 
-float movement::upDownSine() {
+float Movement::upDownSine() {
     float lincr = linearIncr();
     if(lincr < .5) return easeInOutSine(lincr,0.,1.,.5);
     else return 1.-easeInOutSine(lincr-.5,0.,1.,.5);
 }
 
-ofRectangle movement::calculatePosition(int i, int j) {
+ofRectangle Movement::calculatePosition(int i, int j) {
     if(!isUsed) {
         if(!blockMovementDueToWinningAnimation && audioOnMove == NORMALMT) playMoveSound();
         else if(!blockMovementDueToWinningAnimation && audioOnMove == UNDOMT) playUndoSound();
@@ -210,8 +118,8 @@ ofRectangle movement::calculatePosition(int i, int j) {
 }
 
 
-deque<movement> movements;
-vector<movement> previousMovements;
+deque<Movement> movements;
+vector<Movement> previousMovements;
 
 void checkMovement() {
     if(movements.size() != 0) {
@@ -253,7 +161,7 @@ void undoMovement(long long maxtime) {
             if(locationOfFirstGravity != -1 && previousMovements.back().audioOnMove >= 100 && previousMovements.back().audioOnMove <= 103) movements[locationOfFirstGravity].audioOnMove = (MusicType)(previousMovements.back().audioOnMove + 200);
             if(locationOfFirstGravity != -1 && previousMovements.back().audioOnMove >= 200 && previousMovements.back().audioOnMove <= 203) { movements[locationOfFirstGravity].audioOnMove = (MusicType)(previousMovements.back().audioOnMove + 200);
             }
-            movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
+            Movement undoMove(previousMovements.back().oldGrid, previousMovements.back().newGrid,
                               previousMovements.back().oldEyeGrid, previousMovements.back().newEyeGrid,
                               oppositeKeyType, previousMovements.back().hasMoved, true,
                               MIN(maxtime,previousMovements.back().movementTime), previousMovements.back().gravityMove, undoMusicType);
@@ -341,7 +249,25 @@ bool affectGravity(ddd & moveGrid, ddd & moveEyeGrid, int elementId, keyType& gr
 }
 
 
-void screenShake(long long duration, keyType keytype, float intensity);
+/*
+struct Rule {
+    vector<string> directions = {};
+    
+    // [
+    vector<vector<vector<string> > > lhs = {}, rhs = {};
+    
+    bool late = false;
+    bool rigid = false;
+    bool randomRule = false;
+    
+    int lineNumber = -1;
+    int groupNumber = -1;
+    vector<string> commands = {}; //potentially executed if empty
+    
+};
+*/
+
+
 //WILL NOT CALL THE GLOBAL MOVEGRID or playerID so it can be used with the solver!
 bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long long timeAllowed, bool solver, bool possibleGravity) {
     //INSTEAD CHECK THE TOP OF
@@ -350,7 +276,6 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     //moveGrid = grid;
     
     deque<deque<int> > oldGrid = moveGrid;
-    deque<deque<int> > oldEyeGrid = moveEyeGrid;
     
     if(input == UP) pushFrontRowOf(moveGrid);
     else if(input == DOWN) pushBackRowOf(moveGrid);
@@ -358,6 +283,8 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
     else if(input == RIGHT) pushBackColumnOf(moveGrid);
     
 #ifndef compiledWithoutOpenframeworks
+    deque<deque<int> > oldEyeGrid = moveEyeGrid;
+
     if(!solver) {
         if(input == UP) pushFrontRowOf(moveEyeGrid);
         else if(input == DOWN) pushBackRowOf(moveEyeGrid);
@@ -422,7 +349,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
         checkForMerge(moveGrid,playerID);
 #ifndef compiledWithoutOpenframeworks
         if(!solver) {
-            movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false, NORMALMT);
+            Movement newMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, input, checked, false, timeAllowed, false, NORMALMT);
             movements.push_back(newMovement);
         }
 #endif
@@ -570,7 +497,7 @@ bool move(ddd & moveGrid, ddd & moveEyeGrid, int & playerID, keyType input, long
                 
 #ifndef compiledWithoutOpenframeworks
                 if(!solver && moveGrid != oldGrid) {
-                    movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true, NONEMT);
+                    Movement newGravityMovement(moveGrid, oldGrid, moveEyeGrid, oldEyeGrid, gravityDirection, affectedByGravity, false, movementSlowDownDueToEyeKilling ? timeForSlowEyeMovement : (long long)(1./velocity), true, NONEMT);
                     movements.push_back(newGravityMovement);
                     velocity += gravityAcceleration - gravityStokesFriction*velocity - gravityQuadraticFriction*velocity*velocity;
                 }

@@ -21,8 +21,10 @@
 		630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC52241A19300A22C60 /* screenShake.cpp */; };
 		630A0AC82242A39100A22C60 /* levelGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC72242A39100A22C60 /* levelGen.cpp */; };
 		630A0ACA2242A47900A22C60 /* parallelLevelCreation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 630A0AC92242A47900A22C60 /* parallelLevelCreation.cpp */; };
-		63CA016F1FB31C79007C25F1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
-		63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
+		633C89DB2248808800BA8CCA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
+		633C89DC2248809B00BA8CCA /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
+		63728A9D2242D3BA005138E1 /* puzzleScriptStringToRules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63728A9B2242D3BA005138E1 /* puzzleScriptStringToRules.cpp */; };
+		6394D10A2246708E00657BA2 /* tweens.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6394D1082246708E00657BA2 /* tweens.cpp */; };
 		63D37F162239ADE50067F730 /* audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F152239ADE50067F730 /* audio.cpp */; };
 		63D37F182239B4DD0067F730 /* globals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F172239B4DD0067F730 /* globals.cpp */; };
 		63D37F1B2239CEDA0067F730 /* eyes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63D37F1A2239CEDA0067F730 /* eyes.cpp */; };
@@ -76,7 +78,6 @@
 		22CAB9B71C3E73DD00724B49 /* keyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyMap.h; sourceTree = "<group>"; };
 		22CAB9B81C3E73DD00724B49 /* levelEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levelEditor.h; sourceTree = "<group>"; };
 		22CAB9B91C3E73DD00724B49 /* levels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = levels.h; sourceTree = "<group>"; };
-		22CAB9BA1C3E73DD00724B49 /* movement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movement.h; sourceTree = "<group>"; };
 		22CAB9BB1C3E73DD00724B49 /* puzzleSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = puzzleSolver.h; sourceTree = "<group>"; };
 		22CAB9BC1C3E73DD00724B49 /* updateGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updateGrid.h; sourceTree = "<group>"; };
 		630A0AAF22417DA900A22C60 /* levelEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = levelEditor.cpp; sourceTree = "<group>"; };
@@ -103,11 +104,16 @@
 		635462FC1EA425B900B973D0 /* keyEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = keyEvent.h; sourceTree = "<group>"; };
 		635462FD1EA4285100B973D0 /* setupDrawEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = setupDrawEvent.h; sourceTree = "<group>"; };
 		635463211EA42DB100B973D0 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = bin/data; sourceTree = SOURCE_ROOT; };
+		63728A9A2242D0E1005138E1 /* movement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movement.h; sourceTree = "<group>"; };
+		63728A9B2242D3BA005138E1 /* puzzleScriptStringToRules.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = puzzleScriptStringToRules.cpp; sourceTree = "<group>"; };
+		63728A9C2242D3BA005138E1 /* puzzleScriptStringToRules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = puzzleScriptStringToRules.h; sourceTree = "<group>"; };
 		63807F7C1F6C51F500BFBBFE /* screenShake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = screenShake.h; sourceTree = "<group>"; };
 		6380CB8A1EAAC73500C8C260 /* winningAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = winningAnimation.h; sourceTree = "<group>"; };
 		6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouseTouchEvent.h; sourceTree = "<group>"; };
 		6380CB8C1EAACA0900C8C260 /* TODO.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		6380CB8D1EAACF6F00C8C260 /* toolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = toolbar.h; sourceTree = "<group>"; };
+		6394D1082246708E00657BA2 /* tweens.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tweens.cpp; sourceTree = "<group>"; };
+		6394D1092246708E00657BA2 /* tweens.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tweens.h; sourceTree = "<group>"; };
 		63A725341D69DBC200F8BC0A /* messages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
 		63CDFA5C1DAA539E00454DE3 /* audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio.h; sourceTree = "<group>"; };
 		63D23B6E223440AF00DED9F3 /* levelEditorIDE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = levelEditorIDE.h; sourceTree = "<group>"; };
@@ -220,14 +226,18 @@
 				630A0AB3224181BA00A22C60 /* messages.cpp */,
 				6380CB8B1EAAC95700C8C260 /* mouseTouchEvent.h */,
 				630A0ABD224199F400A22C60 /* mouseTouchEvent.cpp */,
-				22CAB9BA1C3E73DD00724B49 /* movement.h */,
+				63728A9A2242D0E1005138E1 /* movement.h */,
 				63D37F2D223EEDCF0067F730 /* movement.cpp */,
+				63728A9C2242D3BA005138E1 /* puzzleScriptStringToRules.h */,
+				63728A9B2242D3BA005138E1 /* puzzleScriptStringToRules.cpp */,
 				22A39D901C5387FA0007A506 /* saves.h */,
 				630A0ABF22419C6300A22C60 /* saves.cpp */,
 				63807F7C1F6C51F500BFBBFE /* screenShake.h */,
 				630A0AC52241A19300A22C60 /* screenShake.cpp */,
 				635462FD1EA4285100B973D0 /* setupDrawEvent.h */,
 				630A0AB92241981F00A22C60 /* setupDrawEvent.cpp */,
+				6394D1092246708E00657BA2 /* tweens.h */,
+				6394D1082246708E00657BA2 /* tweens.cpp */,
 				6380CB8D1EAACF6F00C8C260 /* toolbar.h */,
 				63D37F202239D68B0067F730 /* toolbar.cpp */,
 				22CAB9BC1C3E73DD00724B49 /* updateGrid.h */,
@@ -346,11 +356,12 @@
 			files = (
 				63D37F272239DA310067F730 /* levels.cpp in Sources */,
 				630A0ABE224199F400A22C60 /* mouseTouchEvent.cpp in Sources */,
+				63728A9D2242D3BA005138E1 /* puzzleScriptStringToRules.cpp in Sources */,
 				630A0AB62241845300A22C60 /* puzzleSolver.cpp in Sources */,
 				63D37F182239B4DD0067F730 /* globals.cpp in Sources */,
+				6394D10A2246708E00657BA2 /* tweens.cpp in Sources */,
 				630A0AC022419C6300A22C60 /* saves.cpp in Sources */,
 				630A0ABC2241992C00A22C60 /* winningAnimation.cpp in Sources */,
-				63CA016F1FB31C79007C25F1 /* main.cpp in Sources */,
 				63D37F252239D7DD0067F730 /* levelEditorIDE.cpp in Sources */,
 				63D37F1F2239D4B50067F730 /* colorScheme.cpp in Sources */,
 				630A0AB8224185D000A22C60 /* keyEvent.cpp in Sources */,
@@ -359,7 +370,6 @@
 				63D37F292239EAB30067F730 /* displayLevel.cpp in Sources */,
 				63D37F162239ADE50067F730 /* audio.cpp in Sources */,
 				63D37F1B2239CEDA0067F730 /* eyes.cpp in Sources */,
-				63CA01701FB31C7C007C25F1 /* ofApp.cpp in Sources */,
 				630A0ABA2241981F00A22C60 /* setupDrawEvent.cpp in Sources */,
 				630A0AC62241A19300A22C60 /* screenShake.cpp in Sources */,
 				63D37F1D2239CFF40067F730 /* grid.cpp in Sources */,
@@ -371,6 +381,8 @@
 				630A0AC222419DCD00A22C60 /* menu.cpp in Sources */,
 				63D37F212239D68B0067F730 /* toolbar.cpp in Sources */,
 				630A0AB222417FAE00A22C60 /* updateGrid.cpp in Sources */,
+				633C89DB2248808800BA8CCA /* main.cpp in Sources */,
+				633C89DC2248809B00BA8CCA /* ofApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

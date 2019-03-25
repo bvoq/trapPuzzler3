@@ -285,7 +285,7 @@ void displayMainMenu() {
     if(gotoYOption != -1 && movements.size() == 0) {
         screenShake(timeForMovement*2, LEFT, wallShakeIntensity);
         if(playerID != 1) {
-            movement m = movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
+            Movement m = Movement(moveGrid, moveGrid, moveEyeGrid, moveEyeGrid,
                                   CHANGE_TO_PLAYER, {}, false, timeForMovement, false, PLAYER_CHANGEMT
                                   );
             changePlayerIdDeterministic(moveGrid,playerID,false);

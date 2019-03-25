@@ -6,6 +6,7 @@
 #include "grid.h"
 #include "levels.h"
 #include "movement.h"
+#include "tweens.h"
 
 int LINE_WIDTH = 5;
 
@@ -777,7 +778,7 @@ void recheckGrid() {
 
 
 //DO COPY THE DISPLAY MORE THAN ONCE!
-void displayLevel(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<movement> & movements) {
+void displayLevel(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<Movement> & movements) {
     if (grid.size() == 0 || moveGrid.size() == 0) return;
     float scaleY = (getHeight() * 1.) / (MAX(grid.size() + 2, MIN_CELL_SIZE) * 1.);
     float scaleX = (getWidth() * 1.) / (MAX(grid[0].size() + 2, MIN_CELL_SIZE) * 1.);
@@ -976,7 +977,7 @@ void switchRenderMode(RenderMode in) {
     }
 }
 
-void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<movement> & movements) {
+void displayLevelWORefresh(deque<deque<int> > & grid, deque<deque<int> > & moveGrid, deque<Movement> & movements) {
     float scaleY = (getHeight() * 1.) / (MAX(grid.size() + 2, MIN_CELL_SIZE) * 1.);
     float scaleX = (getWidth() * 1.) / (MAX(grid[0].size() + 2, MIN_CELL_SIZE) * 1.);
     float scale = MIN(scaleY, scaleX);
