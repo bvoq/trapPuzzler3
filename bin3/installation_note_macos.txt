@@ -1,0 +1,21 @@
+https://developer.apple.com/forums/thread/128166
+
+find identity
+security find-identity -v
+
+and also
+1. https://help.apple.com/xcode/mac/current/#/dev033e997ca
+2. https://help.apple.com/xcode/mac/current/#/dev88332a81e
+3. https://developer.apple.com/forums/thread/128166
+
+
+hdiutil create -srcFolder /Users/kdkdk/Desktop/Supersync/of_v0.11.1_osx_release/apps/myApps/trappuzzler5/trappuzzler.app -o /Users/kdkdk/Desktop/Supersync/of_v0.11.1_osx_release/apps/myApps/trappuzzler5/trappuzzleresque
+
+codesign -s "Developer ID Application: Kevin De Keyser (Y3K8YFHWL8)" --timestamp -i "cc.openFrameworks.trappuzzler5" /Users/kdkdk/Desktop/Supersync/of_v0.11.1_osx_release/apps/myApps/trappuzzler5/trappuzzleresque.dmg
+
+
+
+
+ADD data folder:
+add as reference not as group
+https://www.dev2qa.com/how-to-add-resource-files-into-xcode-project-and-ios-app/
