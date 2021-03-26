@@ -1,6 +1,5 @@
 How to install trappuzzler
 ==========================
-I haven't cleaned up the installer 
 
 1. Install vcredist_x64_2013.exe (contains vcomp120.dll)
 2. Install vcredist_x64_2017.exe (contains other required dll's)
