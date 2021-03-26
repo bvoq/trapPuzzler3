@@ -1,16 +1,5 @@
 #include "ofApp.h"
-
-#include "audio.h"
-#include "displayLevel.h"
-#include "globals.h"
-#include "keyEvent.h"
-#include "keyMap.h"
-#include "levels.h"
-#include "levelEditorIDE.h"
-#include "movement.h"
-#include "mouseTouchEvent.h"
-#include "saves.h"
-#include "setupDrawEvent.h"
+#include "includes.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -20,7 +9,6 @@ void ofApp::setup(){
     //SEE ALSO OFAPP.CPP AT THE SETUP
 
     initAudio();
-
     initDefaultKeyMapping();
     ofSetEscapeQuitsApp(false); //Disable quit on escape key press.
 
@@ -57,29 +45,21 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 
-bool isSuperKey = false;
 void ofApp::keyPressed(int key){
-    if(key == OF_KEY_SUPER) isSuperKey = true;
-    if(activeIDE) {
-        ideKeyPressed(key, isSuperKey);
+    if(keyMapper.count(key) != 0) {
+        if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ].second == false) {
+            keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
+            keyEvent(keyMapper[key]);
+        }
     }
-    else {
-        if(keyMapper.count(key) != 0) {
-            if(keyPressedDown.count(keyMapper[key]) == 0 || keyPressedDown[keyMapper[key] ].second == false) {
-                keyPressedDown[keyMapper[key] ] = {ofGetElapsedTimeMicros(),true};
-                keyEvent(keyMapper[key]);
-            }
-        }
-        if(mode == CONTROL_CHANGE && setRemapKey) {
-            if(keyMapper.count(key) == 0 || keyMapper[key] != remapKey) keyMapper[key] = remapKey;
-            else keyMapper[key] = UNKNOWNKEYT;
-        }
+    if(mode == CONTROL_CHANGE && setRemapKey) {
+        if(keyMapper.count(key) == 0 || keyMapper[key] != remapKey) keyMapper[key] = remapKey;
+        else keyMapper[key] = UNKNOWNKEYT;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-    if(key == OF_KEY_SUPER) isSuperKey = false;
     if(keyMapper.count(key) != 0) {
         if(keyPressedDown.count(keyMapper[key]) != 0) {
             keyPressedDown[keyMapper[key]] = {LLONG_MAX,false};

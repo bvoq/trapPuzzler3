@@ -1,1 +1,0 @@
-/Users/kdkdk/Library/Developer/Xcode/DerivedData/trappuzzler5-fbgkbfrvdbtiindqvsyipuqmwdlm/Build/Intermediates.noindex/ArchiveIntermediates/trappuzzler5 Release/InstallationBuildProductsLocation/Applications/trappuzzler5.app
