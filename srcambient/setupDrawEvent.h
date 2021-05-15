@@ -43,7 +43,7 @@ void drawEvent() {
             }
             else {
                 
-                if(lightmode == 0) { //enable the shade of the player
+                if(lightmode == 0 && grid.size() != 0) { //enable the shade of the player
                     ofBackground(0);
                     ofFill();
                     ofEnableAlphaBlending();    // turn on alpha blending

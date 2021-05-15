@@ -74,10 +74,11 @@ deque<deque<int> > cellularAutomata () {
         for(int j = 0; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) cellLevel[i][j] = 0;
         for(int j = additionalsfxwidth; i >= 0 && j < additionalsfxwidth+menuwidth; ++j) {
             if(j == additionalsfxwidth && i == 2) cellLevel[i][j] = 1000000;
-            else if(j == additionalsfxwidth && i == menulength/3) cellLevel[i][j] = 1000001;
-            else if(!isMobile && j == additionalsfxwidth && i == menulength/3*2) cellLevel[i][j] = 1000002;
-            else if(j == additionalsfxwidth && i == menulength-3) cellLevel[i][j] = 1000003;
-            
+            else if(j == additionalsfxwidth && i == menulength/3-1) cellLevel[i][j] = 1000001;
+            else if(!isMobile && j == additionalsfxwidth && i == menulength/3*2-1) cellLevel[i][j] = 1000002;
+            else if(j == additionalsfxwidth && i == menulength-5) cellLevel[i][j] = 1000003;
+            else if(j == additionalsfxwidth && i == menulength-3) cellLevel[i][j] = 1000004;
+
             else if(i < 1 || j < additionalsfxwidth+1 || i >= menulength-1 || j >= additionalsfxwidth + menuwidth - 1) cellLevel[i][j] = 2000001+i*menulength+j;
             
             else if(i < 2) cellLevel[i][j] = 1;
@@ -229,20 +230,20 @@ void displayMainMenu() {
     }
     
     //ZEN-MODE
-    ofTranslate(0,3*singleMenuTileWidth);
-    transY += 3*singleMenuTileWidth;
+    ofTranslate(0,2*singleMenuTileWidth);
+    transY += 2*singleMenuTileWidth;
     // UNCOMMENTFORZENMODE
     string lightOrDark = lightmode ? "Dark mood" : "Light mood";
-    if(getCellType(grid[menulength/3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth(lightOrDark) && mousetouchX <= transX)) {
+    if(getCellType(grid[menulength/3-1][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth(lightOrDark) && mousetouchX <= transX)) {
         highlightedMainMenuPrintRightAligned(lightOrDark, singleMenuTileWidth);
     } else {
         unhighlightedMainMenuPrintRightAligned(lightOrDark, singleMenuTileWidth);
     }
 
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth(lightOrDark) && mousetouchX <= transX)) {
-        gotoYOption = menulength/3;
+        gotoYOption = menulength/3-1;
     }
-    if(getCellType(grid[menulength/3][additionalsfxwidth]) == PLAYER) {
+    if(getCellType(grid[menulength/3-1][additionalsfxwidth]) == PLAYER) {
         lightmode = lightmode == 0 ? 1 : 0;
         loadColorScheme();
         playAudio(lightmode);
@@ -255,35 +256,56 @@ void displayMainMenu() {
     transY += 5*singleMenuTileWidth;
 
     if(!isMobile) {
-        if(getCellType(grid[menulength/3*2][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=     -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX -   mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
+        if(getCellType(grid[menulength/3*2-1][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=     -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX -   mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
             highlightedMainMenuPrintRightAligned("Controls", singleMenuTileWidth);
         } else {
             unhighlightedMainMenuPrintRightAligned("Controls", singleMenuTileWidth);
         }
         if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY &&     mousetouchX >= transX - mainMenuFont.stringWidth("Controls") && mousetouchX <= transX)) {
-            gotoYOption = menulength/3*2;
+            gotoYOption = menulength/3*2-1;
         }
-        if(getCellType(grid[menulength/3*2][additionalsfxwidth]) == PLAYER) {
+        if(getCellType(grid[menulength/3*2-1][additionalsfxwidth]) == PLAYER) {
             initControlChange();
         }
     }
     
-    //MAIN MENU
-    ofTranslate(0,3*singleMenuTileWidth);
-    transY += 3*singleMenuTileWidth;
+    //CREDITS
+    ofTranslate(0,2*singleMenuTileWidth);
+    transY += 2*singleMenuTileWidth;
     
-    if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX) ) {
+    if(getCellType(grid[menulength-5][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX) ) {
         highlightedMainMenuPrintRightAligned("Credits", singleMenuTileWidth);
     } else {
         unhighlightedMainMenuPrintRightAligned("Credits", singleMenuTileWidth);
     }
     
     if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Credits") && mousetouchX <= transX)) {
+        gotoYOption = menulength-5;
+    }
+    if(getCellType(grid[menulength-5][additionalsfxwidth]) == PLAYER) {
+        initCredits();
+    }
+    
+    //CREDITS
+    ofTranslate(0,2*singleMenuTileWidth);
+    transY += 2*singleMenuTileWidth;
+    
+    if(getCellType(grid[menulength-3][additionalsfxwidth+1]) == PLAYER || (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Exit") && mousetouchX <= transX) ) {
+        highlightedMainMenuPrintRightAligned("Exit", singleMenuTileWidth);
+    } else {
+        unhighlightedMainMenuPrintRightAligned("Exit", singleMenuTileWidth);
+    }
+    
+    if(isMousePressed && (mousetouchY >=  -singleMenuTileWidth + transY && mousetouchY <= transY && mousetouchX >= transX - mainMenuFont.stringWidth("Exit") && mousetouchX <= transX)) {
         gotoYOption = menulength-3;
     }
     if(getCellType(grid[menulength-3][additionalsfxwidth]) == PLAYER) {
-        initCredits();
+        exit(0);
     }
+    
+    
+    
+    
         
     if(gotoYOption != -1 && movements.size() == 0) {
         screenShake(timeForMovement*2, LEFT, wallShakeIntensity);
